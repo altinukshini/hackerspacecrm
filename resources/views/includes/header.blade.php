@@ -22,13 +22,13 @@
 				  <li><a href="{{ url('/register') }}">Register</a></li>
 			  @else
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-				  <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+				  <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
 				  <span class="hidden-xs">{{ Auth::user()->full_name }}</span>
 				</a>
 				<ul class="dropdown-menu">
 				  <!-- User image -->
 				  <li class="user-header">
-					<img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+					<img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 					<p>
 					  {{ Auth::user()->full_name }}
 					  <small>Member since Nov. 2012</small>
@@ -38,7 +38,7 @@
 				  <!-- Menu Footer-->
 				  <li class="user-footer">
 					<div class="pull-left">
-					  <a href="#" class="btn btn-default btn-flat">Profile</a>
+					  <a href="{{ Auth::user()->profilePath() }}" class="btn btn-default btn-flat">Profile</a>
 					</div>
 					<div class="pull-right">
 					  <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>
