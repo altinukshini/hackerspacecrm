@@ -38,6 +38,11 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
+    /**
+     * Get users profile page path.
+     *
+     * @return string
+     */
     public function profilePath()
     {
         return '/members/'.$this->username;

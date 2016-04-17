@@ -69,6 +69,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Locale Configuration
+    |--------------------------------------------------------------------------
+    |
+    | The application locale determines the default locale that will be used
+    | by the translation service provider. You are free to set this value
+    | to any of the locales which will be supported by the application.
+    |
+    */
+
+    'locales' => [
+        'en' =>    'English',
+        'sq' =>    'Shqip',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Fallback Locale
     |--------------------------------------------------------------------------
     |
@@ -78,7 +94,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'sq',
 
     /*
     |--------------------------------------------------------------------------
@@ -155,6 +171,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\HelpersServiceProvider::class,
 
     ],
 

@@ -11,13 +11,14 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::auth();
+Route::get('/dashboard', 'DashboardController@index');
 
-Route::get('/home', 'HomeController@index');
+Route::get('locale/{locale}', ['as'=>'locale.switch', 'uses'=>'LocaleController@switchLocale']);
 
 /*
  * User / Member / Profile Routes

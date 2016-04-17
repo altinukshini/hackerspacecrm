@@ -12,7 +12,6 @@
     <form role="form" method="POST" action="{{ url('/login') }}">
         {!! csrf_field() !!}
 
-
       <div class="form-group{{ $errors->has('email') ? ' has-error' : ' has-feedback' }}">
         <input type="email" class="form-control" placeholder="E-Mail Address" name="email" value="{{ old('email') }}">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

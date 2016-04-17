@@ -1,6 +1,6 @@
 	<header class="main-header">
 	  <!-- Logo -->
-	  <a href="index2.html" class="logo">
+	  <a href="{{ url('/') }}" class="logo">
 		<!-- mini logo for sidebar mini 50x50 pixels -->
 		<span class="logo-mini">CRM</span>
 		<!-- logo for regular state and mobile devices -->
@@ -14,8 +14,26 @@
 		</a>
 		<div class="navbar-custom-menu">
 		  <ul class="nav navbar-nav">
+
+		  	<!-- Application locale switcher -->
+			<li class="dropdown messages-menu pull-left">
+			    <a href="#" class="dropdown-toggle pull-left" data-toggle="dropdown">
+			        {{ getCurrentSessionAppLocale() }}
+			    </a>
+			    <ul class="dropdown-menu">
+			        @foreach (getAvailableAppLocaleArray() as $lang => $language)
+			            @if ($lang != getCurrentSessionAppLocale())
+			                <li>
+			                    <a href="{{ route('locale.switch', $lang) }}">{{$language}}</a>
+			                </li>
+			            @endif
+			        @endforeach
+			    </ul>
+            </li>
+
 			<!-- User Account: style can be found in dropdown.less -->
 			<li class="dropdown user user-menu">
+	
 			  <!-- Authentication Links -->
 			  @if (Auth::guest())
 				  <li><a href="{{ url('/login') }}">Login</a></li>
