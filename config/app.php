@@ -69,10 +69,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Locale Configuration
+    | Supported Application Locales Configuration
     |--------------------------------------------------------------------------
     |
-    | The application locale determines the default locale that will be used
+    | The application locales determines the supported locales that can be used
     | by the translation service provider. You are free to set this value
     | to any of the locales which will be supported by the application.
     |
@@ -94,7 +94,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'sq',
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------

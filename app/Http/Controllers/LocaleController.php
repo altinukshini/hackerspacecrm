@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App;
-use App\Models\User;
-use App\Http\Controllers\Controller;
-use App\Http\Requests;
 use Config;
+use App\Models\User;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
