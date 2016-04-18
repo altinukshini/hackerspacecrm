@@ -8,6 +8,7 @@
   <div class="login-box-body">
 
     <p class="login-box-msg">Register to Hackerspace CRM</p>
+    @include('includes.flash')
 
     <form role="form" method="POST" action="{{ url('/register') }}">
         {!! csrf_field() !!}

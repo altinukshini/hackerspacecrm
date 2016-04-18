@@ -28,6 +28,15 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($user) {
+            $user->email_token = str_random(30);
+        });
+    }
+
     /**
      * Relation between a user and the profile.
      *
@@ -45,6 +54,30 @@ class User extends Authenticatable
      */
     public function profilePath()
     {
-        return '/members/'.$this->username;
+        return $this->hasProfile() ? '/members/'.$this->username : '/';
+    }
+
+    /**
+     * Check if user has profile.
+     *
+     * @return boolean
+     */
+    public function hasProfile()
+    {
+        return $this->profile ? true : false;
+    }
+
+    // TODO: create a new user
+    // public function create()
+    // {
+        
+    // }
+
+    public function confirmEmail()
+    {
+        $this->verified = true;
+        $this->email_token = null;
+        
+        $this->save();
     }
 }

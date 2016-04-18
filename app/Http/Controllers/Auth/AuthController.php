@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
-use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Auth;
+use App\Mailers\AppMailer;
+use App\Models\User;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Mail;
+use Validator;
 
 class AuthController extends Controller
 {
@@ -35,7 +38,8 @@ class AuthController extends Controller
     protected $redirectTo = '/';
 
     /**
-     * Overwrited original method
+     * Overwrited original method: Return user's profile path
+     * or '/' if user has no profile
      * Get the post register / login redirect path.
      *
      * @return string
@@ -68,7 +72,7 @@ class AuthController extends Controller
     {
         return Validator::make($data, [
             'full_name' => 'required|max:255',
-            'username' => 'required|max:255',
+            'username' => 'required|max:255|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
@@ -117,12 +121,21 @@ class AuthController extends Controller
         $credentials = $this->getCredentials($request);
 
         if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
-            if (!empty(Auth::user()->locale)) {
-                Session::put('locale', Auth::user()->locale);
+
+            flashMessage('Welcome to Hackerspace CRM', 'success', true);
+
+            $user = User::find(Auth::user()->id);
+            $user->last_login = date('Y-m-d H:i:s');
+            $user->save();
+
+            if (!empty($user->locale)) {
+                Session::put('locale', $user->locale);
             }
 
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
+
+        flashMessage('We could not sign you in.', 'warning', true);
 
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
@@ -135,36 +148,90 @@ class AuthController extends Controller
     }
 
     /**
+     * Overwritten method: Added verified value
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function getCredentials(Request $request)
+    {
+        // return $request->only($this->loginUsername(), 'password');
+        return [
+            $this->loginUsername() => $request->only($this->loginUsername()),
+            'password' => $request->input('password'),
+            'verified' => true
+        ];
+    }
+
+    /**
      * In case we want to flush session after logout
      * Overwritten method: Added Session::flush();
      * Log the user out of the application.
      *
      * @return \Illuminate\Http\Response
      */
-    // public function logout()
-    // {
-    //     Auth::guard($this->getGuard())->logout();
-    //     Session::flush();
+    public function logout()
+    {
+        Auth::guard($this->getGuard())->logout();
+        Session::flush();
 
-    //     return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
-    // }
+        flashMessage('You have been signed out. See you!', 'success', true);
+        return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
+    }
     
     // TODO: Make this customizable by user admin settings
     /*
      * Overwriting original method
-     * Disable or enable registration globally
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function register()
+    public function register(Request $request, AppMailer $mailer)
     {
-        return redirect('/');
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        // Auth::guard($this->getGuard())->login( $this->create($request->all()) )
+        // return redirect($this->redirectPath());
+
+        $user = $this->create($request->all());
+
+        $mailer->sendEmailConfirmationTo($user);
+        // $AppMailer = new AppMailer(new Mailer);
+        // $AppMailer::sendEmailConfirmationTo($user);
+        
+        flashMessage('Please check your email address to confirm and activate your account.');
+        
+        return back();
     }
 
     /*
      * Overwriting original method
      * Disable or enable registration globally
      */
-    public function showRegistrationForm()
+    // public function showRegistrationForm()
+    // {
+    //     return redirect('/');
+    // }
+
+    public function confirmEmail($email_token)
     {
-        return redirect('/');
+        try {
+            $user = User::where('email_token', $email_token)->firstOrFail()->confirmEmail();
+        } catch (ModelNotFoundException $e) {
+            flashMessage('User with provided token was not found in the database', 'warning', true);
+            return redirect('/');
+        }
+
+        flashMessage('Your account has been verified. You may now log in.', 'success', true);
+
+        return redirect('/login');
     }
 }

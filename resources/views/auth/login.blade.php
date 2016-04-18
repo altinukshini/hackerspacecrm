@@ -8,6 +8,7 @@
   <div class="login-box-body">
 
     <p class="login-box-msg">Sign in to enter the CRM</p>
+    @include('includes.flash')
 
     <form role="form" method="POST" action="{{ url('/login') }}">
         {!! csrf_field() !!}

@@ -29,11 +29,11 @@ class ProfilesController extends Controller
      */
     public function show($username)
     {
+        // TODO: Open user profile only if member
     	// Handle Model not found exceptions in global.php
     	try {
     		$user = User::with('profile')->whereUsername($username)->firstOrFail();
     		// $user->load('profile.user');
-    		// dd($user->toArray());
     	} catch (ModelNotFoundException $e) {
     		return redirect('/');
     	}

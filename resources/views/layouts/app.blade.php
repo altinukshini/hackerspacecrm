@@ -47,6 +47,7 @@
         @include('includes.sidebar')
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
+            @include('includes.flash')
             @yield('content')
         </div><!-- /.content-wrapper -->
         @include('includes.footer')
