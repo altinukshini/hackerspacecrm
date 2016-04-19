@@ -11,18 +11,24 @@
 |
 */
 
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+/* Authentication Routes provided by Laravel */
 Route::auth();
+
+/* Email Confirmation Routes */
 Route::get('/login/confirm', function () {
 	flashMessage('You don\'t have permission to access this page', 'danger', true);
     return redirect('/');
 });
 Route::get('/login/confirm/{email_token}', 'Auth\AuthController@confirmEmail');
+
+
 Route::get('/dashboard', 'DashboardController@index');
 
+/* Application Locale switch */
 Route::get('locale/{locale}', ['as'=>'locale.switch', 'uses'=>'LocaleController@switchLocale']);
 
 /*

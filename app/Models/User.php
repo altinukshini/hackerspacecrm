@@ -28,6 +28,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * Generate email_token for user.
+     *
+     * @return void
+     */
     public static function boot()
     {
         parent::boot();
@@ -54,7 +59,7 @@ class User extends Authenticatable
      */
     public function profilePath()
     {
-        return $this->hasProfile() ? '/members/'.$this->username : '/';
+        return $this->hasProfile() ? '/members/' . $this->username : '/';
     }
 
     /**
@@ -67,16 +72,41 @@ class User extends Authenticatable
         return $this->profile ? true : false;
     }
 
-    // TODO: create a new user
-    // public function create()
-    // {
-        
-    // }
-
+    /**
+     * Verify user in db, since the user has verified
+     * the email.
+     *
+     * @return void
+     */
     public function confirmEmail()
     {
         $this->verified = true;
         $this->email_token = null;
+        
+        $this->save();
+    }
+
+    /**
+     * Set last login datetime
+     *
+     * @return void
+     */
+    public function setLastLogin()
+    {
+        $this->last_login = date('Y-m-d H:i:s');
+        $this->save();
+        
+        $this->save();
+    }
+
+    /**
+     * Set default locale
+     *
+     * @return void
+     */
+    public function setDefaultLocale($locale)
+    {
+        $this->locale = $locale;
         
         $this->save();
     }

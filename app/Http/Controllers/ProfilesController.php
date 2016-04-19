@@ -29,7 +29,7 @@ class ProfilesController extends Controller
      */
     public function show($username)
     {
-        // TODO: Open user profile only if member
+        // TODO: Open user profile only if member and has profile
     	// Handle Model not found exceptions in global.php
     	try {
     		$user = User::with('profile')->whereUsername($username)->firstOrFail();

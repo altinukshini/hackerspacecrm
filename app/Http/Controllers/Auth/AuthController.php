@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Mailers\AppMailer;
+use Mail;
+use Validator;
 use App\Models\User;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
+use App\Mailers\AppMailer;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Mail;
-use Validator;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+
 
 class AuthController extends Controller
 {
@@ -46,11 +47,10 @@ class AuthController extends Controller
      */
     public function redirectPath()
     {
-        if (Auth::check()) {
+        if (Auth::check())
             return Auth::user()->profilePath();
-        } else {
-            return '/';
-        }
+
+        return '/';
     }
 
     /**
@@ -121,28 +121,25 @@ class AuthController extends Controller
         $credentials = $this->getCredentials($request);
 
         if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
+            $user = User::find(Auth::user()->id);
+            $user->setLastLogin();
+
+            if (!empty($user->locale))
+                Session::put('locale', $user->locale);
 
             flashMessage('Welcome to Hackerspace CRM', 'success', true);
-
-            $user = User::find(Auth::user()->id);
-            $user->last_login = date('Y-m-d H:i:s');
-            $user->save();
-
-            if (!empty($user->locale)) {
-                Session::put('locale', $user->locale);
-            }
 
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
 
-        flashMessage('We could not sign you in.', 'warning', true);
-
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
-        if ($throttles && !$lockedOut) {
+
+        if ($throttles && !$lockedOut)
             $this->incrementLoginAttempts($request);
-        }
+
+        flashMessage('We could not sign you in.', 'warning', true);
 
         return $this->sendFailedLoginResponse($request);
     }
@@ -174,9 +171,11 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::guard($this->getGuard())->logout();
+
         Session::flush();
 
         flashMessage('You have been signed out. See you!', 'success', true);
+
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
     
@@ -192,22 +191,14 @@ class AuthController extends Controller
     {
         $validator = $this->validator($request->all());
 
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
-
-        // Auth::guard($this->getGuard())->login( $this->create($request->all()) )
-        // return redirect($this->redirectPath());
+        if ($validator->fails())
+            $this->throwValidationException($request, $validator);
 
         $user = $this->create($request->all());
 
         $mailer->sendEmailConfirmationTo($user);
-        // $AppMailer = new AppMailer(new Mailer);
-        // $AppMailer::sendEmailConfirmationTo($user);
         
-        flashMessage('Please check your email address to confirm and activate your account.');
+        flashMessage('Please check your email address to confirm and activate your account.', 'info', true);
         
         return back();
     }
@@ -221,6 +212,12 @@ class AuthController extends Controller
     //     return redirect('/');
     // }
 
+    /*
+     * Verify user account.
+     *
+     * @param  Email token $email_token
+     * @return void
+     */
     public function confirmEmail($email_token)
     {
         try {
