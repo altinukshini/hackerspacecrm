@@ -4,10 +4,21 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Profile;
+use App\Models\Role;
+use App\Models\Permission;
+use Illuminate\Support\Collection;
+use App\Traits\HasRole;
 
 class User extends Authenticatable
 {
 
+    use HasRole;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'users';
     
     /**
@@ -40,36 +51,6 @@ class User extends Authenticatable
         static::creating(function($user) {
             $user->email_token = str_random(30);
         });
-    }
-
-    /**
-     * Relation between a user and the profile.
-     *
-     * @return Profile
-     */
-    public function profile()
-    {
-        return $this->hasOne(Profile::class);
-    }
-
-    /**
-     * Get users profile page path.
-     *
-     * @return string
-     */
-    public function profilePath()
-    {
-        return $this->hasProfile() ? '/members/' . $this->username : '/';
-    }
-
-    /**
-     * Check if user has profile.
-     *
-     * @return boolean
-     */
-    public function hasProfile()
-    {
-        return $this->profile ? true : false;
     }
 
     /**
@@ -109,5 +90,45 @@ class User extends Authenticatable
         $this->locale = $locale;
         
         $this->save();
+    }
+
+    /**
+     * Relation between a User and Role.
+     *
+     * @return Roles
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * Relation between a user and the profile.
+     *
+     * @return Profile
+     */
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    /**
+     * Get users profile page path.
+     *
+     * @return string
+     */
+    public function profilePath()
+    {
+        return $this->hasProfile() ? '/members/' . $this->username : '/';
+    }
+
+    /**
+     * Check if user has profile.
+     *
+     * @return boolean
+     */
+    public function hasProfile()
+    {
+        return $this->profile ? true : false;
     }
 }

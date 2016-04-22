@@ -8,6 +8,11 @@ use App\Models\User;
 class Profile extends Model
 {
 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'profiles';
 
 	/**

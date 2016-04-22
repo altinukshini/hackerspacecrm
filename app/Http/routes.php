@@ -11,6 +11,7 @@
 |
 */
 
+// Route::get('/', 'DashboardController@index')
 Route::get('/', function () {
     return view('welcome');
 });

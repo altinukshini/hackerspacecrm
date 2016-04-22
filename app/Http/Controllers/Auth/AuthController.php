@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Mail;
 use Validator;
 use App\Models\User;
-use App\Mailers\AppMailer;
+use App\Mailers\UserMailer as Mailer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +28,8 @@ class AuthController extends Controller
     | a simple trait to add these behaviors. Why don't you explore it?
     |
     */
+
+    protected $mailer;
 
     use AuthenticatesAndRegistersUsers;
 
@@ -56,9 +58,10 @@ class AuthController extends Controller
     /**
      * Create a new authentication controller instance.
      */
-    public function __construct()
+    public function __construct(Mailer $mailer)
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->mailer = $mailer;
     }
 
     /**
@@ -187,7 +190,7 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request, AppMailer $mailer)
+    public function register(Request $request)
     {
         $validator = $this->validator($request->all());
 
@@ -196,7 +199,7 @@ class AuthController extends Controller
 
         $user = $this->create($request->all());
 
-        $mailer->sendEmailConfirmationTo($user);
+        $this->mailer->confirmation($user);
         
         flashMessage('Please check your email address to confirm and activate your account.', 'info', true);
         
