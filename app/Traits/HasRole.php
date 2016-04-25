@@ -32,7 +32,7 @@ trait HasRole
         	return !! $role->intersect($this->roles)->count();
 
         foreach ($role as $r) {
-            if ($this->hasRole($r)) return true;
+            return $this->hasRole($r);
         }
 
         return false;
@@ -129,6 +129,21 @@ trait HasRole
     }
 
     /**
+     * Get all User Permissions.
+     *
+     * @return Array
+     */
+    public function getPermissions()
+    {
+        $permissions = array();
+        foreach ($this->roles as $role) {
+            $permissions += $role->permissions->lists('name', 'id')->toArray();
+        }
+
+        return $permissions;
+    }
+
+    /**
      * Check if user has a specific permission
      *
      * @param Permission name
@@ -138,15 +153,21 @@ trait HasRole
     {
 
         if (is_string($permission)){
-            foreach ($this->roles() as $role) {
-                if ($role->hasPermission($permission)) return true;
+            foreach ($this->roles as $role) {
+                return $role->hasPermission($permission);
+            }
+        }
+
+        if ($permission instanceof Collection) {
+            foreach ($this->roles as $role) {
+                return $role->hasPermission($permission);
             }
         }
 
         foreach ($permission as $p) {
-            if ($this->hasPermission($p)) return true;
+            return $this->hasPermission($p);
         }
-
+        
         return false;
     }
 }

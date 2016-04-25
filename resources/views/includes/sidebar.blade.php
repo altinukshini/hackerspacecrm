@@ -18,12 +18,8 @@
 	<!-- /.search form -->
 	<!-- sidebar menu: : style can be found in sidebar.less -->
 	<ul class="sidebar-menu">
-	  <li class="header">MAIN NAVIGATION</li>
-	  <li>
-		<a href="{{ url('/dashboard') }}">
-		  <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-		</a>
-	  </li>
+	  @include('includes.mainnavigation')
+	  @include('includes.settingsnavigation')
 	</ul>
   </section>
   <!-- /.sidebar -->

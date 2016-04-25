@@ -2,9 +2,13 @@
 
 return [
 	'messages'	=> [
-		'welcome' => 'Welcome to :applicationname',
+		'welcome'	=>	'Welcome to :applicationname',
 	],
 	'labels'	=> [
-		'selectlocale' => 'Language',
+		'selectlocale'	=>	'Language',
 	],
+	'menus'		=> [
+	    'mainnavigation'	=>	'MAIN NAVIGATION',
+	    'settings'	=>	'SETTINGS',
+	]
 ];

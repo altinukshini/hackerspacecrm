@@ -15,6 +15,8 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        // $this->middleware('role:administrator');
+        // $this->middleware('permission:edit_member');
     }
 
     /**
@@ -24,6 +26,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        if (!hasRole('administrator')) return back();
+        // if (!hasPermission('administrator')) return back();
+
         return view('dashboard');
     }
 }

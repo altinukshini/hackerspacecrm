@@ -33,7 +33,7 @@ trait HasPermission
         	return !! $permission->intersect($this->permissions)->count();
 
         foreach ($permission as $p) {
-            if ($this->hasPermission($p)) return true;
+            return $this->hasPermission($p);
         }
 
         return false;

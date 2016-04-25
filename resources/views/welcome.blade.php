@@ -9,7 +9,7 @@
 	    </div>
 	    <!-- Example -->
 	    <div class="col-md-12">
-	        @can('edit_page')
+	        @can('edit_cms')
 				Can edit member.
 	        @endcan
 	    </div>
