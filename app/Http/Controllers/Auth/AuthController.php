@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Flash;
 use Mail;
 use Validator;
 use App\Models\User;
@@ -130,7 +131,7 @@ class AuthController extends Controller
             if (!empty($user->locale))
                 Session::put('locale', $user->locale);
 
-            flashMessage('Welcome to Hackerspace CRM', 'success', true);
+            Flash::success('Welcome to Hackerspace CRM');
 
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
@@ -142,7 +143,7 @@ class AuthController extends Controller
         if ($throttles && !$lockedOut)
             $this->incrementLoginAttempts($request);
 
-        flashMessage('We could not sign you in.', 'warning', true);
+        Flash::warning('We could not sign you in.');
 
         return $this->sendFailedLoginResponse($request);
     }
@@ -177,7 +178,7 @@ class AuthController extends Controller
 
         Session::flush();
 
-        flashMessage('You have been signed out. See you!', 'success', true);
+        Flash::success('You have been signed out. See you!');
 
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
@@ -201,7 +202,7 @@ class AuthController extends Controller
 
         $this->mailer->confirmation($user);
         
-        flashMessage('Please check your email address to confirm and activate your account.', 'info', true);
+        Flash::info('Please check your email address to confirm and activate your account.');
         
         return back();
     }
@@ -226,11 +227,11 @@ class AuthController extends Controller
         try {
             $user = User::where('email_token', $email_token)->firstOrFail()->confirmEmail();
         } catch (ModelNotFoundException $e) {
-            flashMessage('User with provided token was not found in the database', 'warning', true);
+            Flash::warning('User with provided token was not found in the database');
             return redirect('/');
         }
 
-        flashMessage('Your account has been verified. You may now log in.', 'success', true);
+        Flash::success('Your account has been verified. You may now log in.');
 
         return redirect('/login');
     }

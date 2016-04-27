@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
+use Flash;
 
 class MustHaveRole
 {
@@ -22,7 +23,7 @@ class MustHaveRole
             return $next($request);
         }
 
-        flashMessage('You do not have permission to perform this action!', 'danger', true);
+        Flash::error('You do not have permission to perform this action!');
         return redirect('/');
 
     }

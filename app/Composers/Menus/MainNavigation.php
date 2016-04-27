@@ -16,6 +16,6 @@ class MainNavigation
 
 	public function compose(View $view)
 	{
-		$view->with('menus', $this->menu->where('menu_group', 'mainnavigation')->get());
+		$view->with('menus', $this->menu->where('menu_group', 'mainnavigation')->orderBy('menu_order', 'asc')->get());
 	}
 }

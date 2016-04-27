@@ -7,10 +7,11 @@ if (!function_exists('hasPermission')) {
      *
      * @return boolean
      */
-    function hasPermission($permission)
+    function hasPermission($permission, $flash = false)
     {
         if (!Auth::check() || !Auth::user()->hasPermission($permission)) {
-            flashMessage('You do not have permission to perform this action', 'danger', true);
+            if ($flash)
+                Flash::error('You do not have permission to perform this action');
             return false;
         }
         
@@ -25,10 +26,12 @@ if (!function_exists('hasRole')) {
      *
      * @return boolean
      */
-    function hasRole($role)
+    function hasRole($role, $flash = false)
     {
         if (!Auth::check() || !Auth::user()->hasRole($role)) {
-            flashMessage('You do not have permission to perform this action', 'danger', true);
+            if ($flash)
+                Flash::error('You do not have permission to perform this action');
+            
             return false;
         }
 

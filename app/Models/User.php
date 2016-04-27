@@ -6,7 +6,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Profile;
 use App\Models\Role;
 use App\Models\Permission;
-use Illuminate\Support\Collection;
 use App\Traits\HasRole;
 
 class User extends Authenticatable

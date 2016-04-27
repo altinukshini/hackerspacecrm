@@ -26,8 +26,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        if (!hasRole('administrator')) return back();
-        // if (!hasPermission('administrator')) return back();
+        if (!hasRole('administrator', true)) return back();
+        // if (!hasPermission('sell_company', true)) return back();
 
         return view('dashboard');
     }

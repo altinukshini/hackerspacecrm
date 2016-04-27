@@ -3,21 +3,34 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Menu;
 
 class Menu extends Model
 {
 
-	protected $table = 'menus';
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'menus';
 
-	public function parent()
+    /**
+     * Relation between this menu and its parents.
+     *
+     * @return Menu
+     */
+    public function parent()
     {
-        return $this->belongsTo(Menu::class, 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id')->orderBy('menu_order', 'asc');
     }
 
+    /**
+     * Relation between this menu and its children.
+     *
+     * @return Menu
+     */
     public function children()
     {
-        return $this->hasMany(Menu::class, 'parent_id');
+        return $this->hasMany(self::class, 'parent_id')->orderBy('menu_order', 'asc');
     }
-
 }

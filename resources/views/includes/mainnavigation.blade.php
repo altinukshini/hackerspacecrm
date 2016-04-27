@@ -1,7 +1,8 @@
 <li class="header"><i class="fa fa-bars" style="margin-right:5px;"></i> {{ trans('hackerspacecrm.menus.mainnavigation') }}</li>
+@can('view_menu')
 @foreach( $menus as $menu )
 	@if($menu->children->count())
-		@if($menu->parent_id == 0)
+		@if($menu->parent_id == 0 and hasRole($menu->permission_role))
 			<li class="treeview {{ setMenuActive($menu->url) }}">
 				<a href="{{$menu->url}}">
 					<i class="fa {{$menu->icon}}"></i>
@@ -10,13 +11,15 @@
 				</a>
 				<ul class="treeview-menu">
 					@foreach($menu->children as $child)
-						<li><a href="{{ url('/'.$child->url) }}"><i class="fa {{$child->icon}}"></i> {{$child->title}}</a></li>
+						@if(hasRole($menu->permission_role))
+							<li><a href="{{ url('/'.$child->url) }}"><i class="fa {{$child->icon}}"></i> {{$child->title}}</a></li>
+						@endif
 					@endforeach
 				</ul>
 			</li>
 		@endif
 	@else
-		@if($menu->parent_id == 0)
+		@if($menu->parent_id == 0 and hasRole($menu->permission_role))
 		  <li class="{{ setMenuActive($menu->url) }}">
 			  <a href="{{ url('/'.$menu->url) }}">
 				<i class="fa {{$menu->icon}}"></i> <span>{{$menu->title}}</span>
@@ -25,3 +28,4 @@
 		@endif
 	@endif
 @endforeach
+@endcan

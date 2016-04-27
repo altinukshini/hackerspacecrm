@@ -1,4 +1,4 @@
-@can('view_settings')
+@can('view_menu')
 <li class="header"><i class="fa fa-sliders" style="margin-right:5px;"></i> {{ trans('hackerspacecrm.menus.settings') }}</li>
 @foreach( $menus as $menu )
 	@if($menu->children->count())

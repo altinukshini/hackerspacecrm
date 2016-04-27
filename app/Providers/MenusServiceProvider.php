@@ -7,6 +7,12 @@ use Illuminate\Support\ServiceProvider;
 
 class MenusServiceProvider extends ServiceProvider
 {
+
+    /**
+     * Register composer views.
+     *
+     * @return void
+     */
     public function boot()
     {
         View::composer('includes.mainnavigation', 'App\Composers\Menus\MainNavigation');

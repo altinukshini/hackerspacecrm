@@ -29,7 +29,7 @@ if (!function_exists('getCurrentSessionAppLocale')) {
     }
 }
 
-if (!function_exists('getCurrentSessionAppLocale')) {
+if (!function_exists('getDefaultAppLocale')) {
     /**
      * Returns default application locale.
      *

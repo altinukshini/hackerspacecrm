@@ -21,7 +21,8 @@
         "classmap": [
             "database",
             "app/Models",
-            "app/Mailers"
+            "app/Mailers",
+            "app/Facades"
         ],
         "psr-4": {
             "App\\": "app/"

@@ -21,7 +21,7 @@ Route::auth();
 
 /* Email Confirmation Routes */
 Route::get('/login/confirm', function () {
-	flashMessage('You don\'t have permission to access this page', 'danger', true);
+	Flash::error('You don\'t have permission to access this page');
     return redirect('/');
 });
 Route::get('/login/confirm/{email_token}', 'Auth\AuthController@confirmEmail');
@@ -36,7 +36,7 @@ Route::get('locale/{locale}', ['as'=>'locale.switch', 'uses'=>'LocaleController@
  * User / Member / Profile Routes
  */
 Route::get('/members', function () {
-	flashMessage('Page not created yet', 'info', true);
+	Flash::info('Page not created yet');
     return redirect('/');
 });
 Route::get('/members/{profile}', 'ProfilesController@show');
