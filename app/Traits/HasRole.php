@@ -10,7 +10,7 @@ trait HasRole
     /**
      * Get all User Roles.
      *
-     * @return Array
+     * @return array
      */
     public function getRoles()
     {
@@ -18,18 +18,21 @@ trait HasRole
     }
 
     /**
-     * Check if user has a specific role
+     * Check if user has a specific role.
      *
      * @param Role name
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasRole($role)
     {
-        if (is_string($role))
+        if (is_string($role)) {
             return $this->roles->contains('name', $role);
+        }
 
-        if ($role instanceof Collection)
-        	return !! $role->intersect($this->roles)->count();
+        if ($role instanceof Collection) {
+            return !! $role->intersect($this->roles)->count();
+        }
 
         foreach ($role as $r) {
             return $this->hasRole($r);
@@ -39,22 +42,25 @@ trait HasRole
     }
 
     /**
-     * Assign role to a user
+     * Assign role to a user.
      *
      * @param App\Models\Role $role
-     * @return boolean
+     *
+     * @return bool
      */
     public function assignRole(Role $role)
     {
-        if (!$this->hasRole($role->name))
+        if (!$this->hasRole($role->name)) {
             return $this->roles()->attach($role);
+        }
     }
 
     /**
-     * Assign role to a user
+     * Assign role to a user.
      *
-     * @param String $name
-     * @return boolean
+     * @param string $name
+     *
+     * @return bool
      */
     public function assignRoleByName($name)
     {
@@ -66,10 +72,11 @@ trait HasRole
     }
 
     /**
-     * Assign roles to a user
+     * Assign roles to a user.
      *
-     * @param Array $names
-     * @return boolean
+     * @param array $names
+     *
+     * @return bool
      */
     public function assignRolesByName($names)
     {
@@ -79,26 +86,29 @@ trait HasRole
     }
 
     /**
-     * Revoke role to a user
+     * Revoke role to a user.
      *
      * @param App\Models\Role $role
-     * @return boolean
+     *
+     * @return bool
      */
     public function revokeRole(Role $role)
     {
-        if ($this->hasRole($role->name))
+        if ($this->hasRole($role->name)) {
             return $this->roles()->detach($role);
+        }
     }
 
     /**
-     * Revoke role to a user
+     * Revoke role to a user.
      *
-     * @param String $name
-     * @return boolean
+     * @param string $name
+     *
+     * @return bool
      */
     public function revokeRoleByName($name)
     {
-        if ($this->hasRole($name)){
+        if ($this->hasRole($name)) {
             return $this->roles()->detach(
                 Role::whereName($name)->firstOrFail()
             );
@@ -106,10 +116,11 @@ trait HasRole
     }
 
     /**
-     * Revoke roles by name
+     * Revoke roles by name.
      *
-     * @param Array $names
-     * @return boolean
+     * @param array $names
+     *
+     * @return bool
      */
     public function revokeRolesByName($names)
     {
@@ -119,9 +130,9 @@ trait HasRole
     }
 
     /**
-     * Revoke All Roles from User
+     * Revoke All Roles from User.
      *
-     * @return boolean
+     * @return bool
      */
     public function revokeAllRoles()
     {
@@ -131,7 +142,7 @@ trait HasRole
     /**
      * Get all User Permissions.
      *
-     * @return Array
+     * @return array
      */
     public function getPermissions()
     {
@@ -144,15 +155,15 @@ trait HasRole
     }
 
     /**
-     * Check if user has a specific permission
+     * Check if user has a specific permission.
      *
      * @param Permission name
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasPermission($permission)
     {
-
-        if (is_string($permission)){
+        if (is_string($permission)) {
             foreach ($this->roles as $role) {
                 return $role->hasPermission($permission);
             }
@@ -167,7 +178,7 @@ trait HasRole
         foreach ($permission as $p) {
             return $this->hasPermission($p);
         }
-        
+
         return false;
     }
 }

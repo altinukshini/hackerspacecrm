@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Profile;
-use App\Models\Role;
 use App\Models\Permission;
 use App\Traits\HasRole;
 

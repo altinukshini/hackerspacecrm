@@ -40,3 +40,31 @@ Route::get('/members', function () {
     return redirect('/');
 });
 Route::get('/members/{profile}', 'ProfilesController@show');
+
+
+/*
+ * Application settings routes
+ */
+Route::get('/settings', function () {
+	return redirect('/');
+});
+Route::get('/settings/general', function () {
+	return view('settings.general');
+});
+Route::get('/settings/emails', function () {
+	return view('settings.emails');
+});
+
+Route::get('/settings/users/all', function () {
+	return view('settings.users.all');
+});
+Route::get('/settings/users/roles', function () {
+	return view('settings.users.roles');
+});
+Route::get('/settings/users/permissions', function () {
+	return view('settings.users.permissions');
+});
+
+Route::get('/settings/menus', function () {
+	return view('settings.menus');
+});

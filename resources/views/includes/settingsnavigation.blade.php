@@ -11,7 +11,7 @@
 				</a>
 				<ul class="treeview-menu">
 					@foreach($menu->children as $child)
-						<li><a href="{{ url('/'.$child->url) }}"><i class="fa {{$child->icon}}"></i> {{$child->title}}</a></li>
+						<li class="{{ setMenuActive($child->url) }}"><a href="{{ url('/'.$child->url) }}"><i class="fa {{$child->icon}}"></i> {{$child->title}}</a></li>
 					@endforeach
 				</ul>
 			</li>

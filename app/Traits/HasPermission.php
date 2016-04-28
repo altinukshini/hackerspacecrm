@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 trait HasPermission
 {
-
     /**
      * Get all Role Permissions.
      *
-     * @return Array
+     * @return array
      */
     public function getPermissions()
     {
@@ -19,18 +18,21 @@ trait HasPermission
     }
 
     /**
-     * Check if user has a specific role
+     * Check if user has a specific role.
      *
      * @param Role name
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasPermission($permission)
     {
-        if (is_string($permission))
+        if (is_string($permission)) {
             return $this->permissions->contains('name', $permission);
+        }
 
-        if ($permission instanceof Collection)
-        	return !! $permission->intersect($this->permissions)->count();
+        if ($permission instanceof Collection) {
+            return !! $permission->intersect($this->permissions)->count();
+        }
 
         foreach ($permission as $p) {
             return $this->hasPermission($p);
@@ -39,23 +41,26 @@ trait HasPermission
         return false;
     }
 
-	/**
-     * Give permission to role
+    /**
+     * Give permission to role.
      *
      * @param App\Models\Permission $permission
-     * @return boolean
+     *
+     * @return bool
      */
     public function givePermission(Permission $permission)
     {
-        if (!$this->hasPermission($permission->name))
+        if (!$this->hasPermission($permission->name)) {
             return $this->permissions()->attach($permission);
+        }
     }
 
     /**
-     * Give Permission to Role
+     * Give Permission to Role.
      *
-     * @param String $name
-     * @return boolean
+     * @param string $name
+     *
+     * @return bool
      */
     public function givePermissionByName($name)
     {
@@ -67,10 +72,11 @@ trait HasPermission
     }
 
     /**
-     * Give Permissions by name
+     * Give Permissions by name.
      *
-     * @param Array $names
-     * @return boolean
+     * @param array $names
+     *
+     * @return bool
      */
     public function givePermissionsByName($name)
     {
@@ -80,26 +86,29 @@ trait HasPermission
     }
 
     /**
-     * Revoke Permission to Role
+     * Revoke Permission to Role.
      *
      * @param App\Models\Permission $permission
-     * @return boolean
+     *
+     * @return bool
      */
     public function revokePermission(Permission $permission)
     {
-        if ($this->hasPermission($permission->name))
+        if ($this->hasPermission($permission->name)) {
             return $this->permissions()->detach($permission);
+        }
     }
 
     /**
-     * Revoke Permission to Role
+     * Revoke Permission to Role.
      *
-     * @param String $name
-     * @return boolean
+     * @param string $name
+     *
+     * @return bool
      */
     public function revokePermissionByName($name)
     {
-        if ($this->hasPermission($name)){
+        if ($this->hasPermission($name)) {
             return $this->permissions()->detach(
                 Permission::whereName($name)->firstOrFail()
             );
@@ -107,10 +116,11 @@ trait HasPermission
     }
 
     /**
-     * Revoke Permissions by name
+     * Revoke Permissions by name.
      *
-     * @param Array $name
-     * @return boolean
+     * @param array $name
+     *
+     * @return bool
      */
     public function revokePermissionsByName($name)
     {
@@ -120,13 +130,12 @@ trait HasPermission
     }
 
     /**
-     * Revoke All Permission from Role
+     * Revoke All Permission from Role.
      *
-     * @return boolean
+     * @return bool
      */
     public function revokeAllPermissions()
     {
         return $this->permissions()->detach();
     }
-
 }
