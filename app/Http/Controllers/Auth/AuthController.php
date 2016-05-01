@@ -150,6 +150,53 @@ class AuthController extends Controller
     }
 
     /**
+     * Overwritten: check if login field is username or email
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    protected function validateLogin(Request $request)
+    {
+        $field = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $request->merge([$field => $request->input('login')]);
+
+        $this->validate($request, [
+            $this->loginUsername($request) => 'required', 'password' => 'required',
+        ]);
+    }
+
+    /**
+     * Overwritten: check if username or email sent in "login" input
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function loginUsername(Request $request)
+    {
+        // return property_exists($this, 'username') ? $this->username : 'email';
+        return $request->has('username') ? 'username' : 'email';
+
+    }
+
+    /**
+     * Overwritten: Changed loginUsername() to 'login'
+     * Get the failed login response instance.
+     *
+     * @param \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        return redirect()->back()
+            ->withInput($request->only('login', 'remember'))
+            ->withErrors([
+                'login' => $this->getFailedLoginMessage(),
+                'password' => $this->getFailedLoginMessage(),
+            ]);
+    }
+
+    /**
      * Overwritten method: Added verified value
      * Get the needed authorization credentials from the request.
      *
@@ -161,7 +208,7 @@ class AuthController extends Controller
     {
         // return $request->only($this->loginUsername(), 'password');
         return [
-            $this->loginUsername() => $request->only($this->loginUsername()),
+            $this->loginUsername($request) => $request->only($this->loginUsername($request)),
             'password' => $request->input('password'),
             'verified' => true,
         ];

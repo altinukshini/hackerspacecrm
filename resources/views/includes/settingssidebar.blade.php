@@ -1,4 +1,4 @@
-@if (hasRole('administrator'))
+@can('setting_edit')
 <!-- Control Sidebar -->
 <aside class="sidebar control-sidebar control-sidebar-dark">
 	<ul class="sidebar-menu">
@@ -7,4 +7,4 @@
 </aside><!-- /.control-sidebar -->
 <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
 <div class="control-sidebar-bg"></div>
-@endif
+@endcan
