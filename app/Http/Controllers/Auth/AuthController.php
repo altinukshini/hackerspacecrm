@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use Flash;
-use Mail;
 use Validator;
 use App\Models\User;
 use App\Mailers\UserMailer as Mailer;
@@ -15,7 +14,6 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
 
 class AuthController extends Controller
 {
@@ -50,8 +48,9 @@ class AuthController extends Controller
      */
     public function redirectPath()
     {
-        if (Auth::check())
+        if (Auth::check()) {
             return Auth::user()->profilePath();
+        }
 
         return '/';
     }
@@ -128,8 +127,9 @@ class AuthController extends Controller
             $user = User::find(Auth::user()->id);
             $user->setLastLogin();
 
-            if (!empty($user->locale))
+            if (!empty($user->locale)) {
                 Session::put('locale', $user->locale);
+            }
 
             Flash::success('Welcome to Hackerspace CRM');
 
@@ -140,8 +140,9 @@ class AuthController extends Controller
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
 
-        if ($throttles && !$lockedOut)
+        if ($throttles && !$lockedOut) {
             $this->incrementLoginAttempts($request);
+        }
 
         Flash::warning('We could not sign you in.');
 
@@ -152,7 +153,8 @@ class AuthController extends Controller
      * Overwritten method: Added verified value
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     protected function getCredentials(Request $request)
@@ -161,7 +163,7 @@ class AuthController extends Controller
         return [
             $this->loginUsername() => $request->only($this->loginUsername()),
             'password' => $request->input('password'),
-            'verified' => true
+            'verified' => true,
         ];
     }
 
@@ -182,7 +184,7 @@ class AuthController extends Controller
 
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
-    
+
     // TODO: Make this customizable by user admin settings
     /*
      * Overwriting original method
@@ -195,15 +197,16 @@ class AuthController extends Controller
     {
         $validator = $this->validator($request->all());
 
-        if ($validator->fails())
+        if ($validator->fails()) {
             $this->throwValidationException($request, $validator);
+        }
 
         $user = $this->create($request->all());
 
         $this->mailer->confirmation($user);
-        
+
         Flash::info('Please check your email address to confirm and activate your account.');
-        
+
         return back();
     }
 
@@ -228,6 +231,7 @@ class AuthController extends Controller
             $user = User::where('email_token', $email_token)->firstOrFail()->confirmEmail();
         } catch (ModelNotFoundException $e) {
             Flash::warning('User with provided token was not found in the database');
+
             return redirect('/');
         }
 

@@ -65,6 +65,11 @@ Route::get('/settings/users/permissions', function () {
 	return view('settings.users.permissions');
 });
 
-Route::get('/settings/menus', function () {
-	return view('settings.menus');
+Route::get('/settings/menus', 'SettingsController@showMenu');
+
+// Route::patch('/settings/menus/{$menu}', 'SettingsController@updateMenu');
+
+Route::delete('settings/menus/{menu}', function(){
+	Flash::success('Menu was deleted succesfully!');
+	return back();
 });
