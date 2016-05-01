@@ -8,16 +8,16 @@ return [
 
 	'tagline' => 'CRM for managing Hackerspaces',
 
-    'admin_name' => 'CRM Admin',
-    'admin_username' => 'admin', // password will be the same when db is seeded (change it after loging in)
-    'admin_email' => 'admin@example.com',
+	'admin_name' => 'CRM Admin',
+	'admin_username' => 'admin', // password will be the same when db is seeded (change it after loging in)
+	'admin_email' => 'admin@example.com',
 
 	'default_locale' => 'en',
 
-    'supported_locales' => [
-        'en' =>    'English',
-        'sq' =>    'Shqip',
-    ],
+	'supported_locales' => [
+		'en' =>    'English',
+		'sq' =>    'Shqip',
+	],
 
 	'default_theme' => 'adminlte',
 
@@ -25,5 +25,4 @@ return [
 
 	'new_user_default_role' => 'authenticated',
 	
-
 ];

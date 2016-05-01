@@ -1,4 +1,4 @@
-@if (hasRole('administrator'))
+@can('setting_edit')
 <li class="header"><i class="fa fa-sliders" style="margin-right:5px;"></i> {{ trans('hackerspacecrm.menus.settings') }}</li>
 @foreach( $menus as $menu )
 	@if($menu->children->count())
@@ -28,4 +28,4 @@
 		@endif
 	@endif
 @endforeach
-@endif
+@endcan
