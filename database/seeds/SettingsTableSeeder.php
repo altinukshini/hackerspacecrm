@@ -16,13 +16,13 @@ class SettingsTableSeeder extends Seeder
 
 		$settings = [
 		
-			['key' => 'base_url', 'value' => Config::get('hackerspacecrm.base_url')],
-			['key' => 'site_title', 'value' => Config::get('hackerspacecrm.site_title')],
-			['key' => 'tagline', 'value' => Config::get('hackerspacecrm.tagline')],
-			['key' => 'default_locale', 'value' => Config::get('hackerspacecrm.default_locale')],
-			['key' => 'default_theme', 'value' => Config::get('hackerspacecrm.default_theme')],
-			['key' => 'registration', 'value' => Config::get('hackerspacecrm.registration')],
-			['key' => 'new_user_default_role', 'value' => Config::get('hackerspacecrm.new_user_default_role')]
+			['key' => 'url', 'value' => Config::get('hackerspacecrm.url')],
+			['key' => 'crmname', 'value' => Config::get('hackerspacecrm.crmname')],
+			['key' => 'crmdescription', 'value' => Config::get('hackerspacecrm.crmdescription')],
+			['key' => 'locale', 'value' => Config::get('hackerspacecrm.locale')],
+			['key' => 'theme', 'value' => Config::get('hackerspacecrm.theme')],
+			['key' => 'enable_registration', 'value' => Config::get('hackerspacecrm.enable_registration')],
+			['key' => 'new_user_role', 'value' => Config::get('hackerspacecrm.new_user_role')]
 
 		];
 

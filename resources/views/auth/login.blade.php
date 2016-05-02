@@ -3,7 +3,7 @@
 @section('content')
 <div class="login-box">
 	<div class="login-logo">
-		<a href="{{ url('/') }}"><b>Hackerspace</b> CRM</a>
+		<a href="{{ url('/') }}"><b>{{ crminfo('name') }}</b></a>
 	</div><!-- /.login-logo -->
 	<div class="login-box-body">
 
@@ -16,6 +16,7 @@
 			<div class="form-group{{ $errors->has('login') ? ' has-error' : ' has-feedback' }}">
 				<input type="text" class="form-control" placeholder="E-Mail or Username" name="login" value="{{ old('login') }}">
 				<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+				
 				@if ($errors->has('login'))
 				<span class="help-block">
 					<strong>{{ $errors->first('login') }}</strong>

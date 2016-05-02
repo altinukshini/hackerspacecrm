@@ -4,7 +4,7 @@
 			<!-- mini logo for sidebar mini 50x50 pixels -->
 			<span class="logo-mini">CRM</span>
 			<!-- logo for regular state and mobile devices -->
-			<span class="logo-lg"><b>Hackerspace</b> CRM</span>
+			<span class="logo-lg">{{ crminfo('name') }}</span>
 		</a>
 		<!-- Header Navbar: style can be found in header.less -->
 		<nav class="navbar navbar-static-top" role="navigation">
@@ -37,7 +37,9 @@
 						<!-- Authentication Links -->
 						@if (Auth::guest())
 						<li><a href="{{ url('/login') }}">Login</a></li>
+						@if(crminfo('enable_registration') == 1)
 						<li><a href="{{ url('/register') }}">Register</a></li>
+						@endif
 						@else
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">

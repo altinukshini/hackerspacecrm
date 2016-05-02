@@ -3,11 +3,11 @@
 @section('content')
 <div class="login-box">
 	<div class="login-logo">
-		<a href="{{ url('/') }}"><b>Hackerspace</b> CRM</a>
+		<a href="{{ url('/') }}"><b>{{ crminfo('name') }}</b></a>
 	</div><!-- /.login-logo -->
 	<div class="login-box-body">
 
-		<p class="login-box-msg">Register to Hackerspace CRM</p>
+		<p class="login-box-msg">Register to {{ crminfo('name') }}</p>
 		@include('includes.flash')
 
 		<form role="form" method="POST" action="{{ url('/register') }}">

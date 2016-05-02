@@ -3,7 +3,7 @@
 @section('content')
 <div class="login-box">
 	<div class="login-logo">
-		<a href="{{ url('/') }}"><b>Hackerspace</b> CRM</a>
+		<a href="{{ url('/') }}"><b>{{ crminfo('name') }}</b></a>
 	</div><!-- /.login-logo -->
 	<div class="login-box-body">
 

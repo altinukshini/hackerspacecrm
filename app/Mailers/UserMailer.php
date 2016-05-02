@@ -53,7 +53,7 @@ class UserMailer extends Mailer
 	public function welcome(User $user)
 	{
 		$this->to = $user->email;
-		$this->subject = 'Welcome to Hackerspace CRM';
+		$this->subject = 'Welcome to '.crminfo('name');
 		$this->view = 'emails.welcome';
 		$this->data = compact('user');
 

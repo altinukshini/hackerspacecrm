@@ -1,4 +1,4 @@
-Dear Hackerspace CRM member,
+Dear {{ crminfo('name') }} member,
 <br />
 <br />
 You've requested to reset your password via the password reset form.
@@ -7,4 +7,4 @@ Please click here to reset your password: <a href="{{ $link = url('password/rese
 <br />
 <br />
 Cheers,
-Hackerspace CRM
+{{ crminfo('name') }}

@@ -2,27 +2,29 @@
 
 return [
 
-	'base_url' => '/',
+	'version' => '0.1 alpha',
 
-	'site_title' => 'Hackerspace CRM',
+	'url' => '/',
 
-	'tagline' => 'CRM for managing Hackerspaces',
+	'crmname' => 'Hackerspace CRM',
+
+	'crmdescription' => 'CRM for managing Hackerspaces',
 
 	'admin_name' => 'CRM Admin',
 	'admin_username' => 'admin', // password will be the same when db is seeded (change it after loging in)
 	'admin_email' => 'admin@example.com',
 
-	'default_locale' => 'en',
+	'locale' => 'en',
 
 	'supported_locales' => [
 		'en' =>    'English',
 		'sq' =>    'Shqip',
 	],
 
-	'default_theme' => 'adminlte',
+	'theme' => 'adminlte',
 
-	'registration' => 1, // 1 = true, 0 = false
+	'enable_registration' => 1, // 1 = true, 0 = false
 
-	'new_user_default_role' => 'authenticated',
+	'new_user_role' => 'authenticated',
 	
 ];

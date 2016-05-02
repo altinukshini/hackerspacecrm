@@ -32,7 +32,7 @@
 
 								<div class="form-group {{ $errors->has('appfooter') ? ' has-error' : ' has-feedback' }}">
 									<label for="appfooter">Footer content</label>
-									<input class="form-control" id="appfooter" placeholder="© 2015-2016 Hackerspace CRM. CC-BY-SA." type="text" required>
+									<input class="form-control" id="appfooter" placeholder="Powered by Hackerspace CRM." type="text" required>
 									@if ($errors->has('appfooter'))
 									<span class="help-block">
 										<strong>{{ $errors->first('appfooter') }}</strong>
