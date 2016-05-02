@@ -18,7 +18,7 @@
 	<link rel="stylesheet" href="{{ asset('/plugins/iCheck/square/blue.css') }}">
 
 	<!-- Styles -->
-	{{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+	{{-- <link href="{{ elixir('/css/app.css') }}" rel="stylesheet"> --}}
 
 	<!-- Fonts -->
 	<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'> -->
@@ -39,7 +39,7 @@
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-	{{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+	{{-- <script src="{{ elixir('/js/app.js') }}"></script> --}}
 
 	<!-- iCheck -->
 	<script src="{{ asset('/plugins/iCheck/icheck.min.js') }}"></script>

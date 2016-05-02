@@ -48,7 +48,9 @@
 				</div><!-- /.col -->
 			</div>
 		</form>
+		@if ( crminfo('enable_registration') == 1)
 		<a href="{{ url('/register') }}">Register</a><br>
+		@endif
 		<a href="{{ url('/password/reset') }}">Forgot Your Password?</a><br>
 		<!-- <a href="register.html" class="text-center">Register a new membership</a> -->
 

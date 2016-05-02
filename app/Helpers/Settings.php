@@ -3,7 +3,7 @@
 if (!function_exists('CRMSettings')) {
 
     /**
-     * Returns application setting
+     * Returns application setting.
      *
      * @return array
      * @return string
@@ -12,8 +12,8 @@ if (!function_exists('CRMSettings')) {
     {
         static $settings;
 
-        if(is_null($settings)) {
-            $settings = Cache::remember('settings', 24*60, function() {
+        if (is_null($settings)) {
+            $settings = Cache::remember('settings', 24 * 60, function () {
                 return array_pluck(App\Models\Setting::all()->toArray(), 'value', 'key');
             });
         }
@@ -23,10 +23,16 @@ if (!function_exists('CRMSettings')) {
 }
 
 if (!function_exists('crminfo')) {
-    
-    function crminfo( $show = '') 
+
+    /**
+     * Returns application config and settings.
+     *
+     * @return string
+     * @return array
+     */
+    function crminfo($show = '')
     {
-        switch( $show ) {
+        switch ($show) {
             case 'version':
                 $output = Config::get('hackerspacecrm.version');
                 break;
@@ -65,7 +71,7 @@ if (!function_exists('crminfo')) {
                 $output = CRMSettings('crmname');
                 break;
         }
-     
+
         return $output;
     }
 }
