@@ -73,6 +73,3 @@ Route::delete('settings/menus/{menu}', function(){
 	Flash::success('Menu was deleted succesfully!');
 	return back();
 });
-
-
-// Hello world
