@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::directive('cache', function ($expression) {
+            return "<?php if (! App\Models\CRMCache::setUp{$expression}) { ?>";
+        });
+
+        Blade::directive('endcache', function(){
+            return "<?php } echo App\Models\CRMCache::tearDown(); ?>";
+        });
+
     }
 
     /**

@@ -1,6 +1,7 @@
 @can('setting_edit')
 <li class="header"><i class="fa fa-sliders" style="margin-right:5px;"></i> {{ trans('hackerspacecrm.menus.settings') }}</li>
 @foreach( $menus as $menu )
+	@cache($menu)
 	@if($menu->children->count())
 		@if($menu->parent_id == 0 and hasPermission($menu->permission))
 			<li class="treeview {{ setMenuActive($menu->url) }}">
@@ -27,5 +28,6 @@
 		</li>
 		@endif
 	@endif
+	@endcache
 @endforeach
 @endcan

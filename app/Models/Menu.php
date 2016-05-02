@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\Cacheable;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
+
+	use Cacheable;
 
 	/**
 	 * The table associated with the model.
@@ -22,8 +25,10 @@ class Menu extends Model
 		'title',
 		'url',
 		'description',
-		'icon'
+		'icon',
 	];
+
+	protected $touches = ['parent'];
 
 	/**
 	 * Relation between this menu and its parents.
@@ -32,7 +37,7 @@ class Menu extends Model
 	 */
 	public function parent()
 	{
-		return $this->belongsTo(self::class, 'parent_id')->orderBy('menu_order', 'asc');
+		return $this->belongsTo(self::class, 'parent_id');
 	}
 
 	/**

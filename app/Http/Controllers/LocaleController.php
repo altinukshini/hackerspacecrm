@@ -27,7 +27,7 @@ class LocaleController extends Controller
     {
         $this->guardLocale($locale);
         
-        if (array_key_exists($locale, Config::get('app.locales'))) {
+        if (array_key_exists($locale, crminfo('supported_locales'))) {
             $this->changeAuthedUserLocale($locale);
             App::setLocale($locale);
             Session::set('locale', $locale);

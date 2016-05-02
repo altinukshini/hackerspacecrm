@@ -9,7 +9,7 @@ if (!function_exists('getAvailableAppLocaleArray')) {
      */
     function getAvailableAppLocaleArray()
     {
-        foreach (Config::get('app.locales') as $key => $value) {
+        foreach (crminfo('supported_locales') as $key => $value) {
             $locales[$key] = $value;
         }
 
@@ -25,7 +25,7 @@ if (!function_exists('getCurrentSessionAppLocale')) {
      */
     function getCurrentSessionAppLocale()
     {
-        return Session::has('locale') ? Session::get('locale') : Config::get('app.locale');
+        return Session::has('locale') ? Session::get('locale') : crminfo('locale');
     }
 }
 
@@ -37,6 +37,6 @@ if (!function_exists('getDefaultAppLocale')) {
      */
     function getDefaultAppLocale()
     {
-        return Config::get('app.locale');
+        return crminfo('locale');
     }
 }
