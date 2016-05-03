@@ -7,8 +7,6 @@ class PermissionsTableSeeder extends Seeder
 {
 	/**
 	 * Run the database seeds.
-	 *
-	 * @return void
 	 */
 	public function run()
 	{
@@ -55,6 +53,5 @@ class PermissionsTableSeeder extends Seeder
 		foreach ($permissions as $permission) {
 			Permission::create($permission);
 		}
-
 	}
 }

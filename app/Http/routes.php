@@ -41,6 +41,12 @@ Route::get('/members', function () {
 });
 Route::get('/members/{profile}', 'ProfilesController@show');
 
+/*
+ * Application settings routes
+ */
+Route::get('/reports/membership', function () {
+	return view('settings.users.roles');
+});
 
 /*
  * Application settings routes

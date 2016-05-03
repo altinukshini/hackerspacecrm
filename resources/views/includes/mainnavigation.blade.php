@@ -2,7 +2,6 @@
 @include('includes.publicnavigation')
 @can('menu_view')
 @foreach( $main as $menu )
-	@cache($menu)
 	@if($menu->children->count())
 		@if($menu->parent_id == 0 and hasPermission($menu->permission))
 			<li class="treeview {{ setMenuActive($menu->url) }}">
@@ -13,11 +12,9 @@
 				</a>
 				<ul class="treeview-menu">
 					@foreach($menu->children as $child)
-						@cache($child)
 						@if(hasPermission($child->permission))
-							<li><a href="{{ url('/'.$child->url) }}"><i class="fa {{$child->icon}}"></i> {{$child->title}}</a></li>
+							<li class="{{ setMenuActive($child->url) }}"><a href="{{ url('/'.$child->url) }}"><i class="fa {{$child->icon}}"></i> {{$child->title}}</a></li>
 						@endif
-						@endcache
 					@endforeach
 				</ul>
 			</li>
@@ -31,6 +28,5 @@
 		</li>
 		@endif
 	@endif
-	@endcache
 @endforeach
 @endcan

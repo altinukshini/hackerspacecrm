@@ -6,16 +6,14 @@ use App\Models\Permission;
 
 class RolesPermissionsPivotTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
-    	DB::table('permission_role')->truncate();
+	/**
+	 * Run the database seeds.
+	 */
+	public function run()
+	{
+		DB::table('permission_role')->truncate();
 
-        $administrator = Role::whereName('administrator')->firstOrFail();
-        $administrator->permissions()->sync(Permission::all());
-    }
+		$administrator = Role::whereName('administrator')->firstOrFail();
+		$administrator->permissions()->sync(Permission::all());
+	}
 }
