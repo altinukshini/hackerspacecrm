@@ -73,3 +73,7 @@ Route::delete('settings/menus/{menu}', function(){
 	Flash::success('Menu was deleted succesfully!');
 	return back();
 });
+
+// \DB::listen(function($query) {
+//     var_dump($query);
+// });

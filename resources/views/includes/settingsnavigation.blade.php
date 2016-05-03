@@ -12,9 +12,11 @@
 				</a>
 				<ul class="treeview-menu">
 					@foreach($menu->children as $child)
+						@cache($child)
 						@if(hasPermission($menu->permission))
 							<li class="{{ setMenuActive($child->url) }}"><a href="{{ url('/'.$child->url) }}"><i class="fa {{$child->icon}}"></i> {{$child->title}}</a></li>
 						@endif
+						@endcache
 					@endforeach
 				</ul>
 			</li>

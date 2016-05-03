@@ -16,6 +16,11 @@ class SettingsNavigation
 
 	public function compose(View $view)
 	{
-		$view->with('menus', $this->menu->where('menu_group', 'settings')->orderBy('menu_order', 'asc')->get());
+		$menus = $this->menu->with('children')->where('menu_group', 'settings')
+		->where('parent_id', '0')
+		->orderBy('menu_order', 'asc')
+		->get();
+
+		$view->with('menus', $menus);
 	}
 }
