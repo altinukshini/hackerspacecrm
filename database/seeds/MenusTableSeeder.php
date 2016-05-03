@@ -19,8 +19,18 @@ class MenusTableSeeder extends Seeder
 
 			[
 				'parent_id' => 0,
+				'permission' => 'public',
+				'menu_group' => 'public',
+				'menu_order' => 0,
+				'title' => 'Home',
+				'url' => '',
+				'description' => null,
+				'icon' => 'fa-home'
+			],
+			[
+				'parent_id' => 0,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Dashboard',
 				'url' => 'dashboard', 
@@ -30,7 +40,7 @@ class MenusTableSeeder extends Seeder
 			[ 
 				'parent_id' => 0,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 1,
 				'title' => 'Reports',
 				'url' => '#',
@@ -38,9 +48,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-bar-chart'
 			],
 			[ 
-				'parent_id' => 2,
+				'parent_id' => 3,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 1,
 				'title' => 'Expenses',
 				'url' => '#',
@@ -48,9 +58,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-line-chart'
 			],
 			[ 
-				'parent_id' => 2,
+				'parent_id' => 3,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 2,
 				'title' => 'Membership',
 				'url' => '#',
@@ -58,9 +68,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-line-chart'
 			],
 			[ 
-				'parent_id' => 2,
+				'parent_id' => 3,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' =>3,
 				'title' => 'Frequentation',
 				'url' => '#',
@@ -70,7 +80,7 @@ class MenusTableSeeder extends Seeder
 			[ 
 				'parent_id' => 0,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 2,
 				'title' => 'Membership',
 				'url' => '#',
@@ -78,9 +88,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-rocket'
 			],
 			[ 
-				'parent_id' => 6,
+				'parent_id' => 7,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Members',
 				'url' => '#',
@@ -88,9 +98,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-mortar-board'
 			],
 			[ 
-				'parent_id' => 6,
+				'parent_id' => 7,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 1,
 				'title' => 'Mentors',
 				'url' => '#',
@@ -98,9 +108,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-child'
 			],
 			[ 
-				'parent_id' => 6,
+				'parent_id' => 7,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 2,
 				'title' => 'Plans',
 				'url' => '#',
@@ -110,7 +120,7 @@ class MenusTableSeeder extends Seeder
 			[ 
 				'parent_id' => 0,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' =>3,
 				'title' => 'Finances',
 				'url' => '#',
@@ -118,9 +128,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-money'
 			],
 			[ 
-				'parent_id' => 10,
+				'parent_id' => 11,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Transactions',
 				'url' => '#',
@@ -128,9 +138,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-exchange'
 			],
 			[ 
-				'parent_id' => 10,
+				'parent_id' => 11,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Billing',
 				'url' => '#',
@@ -138,9 +148,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-dollar'
 			],
 			[ 
-				'parent_id' => 10,
+				'parent_id' => 11,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Accounts',
 				'url' => '#',
@@ -148,9 +158,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-user'
 			],
 			[ 
-				'parent_id' => 10,
+				'parent_id' => 11,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Stripe',
 				'url' => '#',
@@ -158,9 +168,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-cc-stripe'
 			],
 			[ 
-				'parent_id' => 10,
+				'parent_id' => 11,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Paypal',
 				'url' => '#',
@@ -170,7 +180,7 @@ class MenusTableSeeder extends Seeder
 			[ 
 				'parent_id' => 0,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 4,
 				'title' => 'Access control',
 				'url' => '#',
@@ -178,9 +188,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-lock'
 			],
 			[ 
-				'parent_id' => 16,
+				'parent_id' => 17,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Keys',
 				'url' => '#',
@@ -188,9 +198,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-key'
 			],
 			[ 
-				'parent_id' => 16,
+				'parent_id' => 17,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 1,
 				'title' => 'RFID Cards',
 				'url' => '#',
@@ -198,9 +208,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-credit-card'
 			],
 			[ 
-				'parent_id' => 16,
+				'parent_id' => 17,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' => 2,
 				'title' => 'Alarm Pins',
 				'url' => '#',
@@ -208,9 +218,9 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-shield'
 			],
 			[ 
-				'parent_id' => 16,
+				'parent_id' => 17,
 				'permission' => 'menu_view',
-				'menu_group' => 'mainnavigation',
+				'menu_group' => 'main',
 				'menu_order' =>3,
 				'title' => 'HACCSY',
 				'url' => '#',
@@ -248,7 +258,7 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-user'
 			],
 			[ 
-				'parent_id' => 23,
+				'parent_id' => 24,
 				'permission' => 'setting_edit',
 				'menu_group' => 'settings',
 				'menu_order' => 0,
@@ -258,7 +268,7 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-users'
 			],
 			[ 
-				'parent_id' => 23,
+				'parent_id' => 24,
 				'permission' => 'setting_edit',
 				'menu_group' => 'settings',
 				'menu_order' => 1,
@@ -268,7 +278,7 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-eye'
 			],
 			[ 
-				'parent_id' => 23,
+				'parent_id' => 24,
 				'permission' => 'setting_edit',
 				'menu_group' => 'settings',
 				'menu_order' => 2,
@@ -288,7 +298,7 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-plug'
 			],
 			[ 
-				'parent_id' => 27,
+				'parent_id' => 28,
 				'permission' => 'setting_edit',
 				'menu_group' => 'settings',
 				'menu_order' => 0,
@@ -298,7 +308,7 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-inbox'
 			],
 			[ 
-				'parent_id' => 27,
+				'parent_id' => 28,
 				'permission' => 'setting_edit',
 				'menu_group' => 'settings',
 				'menu_order' => 1,

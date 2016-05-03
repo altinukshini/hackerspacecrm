@@ -33,6 +33,85 @@
 
 			<div class="box-body table-responsive no-padding">
 				<br style="clear:both;">
+				<h3>Public menus</h3>
+				<table class="table table-hover">
+					<tbody>
+						<tr>
+							<th>ID</th>
+							<th>icon</th>
+							<th>Title</th>
+							<th>URL</th>
+							<th>parent id</th>
+							<th>permission</th>
+							<th>group</th>
+							<th>order</th>
+							<th>description</th>
+							<th>action</th>
+						</tr>
+						@foreach( $public as $menu )
+							@if($menu->children->count())
+								@if($menu->parent_id == 0)
+									<tr style="background-color:#ebebeb;">
+										<td>{{ $menu->id }}</td>
+										<td><i class="fa {{ $menu->icon }}"></i></td>
+										<td>{{ $menu->title }}</td>
+										<td>{{ $menu->url }}</td>
+										<td>{{ $menu->parent_id }}</td>
+										<td>{{ $menu->permission }}</td>
+										<td>{{ $menu->menu_group }}</td>
+										<td>{{ $menu->menu_order }}</td>
+										<td>{{ $menu->description }}</td>
+										<td>
+											<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#editmenu"><i class="fa fa-edit text-blue"></i></button>
+
+											<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
+										</td>
+									</tr>
+									@foreach($menu->children as $child)
+									<tr>
+										<td>{{ $child->id }}</td>
+										<td><i class="fa {{ $child->icon }}"></i></td>
+										<td>{{ $child->title }}</td>
+										<td>{{ $child->url }}</td>
+										<td>{{ $child->parent_id }}</td>
+										<td>{{ $child->permission }}</td>
+										<td>{{ $child->menu_group }}</td>
+										<td>{{ $child->menu_order }}</td>
+										<td>{{ $child->description }}</td>
+										<td>
+											<button type="button" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#editmenu"><i class="fa fa-edit text-blue"></i></button>
+											<button type="button" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
+										</td>
+									</tr>
+									@endforeach
+								@endif
+							@else
+								@if($menu->parent_id == 0)
+									<tr style="background-color:#ebebeb;">
+										<td>{{ $menu->id }}</td>
+										<td><i class="fa {{ $menu->icon }}"></i></td>
+										<td>{{ $menu->title }}</td>
+										<td>{{ $menu->url }}</td>
+										<td>{{ $menu->parent_id }}</td>
+										<td>{{ $menu->permission }}</td>
+										<td>{{ $menu->menu_group }}</td>
+										<td>{{ $menu->menu_order }}</td>
+										<td>{{ $menu->description }}</td>
+										<td>
+											<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#editmenu"><i class="fa fa-edit text-blue"></i></button>
+
+											<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
+										</td>
+									</tr>
+								@endif
+							@endif
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+
+			<div class="box-body table-responsive no-padding">
+				<br style="clear:both;">
 				<h3>Main Navigation</h3>
 				<table class="table table-hover">
 					<tbody>
@@ -48,7 +127,7 @@
 							<th>description</th>
 							<th>action</th>
 						</tr>
-						@foreach( $mainnavigation as $menu )      
+						@foreach( $main as $menu )
 							@if($menu->children->count())
 								@if($menu->parent_id == 0)
 									<tr style="background-color:#ebebeb;">
@@ -248,7 +327,7 @@
 											<div class="form-group{{ $errors->has('description') ? ' has-error' : ' has-feedback' }}">
 												<label for="description">Description</label>
 												<input type="text" class="form-control" placeholder="This is just a description" name="description" value="{{ old('description') }}">
-												<p>Exc: mainnavigation, settings etc</p>
+												<p>Exc: main, settings, public etc</p>
 												@if ($errors->has('description'))
 												<span class="help-block">
 													<strong>{{ $errors->first('description') }}</strong>
@@ -260,7 +339,7 @@
 											<div class="form-group{{ $errors->has('permission') ? ' has-error' : ' has-feedback' }}">
 												<label for="permission">Permission</label>
 												<input type="text" class="form-control" placeholder="member" name="permission" value="{{ old('permission') }}">
-												<p>Type user role which can access this menu. Exc: member, administrator etc.</p>
+												<p>Type user role which can access this menu. Exc: member, administrator etc. Leave empty or type "public" for non aithenticated users to see it.</p>
 												@if ($errors->has('permission'))
 												<span class="help-block">
 													<strong>{{ $errors->first('permission') }}</strong>
@@ -271,8 +350,8 @@
 										<div class="col-md-6">
 											<div class="form-group{{ $errors->has('menu_group') ? ' has-error' : ' has-feedback' }}">
 												<label for="menu_group">Group</label>
-												<input type="text" class="form-control" placeholder="mainnavigation" name="menu_group" value="{{ old('menu_group') }}">
-												<p>Exc: mainnavigation, settings etc</p>
+												<input type="text" class="form-control" placeholder="main" name="menu_group" value="{{ old('menu_group') }}">
+												<p>Exc: main, settings, public etc</p>
 												@if ($errors->has('menu_group'))
 												<span class="help-block">
 													<strong>{{ $errors->first('menu_group') }}</strong>
@@ -363,7 +442,7 @@
 											<div class="form-group{{ $errors->has('description') ? ' has-error' : ' has-feedback' }}">
 												<label for="description">Description</label>
 												<input type="text" class="form-control" placeholder="This is just a description" name="description" value="{{ old('description') }}">
-												<p>Exc: mainnavigation, settings etc</p>
+												<p>Exc: main, settings, public etc</p>
 												@if ($errors->has('description'))
 												<span class="help-block">
 													<strong>{{ $errors->first('description') }}</strong>
@@ -375,7 +454,7 @@
 											<div class="form-group{{ $errors->has('permission') ? ' has-error' : ' has-feedback' }}">
 												<label for="permission">Permission</label>
 												<input type="text" class="form-control" placeholder="member" name="permission" value="{{ old('permission') }}">
-												<p>Type user role which can access this menu. Exc: member, administrator etc.</p>
+												<p>Type user role which can access this menu. Exc: member, administrator etc. Leave empty or type "public" for non aithenticated users to see it.</p>
 												@if ($errors->has('permission'))
 												<span class="help-block">
 													<strong>{{ $errors->first('permission') }}</strong>
@@ -386,8 +465,8 @@
 										<div class="col-md-6">
 											<div class="form-group{{ $errors->has('menu_group') ? ' has-error' : ' has-feedback' }}">
 												<label for="menu_group">Group</label>
-												<input type="text" class="form-control" placeholder="mainnavigation" name="menu_group" value="{{ old('menu_group') }}">
-												<p>Exc: mainnavigation, settings etc</p>
+												<input type="text" class="form-control" placeholder="main" name="menu_group" value="{{ old('menu_group') }}">
+												<p>Exc: main, settings, public etc</p>
 												@if ($errors->has('menu_group'))
 												<span class="help-block">
 													<strong>{{ $errors->first('menu_group') }}</strong>

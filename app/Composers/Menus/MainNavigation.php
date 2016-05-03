@@ -16,11 +16,11 @@ class MainNavigation
 
 	public function compose(View $view)
 	{
-		$menus = $this->menu->with('children')->where('menu_group', 'mainnavigation')
+		$main = $this->menu->with('children')->where('menu_group', 'main')
 		->where('parent_id', '0')
 		->orderBy('menu_order', 'asc')
 		->get();
 
-		$view->with('menus', $menus);
+		$view->with('main', $main);
 	}
 }

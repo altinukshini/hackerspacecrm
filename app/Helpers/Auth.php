@@ -7,8 +7,12 @@ if (!function_exists('hasPermission')) {
      *
      * @return boolean
      */
-    function hasPermission($permission, $flash = false)
+    function hasPermission($permission = '', $flash = false)
     {
+        if ($permission == '' || $permission == 'public') {
+            return true;
+        }
+
         if (!Auth::check() || !Auth::user()->hasPermission($permission)) {
             if ($flash)
                 Flash::error('You do not have permission to perform this action');

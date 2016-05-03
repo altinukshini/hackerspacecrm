@@ -15,6 +15,7 @@ class MenusServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        View::composer('includes.publicnavigation', 'App\Composers\Menus\PublicNavigation');
         View::composer('includes.mainnavigation', 'App\Composers\Menus\MainNavigation');
         View::composer('includes/settingsnavigation', 'App\Composers\Menus\SettingsNavigation');
     }

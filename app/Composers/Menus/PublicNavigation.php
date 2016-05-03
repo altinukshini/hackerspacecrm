@@ -5,7 +5,7 @@ namespace App\Composers\Menus;
 use App\Models\Menu;
 use Illuminate\Contracts\View\View;
 
-class SettingsNavigation
+class PublicNavigation
 {
 	protected $menu;
 
@@ -16,11 +16,11 @@ class SettingsNavigation
 
 	public function compose(View $view)
 	{
-		$settings = $this->menu->with('children')->where('menu_group', 'settings')
+		$public = $this->menu->with('children')->where('menu_group', 'public')
 		->where('parent_id', '0')
 		->orderBy('menu_order', 'asc')
 		->get();
 
-		$view->with('settings', $settings);
+		$view->with('public', $public);
 	}
 }

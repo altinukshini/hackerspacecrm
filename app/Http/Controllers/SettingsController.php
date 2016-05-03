@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Cache;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\Menu;
@@ -18,17 +19,36 @@ class SettingsController extends Controller
         $this->menu = $menu;
     }
 
+    // 
+    // CLEAN THIS UP!!!
+    // 
     public function showMenu()
     {
-        $mainnavigation = $this->menu->where('menu_group', 'mainnavigation')
-        ->orderBy('menu_order', 'asc')
-        ->get();
-        $settings = $this->menu->where('menu_group', 'settings')
-        ->orderBy('menu_order', 'asc')
-        ->get();
+        $menu = $this->menu;
+        $public = Cache::remember('menus_public', 24*60, function() use ($menu) {
+            return $menu->with('children')->where('menu_group', 'public')
+                    ->where('parent_id', '0')
+                    ->orderBy('menu_order', 'asc')
+                    ->get();
+        });
 
-        return view('settings.menus')->with('mainnavigation', $mainnavigation)
-        ->with('settings', $settings);
+        $main = Cache::remember('menus_main', 24*60, function() use ($menu) {
+            return $menu->with('children')->where('menu_group', 'main')
+                    ->where('parent_id', '0')
+                    ->orderBy('menu_order', 'asc')
+                    ->get();
+        });
+
+        $settings = Cache::remember('menus_settings', 24*60, function() use ($menu) {
+            return $menu->with('children')->where('menu_group', 'settings')
+                    ->where('parent_id', '0')
+                    ->orderBy('menu_order', 'asc')
+                    ->get();
+        });
+
+        return view('settings.menus')->with('main', $main)
+        ->with('settings', $settings)
+        ->with('public', $public);
     }
 
     public function updateMenu(Request $request, $id)
