@@ -266,7 +266,8 @@
 						<h4 class="modal-title">Add new menu</h4>
 					</div>
 					<div class="modal-body">
-						<form role="form">
+						<form role="form" action='/settings/menus/add' METHOD='POST'>
+
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group{{ $errors->has('icon') ? ' has-error' : ' has-feedback' }}">
@@ -362,6 +363,7 @@
 									</div>
 								</div>
 								<div class="col-md-12">
+									<input type="hidden" name="_token" value="{{ csrf_token() }}">
 									<div class="form-group">
 										<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
 									</div>
@@ -546,5 +548,3 @@
 	});
 </script>
 @stop
-
-

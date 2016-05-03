@@ -69,10 +69,12 @@ Route::get('/settings/menus', 'SettingsController@showMenu');
 
 // Route::patch('/settings/menus/{$menu}', 'SettingsController@updateMenu');
 
-Route::delete('settings/menus/{menu}', function(){
+Route::delete('settings/menus/{menu}', function(Request $request){
 	Flash::success('Menu was deleted succesfully!');
 	return back();
 });
+//ROUTE TO CREATE A NEW MENU
+Route::post('settings/menus/add','SettingsController@addMenu');
 
 // \DB::listen(function($query) {
 //     var_dump($query);
