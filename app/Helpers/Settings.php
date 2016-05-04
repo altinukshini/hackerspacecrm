@@ -30,7 +30,7 @@ if (!function_exists('crminfo')) {
      * @return string
      * @return array
      */
-    function crminfo($show = '')
+    function crminfo($show = 'crmname')
     {
         switch ($show) {
             case 'version':
@@ -67,8 +67,10 @@ if (!function_exists('crminfo')) {
                 $output = CRMSettings('crmdescription');
                 break;
             case 'name':
-            default:
                 $output = CRMSettings('crmname');
+                break;
+            default:
+                $output = CRMSettings($show);
                 break;
         }
 

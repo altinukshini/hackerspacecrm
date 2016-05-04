@@ -17,12 +17,12 @@ class SettingsNavigation
 
 	public function compose(View $view)
 	{
-		$settings = Cache::remember('smenus_settings', 24*60, function() {
-            return $this->menu->with('children')->where('menu_group', 'settings')
-                    ->where('parent_id', '0')
-                    ->orderBy('menu_order', 'asc')
-                    ->get();
-        });
+		$settings = Cache::remember('smenu_settings', 24*60, function(){
+			return $this->menu->with('children')->where('menu_group', 'settings')
+					->where('parent_id', '0')
+					->orderBy('menu_order', 'asc')
+					->get();
+		});
 
 		$view->with('settings', $settings);
 	}

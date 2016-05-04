@@ -11,7 +11,7 @@ class CRMCache
 	
 	public static function setUp($model)
 	{
-		static::$keys[] = $key = $model->getCacheKey();
+		static::$keys[] = $key = $model->getObjectCacheKey();
 
 		// turn on output buffering
 		ob_start();

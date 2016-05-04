@@ -24,23 +24,23 @@ class SettingsController extends Controller
     //
     public function showMenu()
     {
-        $menu = $this->menu;
-        $public = Cache::remember('menus_public', 24*60, function() use ($menu) {
-            return $menu->with('children')->where('menu_group', 'public')
+        
+        $public = Cache::remember('menu_public', 24*60, function(){
+            return $this->menu->with('children')->where('menu_group', 'public')
                     ->where('parent_id', '0')
                     ->orderBy('menu_order', 'asc')
                     ->get();
         });
 
-        $main = Cache::remember('menus_main', 24*60, function() use ($menu) {
-            return $menu->with('children')->where('menu_group', 'main')
+        $main = Cache::remember('menu_main', 24*60, function(){
+            return $this->menu->with('children')->where('menu_group', 'main')
                     ->where('parent_id', '0')
                     ->orderBy('menu_order', 'asc')
                     ->get();
         });
 
-        $settings = Cache::remember('menus_settings', 24*60, function() use ($menu) {
-            return $menu->with('children')->where('menu_group', 'settings')
+        $settings = Cache::remember('menu_settings', 24*60, function(){
+            return $this->menu->with('children')->where('menu_group', 'settings')
                     ->where('parent_id', '0')
                     ->orderBy('menu_order', 'asc')
                     ->get();
@@ -54,6 +54,7 @@ class SettingsController extends Controller
     public function updateMenu(Request $request, $id)
     {
     }
+
     public function addMenu(Request $request){
             $menu = new Menu;
             $menu->icon = $request->icon;

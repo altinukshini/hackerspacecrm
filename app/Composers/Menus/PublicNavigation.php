@@ -17,12 +17,12 @@ class PublicNavigation
 
 	public function compose(View $view)
 	{
-		$public = Cache::remember('smenus_public', 24*60, function() {
-            return $this->menu->with('children')->where('menu_group', 'public')
-                    ->where('parent_id', '0')
-                    ->orderBy('menu_order', 'asc')
-                    ->get();
-        });
+		$public = Cache::remember('smenu_public', 24*60, function(){
+			return $this->menu->with('children')->where('menu_group', 'public')
+					->where('parent_id', '0')
+					->orderBy('menu_order', 'asc')
+					->get();
+		});
 
 		$view->with('public', $public);
 	}

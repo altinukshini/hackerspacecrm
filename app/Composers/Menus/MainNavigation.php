@@ -17,12 +17,12 @@ class MainNavigation
 
 	public function compose(View $view)
 	{
-		$main = Cache::remember('smenus_main', 24*60, function() {
-            return $this->menu->with('children')->where('menu_group', 'main')
-                    ->where('parent_id', '0')
-                    ->orderBy('menu_order', 'asc')
-                    ->get();
-        });
+		$main = Cache::remember('smenu_main', 24*60, function(){
+			return $this->menu->with('children')->where('menu_group', 'main')
+					->where('parent_id', '0')
+					->orderBy('menu_order', 'asc')
+					->get();
+		});
 
 		$view->with('main', $main);
 	}

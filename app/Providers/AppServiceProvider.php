@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Cache;
+use App\Models\Menu;
 use Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +16,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        Menu::updating(function () {
+            Cache::flush();
+        });
+
         Blade::directive('cache', function ($expression) {
             return "<?php if (! App\Models\CRMCache::setUp{$expression}) { ?>";
         });

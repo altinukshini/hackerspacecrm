@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use App\Traits\Cacheable;
+use App\Traits\Rememberable;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-
-	use Cacheable;
-
+	use Rememberable;
+	
 	/**
 	 * The table associated with the model.
 	 *
