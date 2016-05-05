@@ -71,16 +71,13 @@ Route::get('/settings/users/permissions', function () {
 	return view('settings.users.permissions');
 });
 
-Route::get('/settings/menus', 'SettingsController@showMenu');
+Route::get('/settings/menus', 'MenusController@show');
 
 // Route::patch('/settings/menus/{$menu}', 'SettingsController@updateMenu');
 
-Route::delete('settings/menus/{menu}', function(Request $request){
-	Flash::success('Menu was deleted succesfully!');
-	return back();
-});
+Route::delete('settings/menus/{menu}', 'MenusController@delete');
 //ROUTE TO CREATE A NEW MENU
-Route::post('settings/menus/add','SettingsController@addMenu');
+Route::post('settings/menus/add','MenusController@add');
 
 // \DB::listen(function($query) {
 //     var_dump($query);
