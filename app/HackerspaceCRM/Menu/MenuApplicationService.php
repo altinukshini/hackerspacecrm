@@ -3,7 +3,6 @@
 namespace HackerspaceCRM\Menu;
 
 use Illuminate\Support\Facades\App;
-use Doctrine\Instantiator\Exception\InvalidArgumentException;
 
 use HackerspaceCRM\Menu\Menu;
 use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;

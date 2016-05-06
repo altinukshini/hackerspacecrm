@@ -234,7 +234,6 @@ class AuthController extends Controller
 		return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
 	}
 
-	// TODO: Make this customizable by user admin settings
 	/*
 	 * Overwriting original method
 	 * Handle a registration request for the application.

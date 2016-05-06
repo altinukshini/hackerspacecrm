@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use Illuminate\Http\Request;
-
 use Flash;
 use App\Http\Requests\AddMenuRequest;
 use App\Http\Requests\EditMenuRequest;
@@ -13,22 +10,22 @@ use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;
 
 class MenusController extends Controller
 {
-	private $menuRepository;
+    private $menuRepository;
 
     public function __construct(MenuRepositoryInterface $menuRepository)
     {
-		$this->menuRepository = $menuRepository;
+        $this->menuRepository = $menuRepository;
 
-		$this->middleware('auth');
+        $this->middleware('auth');
         $this->middleware('role:administrator');
     }
 
     public function show()
     {
         $menus = [
-        	'public' => $this->menuRepository->byGroup('public'),
-        	'main' => $this->menuRepository->byGroup('main'),
-        	'settings' => $this->menuRepository->byGroup('settings'),
+            'public' => $this->menuRepository->byGroup('public'),
+            'main' => $this->menuRepository->byGroup('main'),
+            'settings' => $this->menuRepository->byGroup('settings'),
         ];
 
         return view('settings.menus')->with('menus', $menus);
@@ -37,13 +34,16 @@ class MenusController extends Controller
     public function getMenu($menuId)
     {
         // see if user has permission to view menu
-        if (!hasPermission('menu_view', true)) return back();
+        if (!hasPermission('menu_view', true)) {
+            return back();
+        }
 
         return $this->menuRepository->byId($menuId);
     }
 
     /**
      * @param AddMenuRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function add(AddMenuRequest $request)
@@ -51,7 +51,7 @@ class MenusController extends Controller
         $menuApplicationService = new MenuApplicationService();
         $menu = $menuApplicationService->create($request->all());
 
-        if($request->wantsJson()){
+        if ($request->wantsJson()) {
             return $menu;
         }
 
@@ -61,7 +61,8 @@ class MenusController extends Controller
     }
 
     /**
-     * @param $todoId
+     * @param App\Http\Requests\AddMenuRequest
+     * @param menuId
      */
     public function update(EditMenuRequest $request, $menuId)
     {
@@ -76,13 +77,14 @@ class MenusController extends Controller
     }
 
     /**
-     * @param $todoId
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param $menuId
      */
     public function delete($menuId)
     {
         // see if user has permission to delete menu
-        if (!hasPermission('menu_delete', true)) return back();
+        if (!hasPermission('menu_delete', true)) {
+            return back();
+        }
 
         $menuApplicationService = new MenuApplicationService();
         $menu = $this->menuRepository->byId($menuId);

@@ -8,57 +8,57 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-	use Rememberable, Cacheable;
+    // use Rememberable, Cacheable;
 
-	// protected $rememberFor = 1440; // 1 day
-	
-	/**
-	 * The table associated with the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'menus';
+    // protected $rememberFor = 1440; // 1 day
 
-	protected $fillable = [
-		'parent_id',
-		'permission',
-		'menu_group',
-		'menu_order',
-		'title',
-		'url',
-		'description',
-		'icon',
-	];
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'menus';
 
-	protected $touches = ['parent'];
+    protected $fillable = [
+        'parent_id',
+        'permission',
+        'menu_group',
+        'menu_order',
+        'title',
+        'url',
+        'description',
+        'icon',
+    ];
 
-	/**
-	 * Relation between this menu and its parents.
-	 *
-	 * @return Menu
-	 */
-	public function parent()
-	{
-		return $this->belongsTo(self::class, 'parent_id');
-	}
+    protected $touches = ['parent'];
 
-	/**
-	 * Relation between this menu and its children.
-	 *
-	 * @return Menu
-	 */
-	public function children()
-	{
-		return $this->hasMany(self::class, 'parent_id')->orderBy('menu_order', 'asc');
-	}
+    /**
+     * Relation between this menu and its parents.
+     *
+     * @return Menu
+     */
+    public function parent()
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
 
-	public function hasChildren()
-	{
-		return $this->children ? true : false;
-	}
+    /**
+     * Relation between this menu and its children.
+     *
+     * @return Menu
+     */
+    public function children()
+    {
+        return $this->hasMany(self::class, 'parent_id')->orderBy('menu_order', 'asc');
+    }
 
-	public function hasParent()
-	{
-		return $this->parent ? true : false;
-	}
+    public function hasChildren()
+    {
+        return $this->children ? true : false;
+    }
+
+    public function hasParent()
+    {
+        return $this->parent ? true : false;
+    }
 }

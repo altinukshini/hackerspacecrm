@@ -3,13 +3,13 @@
 namespace HackerspaceCRM\Menu\Composers;
 
 use Illuminate\Contracts\View\View;
-use HackerspaceCRM\Menu\Repository\EloquentMenuRepository;
+use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;
 
 class SettingsNavigation
 {
     protected $menuRepository;
 
-    public function __construct(EloquentMenuRepository $menuRepository)
+    public function __construct(MenuRepositoryInterface $menuRepository)
     {
         $this->menuRepository = $menuRepository;
     }

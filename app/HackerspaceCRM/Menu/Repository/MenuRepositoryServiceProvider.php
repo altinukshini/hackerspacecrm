@@ -5,9 +5,6 @@ namespace HackerspaceCRM\Menu\Repository;
 use View;
 use Illuminate\Support\ServiceProvider;
 
-use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;
-use HackerspaceCRM\Menu\Repository\EloquentMenuRepository;
-
 class MenuRepositoryServiceProvider extends ServiceProvider
 {
 	/**
@@ -17,10 +14,15 @@ class MenuRepositoryServiceProvider extends ServiceProvider
      */
 	public function boot()
 	{
+
+        // When caching menus:
+        // Create here an event listener for when menu is updated to delete cache
+
 		View::composer('includes.publicnavigation', 'HackerspaceCRM\Menu\Composers\PublicNavigation');
         View::composer('includes.mainnavigation', 'HackerspaceCRM\Menu\Composers\MainNavigation');
         View::composer('includes/settingsnavigation', 'HackerspaceCRM\Menu\Composers\SettingsNavigation');
 	}
+
     /**
      * Register the service provider.
      */
