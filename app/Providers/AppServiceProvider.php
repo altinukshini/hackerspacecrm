@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use Cache;
-use App\Models\Menu;
 use Blade;
+// use App\Models\Menu;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Http\Kernel;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,16 +17,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        Menu::updating(function () {
-            Cache::flush();
-        });
+        // Menu::updating(function () {
+        //     Cache::flush();
+        // });
 
         Blade::directive('cache', function ($expression) {
-            return "<?php if (! App\Models\CRMCache::setUp{$expression}) { ?>";
+            return "<?php if (! app('App\Models\BladeDirective')->setUp{$expression}) { ?>";
         });
 
         Blade::directive('endcache', function(){
-            return "<?php } echo App\Models\CRMCache::tearDown(); ?>";
+            return "<?php } echo app('App\Models\BladeDirective')->tearDown(); ?>";
         });
 
     }
@@ -38,6 +38,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton(App\Models\BladeDirective::class);
+
         if ($this->app->environment() == 'local') {
             $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
         }

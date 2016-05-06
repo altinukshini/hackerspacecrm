@@ -2,38 +2,69 @@
 
 namespace App\Models;
 
-use Cache;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Cache\Repository as Cache;
 
 class CRMCache
 {
 
-	protected static $keys = [];
-	
-	public static function setUp($model)
-	{
-		static::$keys[] = $key = $model->getObjectCacheKey();
+    /**
+     * The cache repository.
+     *
+     * @var Cache
+     */
+    protected $cache;
 
-		// turn on output buffering
-		ob_start();
+    /**
+     * Create a new class instance.
+     *
+     * @param Cache $cache
+     */
+    public function __construct(Cache $cache)
+    {
+        $this->cache = $cache;
+    }
 
-		// return boolean that indicates if we have cached this model yet
-		return Cache::has($key);
+    /**
+     * Put to the cache.
+     *
+     * @param mixed  $key
+     * @param string $fragment
+     */
+    public function put($key, $fragment)
+    {
+        $key = $this->normalizeCacheKey($key);
 
-	}
+        return $this->cache
+            ->rememberForever($key, function () use ($fragment) {
+                return $fragment;
+            });
+    }
 
-	public static function tearDown()
-	{
-		// fetch the cache key
-		$key = array_pop(static::$keys);
+    /**
+     * Check if the given key exists in the cache.
+     *
+     * @param mixed $key
+     */
+    public function has($key)
+    {
+        $key = $this->normalizeCacheKey($key);
 
-		// save the output buffer contents to a variable, called $html
-		$html = ob_get_clean();
+        return $this->cache
+            ->has($key);
+    }
 
-		// cache it, if necessary, and echo out the html
-		return Cache::rememberForever($key, function() use ($html) {
-			return $html;
-		});
-		
-	}
+    /**
+     * Normalize the cache key.
+     *
+     * @param mixed $key
+     */
+    protected function normalizeCacheKey($key)
+    {
+        if (is_object($key) && method_exists($key, 'getObjectCacheKey')) {
+            return $key->getObjectCacheKey();
+        }
+        return $key;
+    }
 
 }

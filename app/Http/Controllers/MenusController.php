@@ -2,107 +2,95 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Menu;
 use App\Http\Requests;
-use Cache;
+use Illuminate\Http\Request;
 
-
+use Flash;
+use App\Http\Requests\AddMenuRequest;
+use App\Http\Requests\EditMenuRequest;
+use HackerspaceCRM\Menu\MenuApplicationService;
+use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;
 
 class MenusController extends Controller
 {
+	private $menuRepository;
 
-  protected $menu;
+    public function __construct(MenuRepositoryInterface $menuRepository)
+    {
+		$this->menuRepository = $menuRepository;
 
-  public function __construct(Menu $menu)
-  {
-    $this->menu = $menu;
-  }
+		$this->middleware('auth');
+        $this->middleware('role:administrator');
+    }
 
+    public function show()
+    {
+        $menus = [
+        	'public' => $this->menuRepository->byGroup('public'),
+        	'main' => $this->menuRepository->byGroup('main'),
+        	'settings' => $this->menuRepository->byGroup('settings'),
+        ];
 
-  public function show()
-  {
-      $public = Cache::remember('menu_public', 24*60, function(){
-          return $this->menu->with('children')->where('menu_group', 'public')
-                  ->where('parent_id', '0')
-                  ->orderBy('menu_order', 'asc')
-                  ->get();
-      });
+        return view('settings.menus')->with('menus', $menus);
+    }
 
-      $main = Cache::remember('menu_main', 24*60, function(){
-          return $this->menu->with('children')->where('menu_group', 'main')
-                  ->where('parent_id', '0')
-                  ->orderBy('menu_order', 'asc')
-                  ->get();
-      });
+    public function getMenu($menuId)
+    {
+        // see if user has permission to view menu
+        if (!hasPermission('menu_view', true)) return back();
 
-      $settings = Cache::remember('menu_settings', 24*60, function(){
-          return $this->menu->with('children')->where('menu_group', 'settings')
-                  ->where('parent_id', '0')
-                  ->orderBy('menu_order', 'asc')
-                  ->get();
-      });
+        return $this->menuRepository->byId($menuId);
+    }
 
-      return view('settings.menus')->with('main', $main)
-      ->with('settings', $settings)
-      ->with('public', $public);
-  }
+    /**
+     * @param AddMenuRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function add(AddMenuRequest $request)
+    {
+        $menuApplicationService = new MenuApplicationService();
+        $menu = $menuApplicationService->create($request->all());
 
+        if($request->wantsJson()){
+            return $menu;
+        }
 
+        Flash::success('Menu was created successfully');
 
-  public function add(Request $request){
-          $menu = new Menu;
-          $menu->icon = $request->icon;
-          $menu->parent_id = $request->parent_id;
-          $menu->menu_order = $request->menu_order;
-          $menu->url = $request->url;
-          $menu->menu_group = $request->menu_group;
-          $menu->description = $request->description;
-          $menu->permission = $request->permission;
-          $menu->title = $request->title;
+        return back();
+    }
 
-          $this->validate($request, [
-            'title' => 'required|max:100',
-            'url' => 'required',
-            'permission' => 'required',
-            'menu_group' => 'required',
-            'parent_id' => 'required',
-            'menu_order' => 'required',
+    /**
+     * @param $todoId
+     */
+    public function update(EditMenuRequest $request, $menuId)
+    {
+        $menuApplicationService = new MenuApplicationService();
+        $menu = $this->menuRepository->byId($menuId);
 
-          ]);
-          $menu->save();
+        $menuApplicationService->update($menu, $request->all());
 
-          return redirect('/settings/menus/');
+        Flash::success('Menu updated successfully');
 
-  }
-  public function delete($id){
+        return back();
+    }
 
-      $menu = Menu::find($id);
-      $menu->delete();
-      return back();
+    /**
+     * @param $todoId
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function delete($menuId)
+    {
+        // see if user has permission to delete menu
+        if (!hasPermission('menu_delete', true)) return back();
 
-  }
-  public function update($id){
+        $menuApplicationService = new MenuApplicationService();
+        $menu = $this->menuRepository->byId($menuId);
 
-      $menu = Menu::find($id);
-      $menu->icon = $request->icon;
-      $menu->parent_id = $request->parent_id;
-      $menu->menu_order = $request->menu_order;
-      $menu->url = $request->url;
-      $menu->menu_group = $request->menu_group;
-      $menu->description = $request->description;
-      $menu->permission = $request->permission;
-      $menu->title = $request->title;
+        $menuApplicationService->delete($menuId);
 
-      $this->validate($request, [
-        'title' => 'required|max:100',
-        'url' => 'required|max:100',
-        'permission' => 'required',
-        'menu_group' => 'required',
-        'parent_id' => 'required',
-        'menu_order' => 'required',
-      ]);
-      $menu->save();
+        Flash::success('Menu was successfully deleted!');
 
-  }
+        return back();
+    }
 }

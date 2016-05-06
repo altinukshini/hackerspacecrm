@@ -54,6 +54,9 @@ if (!function_exists('crminfo')) {
             case 'theme':
                 $output = CRMSettings('theme');
                 break;
+            case 'menu_groups':
+                $output = Config::get('hackerspacecrm.menu_groups');
+                break;
             case 'enable_registration':
                 $output = CRMSettings('enable_registration');
                 break;

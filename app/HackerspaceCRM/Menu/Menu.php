@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace HackerspaceCRM\Menu;
 
-use App\Traits\Rememberable;
+use HackerspaceCRM\Traits\Rememberable;
+use HackerspaceCRM\Traits\Cacheable;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-	use Rememberable;
+	use Rememberable, Cacheable;
+
+	// protected $rememberFor = 1440; // 1 day
 	
 	/**
 	 * The table associated with the model.
@@ -47,5 +50,15 @@ class Menu extends Model
 	public function children()
 	{
 		return $this->hasMany(self::class, 'parent_id')->orderBy('menu_order', 'asc');
+	}
+
+	public function hasChildren()
+	{
+		return $this->children ? true : false;
+	}
+
+	public function hasParent()
+	{
+		return $this->parent ? true : false;
 	}
 }

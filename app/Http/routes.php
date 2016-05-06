@@ -71,13 +71,14 @@ Route::get('/settings/users/permissions', function () {
 	return view('settings.users.permissions');
 });
 
+/*
+ * Menus routes
+ */
 Route::get('/settings/menus', 'MenusController@show');
-
-// Route::patch('/settings/menus/{$menu}', 'SettingsController@updateMenu');
-
-Route::delete('settings/menus/{menu}', 'MenusController@delete');
-//ROUTE TO CREATE A NEW MENU
-Route::post('settings/menus/add','MenusController@add');
+Route::get('/settings/menus/{menuId}', 'MenusController@getMenu'); // for ajax request that populates the form
+Route::post('settings/menus','MenusController@add');
+Route::delete('settings/menus/{menuId}', 'MenusController@delete');
+Route::patch('/settings/menus/{menuId}', 'MenusController@update');
 
 // \DB::listen(function($query) {
 //     var_dump($query);

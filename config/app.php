@@ -172,9 +172,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelpersServiceProvider::class,
-        App\Providers\MenusServiceProvider::class,
         App\Providers\FlashServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+
+        HackerspaceCRM\Menu\Repository\MenuRepositoryServiceProvider::class,
 
     ],
 

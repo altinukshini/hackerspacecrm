@@ -23,6 +23,8 @@ return [
 
 	'theme' => 'adminlte',
 
+	'menu_groups' => ['public', 'main', 'settings'],
+
 	'enable_registration' => 1, // 1 = true, 0 = false
 
 	'new_user_role' => 'authenticated',

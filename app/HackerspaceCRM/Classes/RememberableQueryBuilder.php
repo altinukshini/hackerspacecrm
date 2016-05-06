@@ -1,7 +1,7 @@
 <?php
-namespace App\Models;
+namespace HackerspaceCRM\Classes;
 
-use Cache;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 class RememberableQueryBuilder extends QueryBuilder
