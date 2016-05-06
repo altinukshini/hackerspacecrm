@@ -21,22 +21,13 @@ class EloquentMenuRepository implements MenuRepositoryInterface
      */
     public function byId($menuId)
     {
-        try {
-            $menu = Menu::whereId($menuId)->firstOrFail();
-        } catch (ModelNotFoundException $e) {
-            Flash::warning('Menu could not be found');
-
-            return redirect('/');
-        }
-
-        return $menu;
+        return Menu::find($menuId);
     }
 
     public function byGroup($group = '*')
     {
         return Menu::with('children')->where('menu_group', $group)
         ->where('parent_id', '0')
-        // ->remember(24*60)
         ->orderBy('menu_order', 'asc')
         ->get();
     }

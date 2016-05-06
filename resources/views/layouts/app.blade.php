@@ -8,11 +8,11 @@
 	<!-- Bootstrap 3.3.5 -->
 	<link rel="stylesheet" href="{{ asset('/bootstrap/css/bootstrap.min.css') }}">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{{ asset('/dist/css/font-awesome.min.css') }}">
 	<!-- Ionicons -->
-	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="{{ asset('/dist/css/ionicons.min.css') }}">
 	<!-- Theme style -->
-	<link rel="stylesheet" href="{{ asset('/dist/css/AdminLTE.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('/dist/css/AdminLTE.css') }}">
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
 	folder instead of downloading all of them to reduce the load. -->
 	<link rel="stylesheet" href="{{ asset('/dist/css/skins/_all-skins.min.css') }}">
@@ -42,16 +42,16 @@
 	<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> -->
 
 	<!-- jQuery 2.1.4 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="{{ asset('/dist/js/jquery-2.1.4.min.js') }}"></script>
 	<!-- jQuery UI 1.11.4 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> -->
+	<script src="{{ asset('/dist/js/bootstrap.min.js') }}"></script>
 
 	{{-- <script src="{{ elixir('/js/app.js') }}"></script> --}}
 
 	<!-- JavaScripts -->
 	<!-- Morris.js charts -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="{{ asset('/dist/js/raphael-min.js') }}"></script>
 	<script src="{{ asset('/plugins/morris/morris.min.js') }}"></script>
 	<!-- Sparkline -->
 	<script src="{{ asset('/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
@@ -61,7 +61,7 @@
 	<!-- jQuery Knob Chart -->
 	<script src="{{ asset('/plugins/knob/jquery.knob.js') }}"></script>
 	<!-- daterangepicker -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+	<script src="{{ asset('/dist/js/moment.min.js') }}"></script>
 	<script src="{{ asset('/plugins/daterangepicker/daterangepicker.js') }}"></script>
 	<!-- datepicker -->
 	<script src="{{ asset('/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
@@ -78,7 +78,7 @@
 	<!-- AdminLTE for demo purposes -->
 	<script src="{{ asset('/dist/js/demo.js') }}"></script>
 	<!-- FontAwesome Icon Picker for demo purposes -->
-	<script src="{{ asset('/dist/js/fontawesome-iconpicker.min.js') }}"></script>
+	<script src="{{ asset('/dist/js/fontawesome-iconpicker.js') }}"></script>
 
 	@yield('headerscripts')
 

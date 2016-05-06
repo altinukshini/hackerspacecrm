@@ -30,7 +30,7 @@
 			<a class="btn btn-success btn-md" data-toggle="modal" data-target="#addnewmenu">
 				<i class="fa fa-plus"></i> Add new
 			</a>
-
+			<!-- Supporting only 2 dimensions -->
 			@foreach ($menus as $menugroup => $submenus)
 			<div class="box-body table-responsive no-padding">
 				<br style="clear:both;">
@@ -132,8 +132,8 @@
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group{{ $errors->has('icon') ? ' has-error' : ' has-feedback' }}">
-										<label for="icon">Font awesome icon</label>
-										<input name="icon" class="form-control icp icp-auto" value="fa-circle-o" type="text">
+										<label for="icon">Font awesome icon*</label>
+										<input name="icon" class="form-control icp icp-auto iconpicker-input iconpicker-element" value="fa-circle-o" type="text" required>
 										<span class="input-group-addon"></span>
 
 										@if ($errors->has('icon'))
@@ -144,9 +144,9 @@
 									</div>
 									<br>
 									<div class="form-group{{ $errors->has('parent_id') ? ' has-error' : ' has-feedback' }}">
-										<label for="parent_id">Parent ID</label>
-										<input type="number" class="form-control" placeholder="0" name="parent_id" value="{{ old('parent_id') }}">
-										<p>Leave 0 for master menu, or add the ID of a parent menu to add this menu as child.</p>
+										<label for="parent_id">Parent ID*</label>
+										<input type="number" class="form-control" placeholder="0" min="0" name="parent_id" value="{{ old('parent_id') ? old('parent_id') : 0 }}" required>
+										<p>0 for master menu, or add the ID of a parent menu to add this menu as child.</p>
 										@if ($errors->has('parent_id'))
 										<span class="help-block">
 											<strong>{{ $errors->first('parent_id') }}</strong>
@@ -154,8 +154,8 @@
 										@endif
 									</div>
 									<div class="form-group{{ $errors->has('menu_order') ? ' has-error' : ' has-feedback' }}">
-										<label for="menu_order">Order</label>
-										<input type="number" class="form-control" placeholder="0" name="menu_order" value="{{ old('menu_order') }}">
+										<label for="menu_order">Order*</label>
+										<input type="number" class="form-control" placeholder="0" min="0" name="menu_order" value="{{ old('menu_order') ? old('menu_order') : 0 }}" required>
 										<p>0 highest</p>
 										@if ($errors->has('menu_order'))
 										<span class="help-block">
@@ -168,8 +168,8 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group{{ $errors->has('title') ? ' has-error' : ' has-feedback' }}">
-												<label for="title">Name</label>
-												<input type="text" class="form-control" placeholder="Title" name="title" value="{{ old('title') }}">
+												<label for="title">Name*</label>
+												<input type="text" class="form-control" placeholder="Title" name="title" value="{{ old('title') }}" required>
 												@if ($errors->has('title'))
 												<span class="help-block">
 													<strong>{{ $errors->first('title') }}</strong>
@@ -198,10 +198,10 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group{{ $errors->has('permission') ? ' has-error' : ' has-feedback' }}">
-												<label for="permission">Permission</label>
-												<input type="text" class="form-control" placeholder="member" name="permission" value="{{ old('permission') }}">
-												<p>User role which can access this menu. Exc: member, administrator etc. 
-												<br />Leave empty or type "public" for non aithenticated users to see it.</p>
+												<label for="permission">Permission*</label>
+												<input type="text" class="form-control" placeholder="menu_view" name="permission" value="{{ old('permission') }}" required>
+												<p>Permission which can access this menu. Exc: menu_view, members_edit etc. 
+												<br />Type "public" for non aithenticated users to see it.</p>
 												@if ($errors->has('permission'))
 												<span class="help-block">
 													<strong>{{ $errors->first('permission') }}</strong>
@@ -211,10 +211,11 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group{{ $errors->has('menu_group') ? ' has-error' : ' has-feedback' }}">
-												<label for="menu_group">Group</label>
-												<select class="form-control" name="menu_group">
+												<label for="menu_group">Group*</label>
+												<select class="form-control" name="menu_group" required>
+													<option disabled selected>Select group</option>
 													@foreach (crminfo('menu_groups') as $menugroup)
-														<option value="{{ $menugroup }}" {{ Request::old('menu_group') == $menugroup ? "selected" : "" }}>{{ $menugroup }}</option>
+														<option value="{{ $menugroup }}" {{ Request::old('menu_group') == $menugroup ? "selected" : "" }}>{{ ucfirst($menugroup) }}</option>
 													@endforeach
 												</select>
 												@if ($errors->has('menu_group'))
@@ -238,6 +239,7 @@
 				<!-- /.modal-content -->
 			</div>
 		</div>
+
 		<div class="modal fade" tabindex="-1" role="dialog" id="editmenu">
 			<div class="modal-dialog modal-md">
 				<div class="modal-content">
@@ -254,8 +256,8 @@
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group{{ $errors->has('icon') ? ' has-error' : ' has-feedback' }}">
-										<label for="icon">Font awesome icon</label>
-										<input name="icon" class="form-control icp icp-auto" value="fa-circle-o" type="text">
+										<label for="icon">Font awesome icon*</label>
+										<input name="icon" class="form-control icp icp-auto iconpicker-input iconpicker-element" value="fa-circle-o" type="text" required>
 										<span class="input-group-addon"></span>
 										@if ($errors->has('icon'))
 										<span class="help-block">
@@ -265,9 +267,9 @@
 									</div>
 									<br>
 									<div class="form-group{{ $errors->has('parent_id') ? ' has-error' : ' has-feedback' }}">
-										<label for="parent_id">Parent ID</label>
-										<input type="number" class="form-control" placeholder="0" name="parent_id" value="{{ old('parent_id') }}">
-										<p>Leave 0 for master menu, or add the ID of a parent menu to add this menu as child.</p>
+										<label for="parent_id">Parent ID*</label>
+										<input type="number" class="form-control" placeholder="0" name="parent_id" min="0" value="{{ old('parent_id') }}"required>
+										<p>0 for master menu, or add the ID of a parent menu to add this menu as child.</p>
 										@if ($errors->has('parent_id'))
 										<span class="help-block">
 											<strong>{{ $errors->first('parent_id') }}</strong>
@@ -275,8 +277,8 @@
 										@endif
 									</div>
 									<div class="form-group{{ $errors->has('menu_order') ? ' has-error' : ' has-feedback' }}">
-										<label for="menu_order">Order</label>
-										<input type="number" class="form-control" placeholder="0" name="menu_order" value="{{ old('menu_order') }}">
+										<label for="menu_order">Order*</label>
+										<input type="number" class="form-control" placeholder="0" min="0" name="menu_order" value="{{ old('menu_order') }}" required>
 										<p>0 highest</p>
 										@if ($errors->has('menu_order'))
 										<span class="help-block">
@@ -289,8 +291,8 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group{{ $errors->has('title') ? ' has-error' : ' has-feedback' }}">
-												<label for="title">Name</label>
-												<input type="text" class="form-control" placeholder="Title" name="title" value="{{ old('title') }}">
+												<label for="title">Name*</label>
+												<input type="text" class="form-control" placeholder="Title" name="title" value="{{ old('title') }}" required>
 												@if ($errors->has('title'))
 												<span class="help-block">
 													<strong>{{ $errors->first('title') }}</strong>
@@ -319,9 +321,9 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group{{ $errors->has('permission') ? ' has-error' : ' has-feedback' }}">
-												<label for="permission">Permission</label>
-												<input type="text" class="form-control" placeholder="member" name="permission" value="{{ old('permission') }}">
-												<p>User role which can access this menu. Exc: member, administrator etc. 
+												<label for="permission">Permission*</label>
+												<input type="text" class="form-control" placeholder="menu_view" name="permission" value="{{ old('permission') }}" required>
+												<p>Permission which can access this menu. Exc: menu_view, member_edit etc. 
 												<br />Type "public" for non aithenticated users to see it.</p>
 												@if ($errors->has('permission'))
 												<span class="help-block">
@@ -332,10 +334,11 @@
 										</div>
 										<div class="col-md-6">
 											<div class="form-group{{ $errors->has('menu_group') ? ' has-error' : ' has-feedback' }}">
-												<label for="menu_group">Group</label>
-												<select class="form-control" name="menu_group">
+												<label for="menu_group">Group*</label>
+												<select class="form-control" name="menu_group" required>
+													<!-- <option disabled selected>Select group</option> -->
 													@foreach (crminfo('menu_groups') as $menugroup)
-														<option value="{{ $menugroup }}" {{ Request::old('menu_group') == $menugroup ? "selected" : "" }}>{{ $menugroup }}</option>
+														<option value="{{ $menugroup }}" {{ Request::old('menu_group') == $menugroup ? "selected" : "" }}>{{ ucfirst($menugroup) }}</option>
 													@endforeach
 												</select>
 
@@ -360,17 +363,18 @@
 				<!-- /.modal-content -->
 			</div>
 		</div>
+
 		<div class="modal fade" tabindex="-1" role="dialog" id="confirmDelete">
 				<div class="modal-dialog modal-md">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
 							</button>
-							<h4 class="modal-title">Confirm Menu Deletion</h4>
+							<h4 class="modal-title">Confirm menu deletion</h4>
 						</div>
 						<div class="modal-body">
 							<p>Are you sure you want to delete <b><span id="mName"></span></b>?</p>
-							<p><b>Note: </b>Menu children will become parents.</p>
+							<p><b>Note: </b>All children of this menu will not be deleted but will become parents.</p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -400,64 +404,4 @@
 </script>
 @endif
 
-<script type="text/javascript">
-
-	function editMenu(id) {
-        $('#editMenuForm')[0].reset();
-        $.ajax({
-            url: "/settings/menus/" + id,
-            type: "GET",
-            dataType: "JSON",
-            success: function (data) {
-                $('#editMenuForm').attr('action', '/settings/menus/'+id);
-                $('#editMenuForm .input-group-addon').html('<i class="fa '+ data.icon +'"></i>');
-                $('#editMenuForm [name="icon"]').val(data.icon);
-                $('#editMenuForm [name="parent_id"]').val(data.parent_id);
-                $('#editMenuForm [name="menu_order"]').val(data.menu_order);
-                $('#editMenuForm [name="title"]').val(data.title);
-                $('#editMenuForm [name="url"]').val(data.url);
-                $('#editMenuForm [name="description"]').val(data.description);
-                $('#editMenuForm [name="permission"]').val(data.permission);
-                $('#editMenuForm [name="menu_group"]').val(data.menu_group);
-
-                // Open modal for edit:
-                $('#editmenu').modal('show');
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert('Error getting data!');
-            }
-        });
-    }
-
-	// triggered when modal is about to be shown
-	$('#confirmDelete').on('show.bs.modal', function(e) {
-		//get data-id attribute of the clicked element
-		menuId = $(e.relatedTarget).data('menu_id');
-		menuName = $(e.relatedTarget).data('menu_name');
-		$("#confirmDelete #mName").html( menuName );
-		$("#delForm").attr('action', '/settings/menus/' + menuId);//e.g. 'domainname/products/' + menuId
-	});
-
-	$('.action-destroy').on('click', function() {
-		$.iconpicker.batch('.icp.iconpicker-element', 'destroy');
-	});
-	$('.icp-auto').iconpicker();
-		// Live binding of buttons
-	$(document).on('click', '.action-placement', function(e) {
-		$('.action-placement').removeClass('active');
-		$(this).addClass('active');
-		$('.icp-opts').data('iconpicker').updatePlacement($(this).text());
-		e.preventDefault();
-		return false;
-	});
-
-	// Events sample:
-	// This event is only triggered when the actual input value is changed
-	// by user interaction
-	$('.icp').on('iconpickerSelected', function(e) {
-		$('.lead .picker-target').get(0).className = 'picker-target fa-3x ' +
-		e.iconpickerInstance.options.iconBaseClass + ' ' +
-		e.iconpickerInstance.getValue(e.iconpickerValue);
-	});
-</script>
 @stop

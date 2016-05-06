@@ -5,6 +5,10 @@ namespace HackerspaceCRM\Menu\Repository;
 use View;
 use Illuminate\Support\ServiceProvider;
 
+use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;
+use HackerspaceCRM\Menu\Repository\CacheableEloquentMenuRepository;
+use HackerspaceCRM\Menu\Repository\EloquentMenuRepository;
+
 class MenuRepositoryServiceProvider extends ServiceProvider
 {
 	/**
@@ -28,6 +32,12 @@ class MenuRepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(MenuRepositoryInterface::class, EloquentMenuRepository::class);
+        // $this->app->bind(MenuRepositoryInterface::class, EloquentMenuRepository::class);
+        $this->app->singleton(MenuRepositoryInterface::class, function() {
+            return new CacheableEloquentMenuRepository(
+                new EloquentMenuRepository,
+                $this->app['cache.store']
+            ); 
+        });
     }
 }
