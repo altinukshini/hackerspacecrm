@@ -34,9 +34,7 @@ class MenusController extends Controller
     public function getMenu($menuId)
     {
         // see if user has permission to view menu
-        if (!hasPermission('menu_view', true)) {
-            return back();
-        }
+        if (!hasPermission('menu_view', true)) return back();
 
         return $this->menuRepository->byId($menuId);
     }

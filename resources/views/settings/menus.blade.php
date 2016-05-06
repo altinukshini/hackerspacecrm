@@ -31,9 +31,10 @@
 				<i class="fa fa-plus"></i> Add new
 			</a>
 
+			@foreach ($menus as $menugroup => $submenus)
 			<div class="box-body table-responsive no-padding">
 				<br style="clear:both;">
-				<h3>Public menus</h3>
+				<h3><?php echo ucfirst($menugroup); ?> menus</h3>
 				<table class="table table-hover">
 					<tbody>
 						<tr>
@@ -48,7 +49,7 @@
 							<th>description</th>
 							<th>action</th>
 						</tr>
-						@foreach( $public as $menu )
+						@foreach( $submenus as $menu )
 							@if($menu->children->count())
 								@if($menu->parent_id == 0)
 									<tr style="background-color:#ebebeb;">
@@ -62,7 +63,7 @@
 										<td>{{ $menu->menu_order }}</td>
 										<td>{{ $menu->description }}</td>
 										<td>
-											<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#editmenu"><i class="fa fa-edit text-blue"></i></button>
+											<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu({{ $menu->id }})"><i class="fa fa-edit text-blue"></i></button>
 
 											<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
 										</td>
@@ -79,7 +80,8 @@
 										<td>{{ $child->menu_order }}</td>
 										<td>{{ $child->description }}</td>
 										<td>
-											<button type="button" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#editmenu"><i class="fa fa-edit text-blue"></i></button>
+											<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu({{ $child->id }})"><i class="fa fa-edit text-blue"></i></button>
+
 											<button type="button" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
 										</td>
 									</tr>
@@ -98,7 +100,7 @@
 										<td>{{ $menu->menu_order }}</td>
 										<td>{{ $menu->description }}</td>
 										<td>
-											<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#editmenu"><i class="fa fa-edit text-blue"></i></button>
+											<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu({{ $menu->id }})"><i class="fa fa-edit text-blue"></i></button>
 
 											<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
 										</td>
@@ -109,149 +111,8 @@
 					</tbody>
 				</table>
 			</div>
+			@endforeach
 
-			<div class="box-body table-responsive no-padding">
-				<br style="clear:both;">
-				<h3>Main Navigation</h3>
-				<table class="table table-hover">
-					<tbody>
-						<tr>
-							<th>ID</th>
-							<th>icon</th>
-							<th>Title</th>
-							<th>URL</th>
-							<th>parent id</th>
-							<th>permission</th>
-							<th>group</th>
-							<th>order</th>
-							<th>description</th>
-							<th>action</th>
-						</tr>
-						@foreach( $main as $menu )
-							@if($menu->children->count())
-								@if($menu->parent_id == 0)
-									<tr style="background-color:#ebebeb;">
-										<td>{{ $menu->id }}</td>
-										<td><i class="fa {{ $menu->icon }}"></i></td>
-										<td>{{ $menu->title }}</td>
-										<td>{{ $menu->url }}</td>
-										<td>{{ $menu->parent_id }}</td>
-										<td>{{ $menu->permission }}</td>
-										<td>{{ $menu->menu_group }}</td>
-										<td>{{ $menu->menu_order }}</td>
-										<td>{{ $menu->description }}</td>
-										<td>
-											<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#editmenu"><i class="fa fa-edit text-blue"></i></button>
-
-											<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
-										</td>
-									</tr>
-									@foreach($menu->children as $child)
-									<tr>
-										<td>{{ $child->id }}</td>
-										<td><i class="fa {{ $child->icon }}"></i></td>
-										<td>{{ $child->title }}</td>
-										<td>{{ $child->url }}</td>
-										<td>{{ $child->parent_id }}</td>
-										<td>{{ $child->permission }}</td>
-										<td>{{ $child->menu_group }}</td>
-										<td>{{ $child->menu_order }}</td>
-										<td>{{ $child->description }}</td>
-										<td>
-											<button type="button" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#editmenu"><i class="fa fa-edit text-blue"></i></button>
-											<button type="button" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
-										</td>
-									</tr>
-									@endforeach
-								@endif
-							@else
-								@if($menu->parent_id == 0)
-									<tr style="background-color:#ebebeb;">
-										<td>{{ $menu->id }}</td>
-										<td><i class="fa {{ $menu->icon }}"></i></td>
-										<td>{{ $menu->title }}</td>
-										<td>{{ $menu->url }}</td>
-										<td>{{ $menu->parent_id }}</td>
-										<td>{{ $menu->permission }}</td>
-										<td>{{ $menu->menu_group }}</td>
-										<td>{{ $menu->menu_order }}</td>
-										<td>{{ $menu->description }}</td>
-										<td>
-											<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#editmenu"><i class="fa fa-edit text-blue"></i></button>
-
-											<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
-										</td>
-									</tr>
-								@endif
-							@endif
-						@endforeach
-					</tbody>
-				</table>
-			</div>
-
-			<div class="box-body table-responsive no-padding">
-				<br style="clear:both;">
-				<h3>Settings</h3>
-				<table class="table table-hover">
-					<tbody>
-						<tr>
-							<th>ID</th>
-							<th>icon</th>
-							<th>Title</th>
-							<th>URL</th>
-							<th>parent id</th>
-							<th>permission</th>
-							<th>group</th>
-							<th>order</th>
-							<th>description</th>
-						</tr>
-						@foreach( $settings as $menu )
-							@if($menu->children->count())
-								@if($menu->parent_id == 0)
-									<tr style="background-color:#ebebeb;">
-										<td>{{ $menu->id }}</td>
-										<td><i class="fa {{ $menu->icon }}"></i></td>
-										<td>{{ $menu->title }}</td>
-										<td>{{ $menu->url }}</td>
-										<td>{{ $menu->parent_id }}</td>
-										<td>{{ $menu->permission }}</td>
-										<td>{{ $menu->menu_group }}</td>
-										<td>{{ $menu->menu_order }}</td>
-										<td>{{ $menu->description }}</td>
-									</tr>
-									@foreach($menu->children as $child)
-										<tr>
-											<td>{{ $child->id }}</td>
-											<td><i class="fa {{ $child->icon }}"></i></td>
-											<td>{{ $child->title }}</td>
-											<td>{{ $child->url }}</td>
-											<td>{{ $child->parent_id }}</td>
-											<td>{{ $child->permission }}</td>
-											<td>{{ $child->menu_group }}</td>
-											<td>{{ $child->menu_order }}</td>
-											<td>{{ $child->description }}</td>
-										</tr>
-									@endforeach
-								@endif
-							@else
-								@if($menu->parent_id == 0)
-									<tr style="background-color:#ebebeb;">
-										<td>{{ $menu->id }}</td>
-										<td><i class="fa {{ $menu->icon }}"></i></td>
-										<td>{{ $menu->title }}</td>
-										<td>{{ $menu->url }}</td>
-										<td>{{ $menu->parent_id }}</td>
-										<td>{{ $menu->permission }}</td>
-										<td>{{ $menu->menu_group }}</td>
-										<td>{{ $menu->menu_order }}</td>
-										<td>{{ $menu->description }}</td>
-									</tr>
-								@endif
-							@endif
-						@endforeach
-					</tbody>
-				</table>
-			</div>
 		</div><!-- /.box-body -->
 	</div><!-- /.box -->
 
@@ -266,8 +127,8 @@
 						<h4 class="modal-title">Add new menu</h4>
 					</div>
 					<div class="modal-body">
-						<form role="form" action='/settings/menus/add' METHOD='POST'>
-
+						<form role="form" action='/settings/menus' METHOD='POST'>
+							{!! csrf_field() !!}
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group{{ $errors->has('icon') ? ' has-error' : ' has-feedback' }}">
@@ -275,7 +136,6 @@
 										<input name="icon" class="form-control icp icp-auto" value="fa-circle-o" type="text">
 										<span class="input-group-addon"></span>
 
-										<!-- <input type="text" class="form-control" placeholder="fa-inbox" name="icon" value="{{ old('icon') }}"> -->
 										@if ($errors->has('icon'))
 										<span class="help-block">
 											<strong>{{ $errors->first('icon') }}</strong>
@@ -328,7 +188,7 @@
 											<div class="form-group{{ $errors->has('description') ? ' has-error' : ' has-feedback' }}">
 												<label for="description">Description</label>
 												<input type="text" class="form-control" placeholder="This is just a description" name="description" value="{{ old('description') }}">
-												<p>Exc: main, settings, public etc</p>
+
 												@if ($errors->has('description'))
 												<span class="help-block">
 													<strong>{{ $errors->first('description') }}</strong>
@@ -340,7 +200,8 @@
 											<div class="form-group{{ $errors->has('permission') ? ' has-error' : ' has-feedback' }}">
 												<label for="permission">Permission</label>
 												<input type="text" class="form-control" placeholder="member" name="permission" value="{{ old('permission') }}">
-												<p>Type user role which can access this menu. Exc: member, administrator etc. Leave empty or type "public" for non aithenticated users to see it.</p>
+												<p>User role which can access this menu. Exc: member, administrator etc. 
+												<br />Leave empty or type "public" for non aithenticated users to see it.</p>
 												@if ($errors->has('permission'))
 												<span class="help-block">
 													<strong>{{ $errors->first('permission') }}</strong>
@@ -351,8 +212,11 @@
 										<div class="col-md-6">
 											<div class="form-group{{ $errors->has('menu_group') ? ' has-error' : ' has-feedback' }}">
 												<label for="menu_group">Group</label>
-												<input type="text" class="form-control" placeholder="main" name="menu_group" value="{{ old('menu_group') }}">
-												<p>Exc: main, settings, public etc</p>
+												<select class="form-control" name="menu_group">
+													@foreach (crminfo('menu_groups') as $menugroup)
+														<option value="{{ $menugroup }}" {{ Request::old('menu_group') == $menugroup ? "selected" : "" }}>{{ $menugroup }}</option>
+													@endforeach
+												</select>
 												@if ($errors->has('menu_group'))
 												<span class="help-block">
 													<strong>{{ $errors->first('menu_group') }}</strong>
@@ -363,7 +227,6 @@
 									</div>
 								</div>
 								<div class="col-md-12">
-									<input type="hidden" name="_token" value="{{ csrf_token() }}">
 									<div class="form-group">
 										<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
 									</div>
@@ -385,7 +248,9 @@
 						<h4 class="modal-title">Edit menu</h4>
 					</div>
 					<div class="modal-body">
-						<form role="form">
+						<form role="form" id="editMenuForm" method="POST" action="">
+							{!! method_field('PATCH') !!}
+							{!! csrf_field() !!}
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group{{ $errors->has('icon') ? ' has-error' : ' has-feedback' }}">
@@ -444,7 +309,7 @@
 											<div class="form-group{{ $errors->has('description') ? ' has-error' : ' has-feedback' }}">
 												<label for="description">Description</label>
 												<input type="text" class="form-control" placeholder="This is just a description" name="description" value="{{ old('description') }}">
-												<p>Exc: main, settings, public etc</p>
+
 												@if ($errors->has('description'))
 												<span class="help-block">
 													<strong>{{ $errors->first('description') }}</strong>
@@ -456,7 +321,8 @@
 											<div class="form-group{{ $errors->has('permission') ? ' has-error' : ' has-feedback' }}">
 												<label for="permission">Permission</label>
 												<input type="text" class="form-control" placeholder="member" name="permission" value="{{ old('permission') }}">
-												<p>Type user role which can access this menu. Exc: member, administrator etc. Leave empty or type "public" for non aithenticated users to see it.</p>
+												<p>User role which can access this menu. Exc: member, administrator etc. 
+												<br />Type "public" for non aithenticated users to see it.</p>
 												@if ($errors->has('permission'))
 												<span class="help-block">
 													<strong>{{ $errors->first('permission') }}</strong>
@@ -467,8 +333,12 @@
 										<div class="col-md-6">
 											<div class="form-group{{ $errors->has('menu_group') ? ' has-error' : ' has-feedback' }}">
 												<label for="menu_group">Group</label>
-												<input type="text" class="form-control" placeholder="main" name="menu_group" value="{{ old('menu_group') }}">
-												<p>Exc: main, settings, public etc</p>
+												<select class="form-control" name="menu_group">
+													@foreach (crminfo('menu_groups') as $menugroup)
+														<option value="{{ $menugroup }}" {{ Request::old('menu_group') == $menugroup ? "selected" : "" }}>{{ $menugroup }}</option>
+													@endforeach
+												</select>
+
 												@if ($errors->has('menu_group'))
 												<span class="help-block">
 													<strong>{{ $errors->first('menu_group') }}</strong>
@@ -499,7 +369,8 @@
 							<h4 class="modal-title">Confirm Menu Deletion</h4>
 						</div>
 						<div class="modal-body">
-							<p>Are you sure you want to delete <span id="mName"></span>?</p>
+							<p>Are you sure you want to delete <b><span id="mName"></span></b>?</p>
+							<p><b>Note: </b>Menu children will become parents.</p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -515,7 +386,49 @@
 
 </section><!-- /.content -->
 
+<!-- If edit menu request has error, open editmenu modal -->
+@if ($errors->has('error_code') AND $errors->first('error_code') == 5)
 <script type="text/javascript">
+	$('#addnewmenu').modal('show');
+</script>
+@endif
+
+<!-- If edit menu request has error, open editmenu modal -->
+@if ($errors->has('error_code') AND $errors->first('error_code') == 6)
+<script type="text/javascript">
+	$('#editmenu').modal('show');
+</script>
+@endif
+
+<script type="text/javascript">
+
+	function editMenu(id) {
+        $('#editMenuForm')[0].reset();
+        $.ajax({
+            url: "/settings/menus/" + id,
+            type: "GET",
+            dataType: "JSON",
+            success: function (data) {
+                $('#editMenuForm').attr('action', '/settings/menus/'+id);
+                $('#editMenuForm .input-group-addon').html('<i class="fa '+ data.icon +'"></i>');
+                $('#editMenuForm [name="icon"]').val(data.icon);
+                $('#editMenuForm [name="parent_id"]').val(data.parent_id);
+                $('#editMenuForm [name="menu_order"]').val(data.menu_order);
+                $('#editMenuForm [name="title"]').val(data.title);
+                $('#editMenuForm [name="url"]').val(data.url);
+                $('#editMenuForm [name="description"]').val(data.description);
+                $('#editMenuForm [name="permission"]').val(data.permission);
+                $('#editMenuForm [name="menu_group"]').val(data.menu_group);
+
+                // Open modal for edit:
+                $('#editmenu').modal('show');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('Error getting data!');
+            }
+        });
+    }
+
 	// triggered when modal is about to be shown
 	$('#confirmDelete').on('show.bs.modal', function(e) {
 		//get data-id attribute of the clicked element
