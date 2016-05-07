@@ -18,7 +18,11 @@ function editMenu(id) {
             $('#editMenuForm').attr('action', '/settings/menus/'+id);
             $('#editMenuForm .input-group-addon').html('<i class="fa '+ data.icon +'"></i>');
             $('#editMenuForm [name="icon"]').val(data.icon);
-            $('#editMenuForm [name="parent_id"]').val(data.parent_id);
+            if (data.parent_id != 0) {
+            	$('#editMenuForm [name="parent_id"]').val(data.parent_id);
+            }else{
+            	$('#editMenuForm [name="parent_id"]').val(null);
+            }
             $('#editMenuForm [name="menu_order"]').val(data.menu_order);
             $('#editMenuForm [name="title"]').val(data.title);
             $('#editMenuForm [name="url"]').val(data.url);

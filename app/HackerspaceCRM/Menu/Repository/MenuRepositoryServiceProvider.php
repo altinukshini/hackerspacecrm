@@ -3,8 +3,10 @@
 namespace HackerspaceCRM\Menu\Repository;
 
 use View;
+use Cache;
 use Illuminate\Support\ServiceProvider;
 
+use HackerspaceCRM\Menu\Menu;
 use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;
 use HackerspaceCRM\Menu\Repository\CacheableEloquentMenuRepository;
 use HackerspaceCRM\Menu\Repository\EloquentMenuRepository;
@@ -18,9 +20,10 @@ class MenuRepositoryServiceProvider extends ServiceProvider
      */
 	public function boot()
 	{
-
-        // When caching menus:
-        // Create here an event listener for when menu is updated to delete cache
+        // TEMPORARY SOLUTION
+        Menu::updating(function ($menu) { $this->clearCache($menu->id); });
+        Menu::creating(function ($menu) { $this->clearCache($menu->id);});
+        Menu::deleting(function ($menu) { $this->clearCache($menu->id);});
 
 		View::composer('includes.publicnavigation', 'HackerspaceCRM\Menu\Composers\PublicNavigation');
         View::composer('includes.mainnavigation', 'HackerspaceCRM\Menu\Composers\MainNavigation');
@@ -39,5 +42,14 @@ class MenuRepositoryServiceProvider extends ServiceProvider
                 $this->app['cache.store']
             ); 
         });
+    }
+
+    private function clearCache($menuId)
+    {
+        Cache::forget('menus.all');
+        Cache::forget('menus.byId.'.$menuId);
+        foreach (crminfo('menu_groups') as $menugroup) {
+            Cache::forget('menus.byGroup.'.$menugroup);
+        }
     }
 }

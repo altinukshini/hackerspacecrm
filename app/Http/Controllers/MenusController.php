@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Flash;
+use App\Http\Requests\Request;
 use App\Http\Requests\AddMenuRequest;
 use App\Http\Requests\EditMenuRequest;
+
+use HackerspaceCRM\Menu\Menu;
 use HackerspaceCRM\Menu\MenuApplicationService;
 use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;
 
@@ -20,6 +23,12 @@ class MenusController extends Controller
         $this->middleware('role:administrator');
     }
 
+
+    /**
+     * Show all menus /settings/menus
+     *
+     * @return View;
+     **/
     public function show()
     {
         $menus = [
@@ -31,6 +40,11 @@ class MenusController extends Controller
         return view('settings.menus')->with('menus', $menus);
     }
 
+    /**
+     * Get a single menu as JSON for the editMenu ajax call in menus.blade.php
+     *
+     * @return Menu
+     **/
     public function getMenu($menuId)
     {
         // see if user has permission to view menu
@@ -47,7 +61,10 @@ class MenusController extends Controller
     public function add(AddMenuRequest $request)
     {
         $menuApplicationService = new MenuApplicationService();
-        $menu = $menuApplicationService->create($request->all());
+
+        $requestArray = $this->normalizeNewMenuRequest($request);
+
+        $menu = $menuApplicationService->create($requestArray);
 
         if ($request->wantsJson()) {
             return $menu;
@@ -59,6 +76,8 @@ class MenusController extends Controller
     }
 
     /**
+     * Update an existing menu
+     *
      * @param App\Http\Requests\AddMenuRequest
      * @param menuId
      */
@@ -67,7 +86,9 @@ class MenusController extends Controller
         $menuApplicationService = new MenuApplicationService();
         $menu = $this->menuRepository->byId($menuId);
 
-        $menuApplicationService->update($menu, $request->all());
+        $requestArray = $this->normalizeNewMenuRequest($request);
+
+        $menuApplicationService->update($menu, $requestArray);
 
         Flash::success('Menu updated successfully');
 
@@ -75,6 +96,8 @@ class MenusController extends Controller
     }
 
     /**
+     * Delete an existing menu by id
+     *
      * @param $menuId
      */
     public function delete($menuId)
@@ -92,5 +115,48 @@ class MenusController extends Controller
         Flash::success('Menu was successfully deleted!');
 
         return back();
+    }
+
+    /**
+     * Normalize the menu fields in request. When new menu has a parent specified,
+     * this will check if the menu is child of child and fix it (changes it to child of parent),
+     * and it will change the given menu group if it is different from its parent's
+     *
+     * @param Request
+     * @return array
+     **/
+    public function normalizeNewMenuRequest(Request $request)
+    {
+        if ( $request->has('parent_id') && $request->input('parent_id') != 0) {
+            
+            $parent = $this->menuRepository->byId($request->input('parent_id'));
+            $requestArray = $request->all();
+
+            return $this->normalizeRelations($parent, $requestArray);
+        }
+        return $request->all();
+    }
+
+    public function normalizeRelations(Menu $parent, array $requestArray)
+    {
+        if ($parent->menu_group != $requestArray['menu_group']) {
+            
+            $requestArray['menu_group'] = $parent->menu_group;
+
+            return $this->normalizeParentId($parent, $requestArray);
+        }
+
+        return $this->normalizeParentId($parent, $requestArray);
+    }
+
+    public function normalizeParentId(Menu $parent, array $requestArray)
+    {
+        if ($parent->hasParent()) {
+            $requestArray['parent_id'] = $parent->parent_id;
+
+            return $requestArray;
+        }
+
+        return $requestArray;
     }
 }

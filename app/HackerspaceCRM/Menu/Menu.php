@@ -2,15 +2,10 @@
 
 namespace HackerspaceCRM\Menu;
 
-use HackerspaceCRM\Traits\Rememberable;
-use HackerspaceCRM\Traits\Cacheable;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-    // use Rememberable, Cacheable;
-
-    // protected $rememberFor = 1440; // 1 day
 
     /**
      * The table associated with the model.
@@ -19,6 +14,11 @@ class Menu extends Model
      */
     protected $table = 'menus';
 
+    /**
+     * Fillable fields
+     *
+     * @var array
+     */
     protected $fillable = [
         'parent_id',
         'permission',
@@ -30,6 +30,11 @@ class Menu extends Model
         'icon',
     ];
 
+    /**
+     * When model updated, touch parent (update timestamp)
+     *
+     * @var array
+     */
     protected $touches = ['parent'];
 
     /**
@@ -52,11 +57,21 @@ class Menu extends Model
         return $this->hasMany(self::class, 'parent_id')->orderBy('menu_order', 'asc');
     }
 
+    /**
+     * Check if menu has children
+     *
+     * @return bool
+     */
     public function hasChildren()
     {
         return $this->children ? true : false;
     }
 
+    /**
+     * Check if menu has parent
+     *
+     * @return bool
+     */
     public function hasParent()
     {
         return $this->parent ? true : false;

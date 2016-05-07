@@ -9,21 +9,34 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EloquentMenuRepository implements MenuRepositoryInterface
 {
+    /**
+     * All menus
+     *
+     * @return Collection
+     */
     public function getAll()
     {
         return Menu::all();
     }
 
     /**
-     * @param $menuId
+     * Get menu by id.
      *
-     * @return mixed
+     * @param $menuId
      */
     public function byId($menuId)
     {
         return Menu::find($menuId);
     }
 
+    /**
+     * By group get parent menus with children 
+     * ordered by menu_order asc 
+     *
+     * @param $group
+     *
+     * @return Collection
+     */
     public function byGroup($group = '*')
     {
         return Menu::with('children')->where('menu_group', $group)
@@ -33,7 +46,9 @@ class EloquentMenuRepository implements MenuRepositoryInterface
     }
 
     /**
-     * @param $menu
+     * Create new menu
+     *
+     * @param array attributes
      *
      * @return Menu
      */
@@ -42,13 +57,16 @@ class EloquentMenuRepository implements MenuRepositoryInterface
         $menu = new Menu();
 
         $menu->icon = $attributes['icon'];
-        $menu->parent_id = $attributes['parent_id'];
         $menu->menu_order = $attributes['menu_order'];
         $menu->title = $attributes['title'];
         $menu->url = $attributes['url'];
-        $menu->description = $attributes['description'];
         $menu->permission = $attributes['permission'];
-        $menu->menu_group = $attributes['menu_group'];
+        if (array_key_exists('menu_group', $attributes))
+            $menu->menu_group = $attributes['menu_group'];
+        if (array_key_exists('parent_id', $attributes))
+            $menu->parent_id = $attributes['parent_id'];
+        if (array_key_exists('description', $attributes))
+            $menu->description = $attributes['description'];
 
         $menu->save();
 
@@ -56,9 +74,10 @@ class EloquentMenuRepository implements MenuRepositoryInterface
     }
 
     /**
-     * @param $menuId
+     * Delete menu by id, but if menu is parent
+     * make it's children parents first
      *
-     * @return mixed
+     * @param $menuId
      */
     public function deleteById($menuId)
     {
@@ -71,6 +90,13 @@ class EloquentMenuRepository implements MenuRepositoryInterface
         $menu->delete();
     }
 
+    /**
+     * Make menu children parents
+     *
+     * @param Collection
+     *
+     * @return void
+     */
     public function updateChildren(Collection $children)
     {
         foreach ($children as $child) {
@@ -78,6 +104,14 @@ class EloquentMenuRepository implements MenuRepositoryInterface
         }
     }
 
+    /**
+     * Update menu by given attributes
+     *
+     * @param Menu
+     * @param array atributes
+     *
+     * @return void
+     */
     public function update(Menu $menu, array $attributes)
     {
         $menu->update($attributes);

@@ -26,7 +26,7 @@ class EditMenuRequest extends Request
     {
         return [
             'icon' => 'required|string',
-            'parent_id' => 'required|integer|min:0',
+            'parent_id' => 'sometimes|integer|min:0|exists:menus,id',
             'menu_order' => 'required|integer|min:0',
             'title' => 'required|string|max:100',
             // 'url' => '', not required, can be empty

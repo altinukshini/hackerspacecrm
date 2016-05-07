@@ -57,7 +57,7 @@
 										<td><i class="fa {{ $menu->icon }}"></i></td>
 										<td>{{ $menu->title }}</td>
 										<td>{{ $menu->url }}</td>
-										<td>{{ $menu->parent_id }}</td>
+										<td>{{ $menu->parent_id == 0 ? '' : $menu->parent_id }}</td>
 										<td>{{ $menu->permission }}</td>
 										<td>{{ $menu->menu_group }}</td>
 										<td>{{ $menu->menu_order }}</td>
@@ -74,7 +74,7 @@
 										<td><i class="fa {{ $child->icon }}"></i></td>
 										<td>{{ $child->title }}</td>
 										<td>{{ $child->url }}</td>
-										<td>{{ $child->parent_id }}</td>
+										<td>{{ $child->parent_id == 0 ? '' : $child->parent_id }}</td>
 										<td>{{ $child->permission }}</td>
 										<td>{{ $child->menu_group }}</td>
 										<td>{{ $child->menu_order }}</td>
@@ -94,7 +94,7 @@
 										<td><i class="fa {{ $menu->icon }}"></i></td>
 										<td>{{ $menu->title }}</td>
 										<td>{{ $menu->url }}</td>
-										<td>{{ $menu->parent_id }}</td>
+										<td>{{ $menu->parent_id == 0 ? '' : $menu->parent_id }}</td>
 										<td>{{ $menu->permission }}</td>
 										<td>{{ $menu->menu_group }}</td>
 										<td>{{ $menu->menu_order }}</td>
@@ -144,9 +144,9 @@
 									</div>
 									<br>
 									<div class="form-group{{ $errors->has('parent_id') ? ' has-error' : ' has-feedback' }}">
-										<label for="parent_id">Parent ID*</label>
-										<input type="number" class="form-control" placeholder="0" min="0" name="parent_id" value="{{ old('parent_id') ? old('parent_id') : 0 }}" required>
-										<p>0 for master menu, or add the ID of a parent menu to add this menu as child.</p>
+										<label for="parent_id">Parent ID</label>
+										<input type="number" class="form-control" min="0" name="parent_id" value="{{ old('parent_id') }}">
+										<p>Leave empty for master menu, or add the ID of a parent menu to add this menu as child.</p>
 										@if ($errors->has('parent_id'))
 										<span class="help-block">
 											<strong>{{ $errors->first('parent_id') }}</strong>
@@ -267,9 +267,9 @@
 									</div>
 									<br>
 									<div class="form-group{{ $errors->has('parent_id') ? ' has-error' : ' has-feedback' }}">
-										<label for="parent_id">Parent ID*</label>
-										<input type="number" class="form-control" placeholder="0" name="parent_id" min="0" value="{{ old('parent_id') }}"required>
-										<p>0 for master menu, or add the ID of a parent menu to add this menu as child.</p>
+										<label for="parent_id">Parent ID</label>
+										<input type="number" class="form-control" name="parent_id" min="0" value="{{ old('parent_id') }}">
+										<p>Leave empty for master menu, or add the ID of a parent menu to add this menu as child.</p>
 										@if ($errors->has('parent_id'))
 										<span class="help-block">
 											<strong>{{ $errors->first('parent_id') }}</strong>
