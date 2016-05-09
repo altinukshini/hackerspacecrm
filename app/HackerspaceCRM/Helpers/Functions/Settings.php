@@ -13,9 +13,8 @@ if (!function_exists('CRMSettings')) {
         static $settings;
 
         if (is_null($settings)) {
-            $settings = Cache::remember('settings', 24 * 60, function () {
-                return array_pluck(App\Models\Setting::all()->toArray(), 'value', 'key');
-            });
+            $settingsAll = App::make('HackerspaceCRM\Setting\Repository\SettingRepositoryInterface');
+            $settings = $settingsAll->getAll()->lists('value', 'key')->toArray();
         }
 
         return (is_array($key)) ? array_only($settings, $key) : $settings[$key];
@@ -68,6 +67,9 @@ if (!function_exists('crminfo')) {
                 break;
             case 'description':
                 $output = CRMSettings('crmdescription');
+                break;
+            case 'footer':
+                $output = CRMSettings('crmfooter');
                 break;
             case 'name':
                 $output = CRMSettings('crmname');

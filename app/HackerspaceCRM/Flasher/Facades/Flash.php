@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Facades;
+namespace HackerspaceCRM\Flasher\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Menu;
+use HackerspaceCRM\Menu\Menu;
 
 class MenusTableSeeder extends Seeder
 {

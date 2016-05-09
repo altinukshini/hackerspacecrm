@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace HackerspaceCRM\Flasher;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -26,7 +26,7 @@ class FlashServiceProvider extends ServiceProvider
 	{
 		$this->app->bind('flash', function()
 		{
-			return $this->app->make('App\Models\FlashNotifier');
+			return $this->app->make('HackerspaceCRM\Flasher\FlashNotifier');
 		});
 	}
 }

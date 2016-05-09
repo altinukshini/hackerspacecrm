@@ -78,7 +78,7 @@ class MenusController extends Controller
     /**
      * Update an existing menu
      *
-     * @param App\Http\Requests\AddMenuRequest
+     * @param App\Http\Requests\EditMenuRequest
      * @param menuId
      */
     public function update(EditMenuRequest $request, $menuId)

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Mailers;
+namespace HackerspaceCRM\Mailers;
 
 use Mail;
-use App\Mailers\EmailAddress;
+use HackerspaceCRM\Mailers\EmailAddress;
 
 abstract class Mailer
 {
@@ -14,8 +14,8 @@ abstract class Mailer
 	 * @param $view
 	 * @param $subject
 	 * @param $fromName
-	 * @param App\Mailers\EmailAddress $fromEmail
-	 * @param App\Mailers\EmailAddress $to
+	 * @param HackerspaceCRM\Mailers\EmailAddress $fromEmail
+	 * @param HackerspaceCRM\Mailers\EmailAddress $to
 	 * @param $data
 	 */
 	public function deliver($view, $subject, $fromName, EmailAddress $fromEmail, EmailAddress $to, $data = array())

@@ -171,11 +171,12 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\HelpersServiceProvider::class,
-        App\Providers\FlashServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 
+        HackerspaceCRM\Helpers\HelpersServiceProvider::class,
+        HackerspaceCRM\Flasher\FlashServiceProvider::class,
         HackerspaceCRM\Menu\Repository\MenuRepositoryServiceProvider::class,
+        HackerspaceCRM\Setting\Repository\SettingRepositoryServiceProvider::class,
 
     ],
 
@@ -222,7 +223,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Flash' => App\Facades\Flash::class,
+        'Flash' => HackerspaceCRM\Flasher\Facades\Flash::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
 

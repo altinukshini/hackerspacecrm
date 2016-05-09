@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Setting;
+use HackerspaceCRM\Setting\Setting;
 
 class SettingsTableSeeder extends Seeder
 {
@@ -17,6 +17,7 @@ class SettingsTableSeeder extends Seeder
 			['key' => 'url', 'value' => Config::get('hackerspacecrm.url')],
 			['key' => 'crmname', 'value' => Config::get('hackerspacecrm.crmname')],
 			['key' => 'crmdescription', 'value' => Config::get('hackerspacecrm.crmdescription')],
+			['key' => 'crmfooter', 'value' => Config::get('hackerspacecrm.crmfooter')],
 			['key' => 'locale', 'value' => Config::get('hackerspacecrm.locale')],
 			['key' => 'theme', 'value' => Config::get('hackerspacecrm.theme')],
 			['key' => 'enable_registration', 'value' => Config::get('hackerspacecrm.enable_registration')],

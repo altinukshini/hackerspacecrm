@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace HackerspaceCRM\Flasher;
 
 use Illuminate\Session\Store;
 

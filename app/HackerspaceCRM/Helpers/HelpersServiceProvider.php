@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace HackerspaceCRM\Helpers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -19,7 +19,7 @@ class HelpersServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        foreach (glob(app_path().'/Helpers/*.php') as $filename) {
+        foreach (glob(app_path().'/HackerspaceCRM/Helpers/Functions/*.php') as $filename) {
             require_once $filename;
         }
     }

@@ -54,9 +54,9 @@ Route::get('/reports/membership', function () {
 Route::get('/settings', function () {
 	return redirect('/');
 });
-Route::get('/settings/general', function () {
-	return view('settings.general');
-});
+Route::get('/settings/general', 'SettingsController@showGeneral');
+Route::patch('/settings/general', 'SettingsController@editGeneral');
+
 Route::get('/settings/emails', function () {
 	return view('settings.emails');
 });

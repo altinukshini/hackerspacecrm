@@ -10,6 +10,8 @@ return [
 
 	'crmdescription' => 'CRM for managing Hackerspaces',
 
+	'crmfooter' => 'Hackerspace CRM',
+
 	'admin_name' => 'CRM Admin',
 	'admin_username' => 'admin', // password will be the same when db is seeded (change it after loging in)
 	'admin_email' => 'admin@example.com',

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use Flash;
 use Validator;
 use App\Models\User;
-use App\Mailers\UserMailer as Mailer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +13,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use HackerspaceCRM\Mailers\UserMailer as Mailer;
 
 class AuthController extends Controller
 {

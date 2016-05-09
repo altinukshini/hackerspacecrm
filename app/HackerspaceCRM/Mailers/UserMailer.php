@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Mailers;
+namespace HackerspaceCRM\Mailers;
 
 use Config;
 use App\Models\User;
-use App\Mailers\Mailer;
-use App\Mailers\EmailAddress;
+use HackerspaceCRM\Mailers\Mailer;
+use HackerspaceCRM\Mailers\EmailAddress;
 
 class UserMailer extends Mailer
 {
@@ -20,7 +20,7 @@ class UserMailer extends Mailer
 	protected $fromName;
 	
 	/*
-	 * @param App\Mailers\Mailer $mailer
+	 * @param HackerspaceCRM\Mailers\Mailer $mailer
 	 */
 	public function __construct()
 	{

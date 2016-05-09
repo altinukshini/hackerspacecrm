@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace HackerspaceCRM\Setting;
 
 use Illuminate\Database\Eloquent\Model;
 

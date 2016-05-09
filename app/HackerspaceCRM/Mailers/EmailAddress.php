@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Mailers;
+namespace HackerspaceCRM\Mailers;
 
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 
