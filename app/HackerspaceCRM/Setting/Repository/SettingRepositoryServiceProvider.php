@@ -36,7 +36,8 @@ class SettingRepositoryServiceProvider extends ServiceProvider
 
     private function clearCache($key)
     {
-        Cache::forget('setting.all');
-        Cache::forget('setting.byKey.'.$key);
+        Cache::tags('settings')->flush();
+        // Cache::forget('setting.all');
+        // Cache::forget('setting.byKey.'.$key);
     }
 }

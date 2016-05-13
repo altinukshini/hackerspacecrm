@@ -5,7 +5,7 @@ namespace HackerspaceCRM\Traits;
 trait Cacheable
 {
     /*
-     * Get a cache key for a single object of model
+     * Calculate a unique cache key for the model instance.
      *
      * @return String
      */
@@ -13,7 +13,7 @@ trait Cacheable
     {
         return sprintf('%s/%s-%s',
             get_class($this),
-            $this->id,
+            $this->getKey(),
             $this->updated_at->timestamp
         );
     }

@@ -36,6 +36,7 @@ class CRMCache
         $key = $this->normalizeCacheKey($key);
 
         return $this->cache
+            ->tags('views')
             ->rememberForever($key, function () use ($fragment) {
                 return $fragment;
             });
@@ -51,6 +52,7 @@ class CRMCache
         $key = $this->normalizeCacheKey($key);
 
         return $this->cache
+            ->tags('views')
             ->has($key);
     }
 

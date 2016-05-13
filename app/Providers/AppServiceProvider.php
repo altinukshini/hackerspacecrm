@@ -14,12 +14,11 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Kernel $kernel)
     {
-
-        // Menu::updating(function () {
-        //     Cache::flush();
-        // });
+        if ($this->app->isLocal()) {
+            $kernel->pushMiddleware('App\Http\Middleware\FlushViews');
+        }
 
         Blade::directive('cache', function ($expression) {
             return "<?php if (! app('App\Models\BladeDirective')->setUp{$expression}) { ?>";

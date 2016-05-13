@@ -4,8 +4,11 @@ namespace HackerspaceCRM\Menu;
 
 use Illuminate\Database\Eloquent\Model;
 
+use HackerspaceCRM\Traits\Cacheable;
+
 class Menu extends Model
 {
+    use Cacheable;
 
     /**
      * The table associated with the model.

@@ -29,7 +29,7 @@ class CacheableEloquentMenuRepository implements MenuRepositoryInterface
      */
     public function getAll()
     {
-        return $this->cache->remember('menus.all', 24 * 60, function () {
+        return $this->cache->tags('menus')->rememberForever('menus.all', function () {
             return $this->menuRepository->getAll();
         });
     }
@@ -41,7 +41,7 @@ class CacheableEloquentMenuRepository implements MenuRepositoryInterface
      */
     public function byId($menuId)
     {
-        return $this->cache->remember('menus.byId.'.$menuId, 24 * 60, function () use ($menuId) {
+        return $this->cache->tags('menus')->rememberForever('menus.byId.'.$menuId, function () use ($menuId) {
             return $this->menuRepository->byId($menuId);
         });
     }
@@ -56,7 +56,7 @@ class CacheableEloquentMenuRepository implements MenuRepositoryInterface
      */
     public function byGroup($group = '*')
     {
-        return $this->cache->remember('menus.byGroup.'.$group, 24 * 60, function () use ($group) {
+        return $this->cache->tags('menus')->rememberForever('menus.byGroup.'.$group, function () use ($group) {
             return $this->menuRepository->byGroup($group);
         });
     }

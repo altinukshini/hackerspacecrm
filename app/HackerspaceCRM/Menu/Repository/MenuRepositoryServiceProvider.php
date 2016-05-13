@@ -15,7 +15,7 @@ class MenuRepositoryServiceProvider extends ServiceProvider
     public function boot()
     {
         // TEMPORARY SOLUTION
-        Menu::updating(function ($menu) { $this->clearCache($menu->id); });
+        Menu::updating(function ($menu) { $this->clearCache($menu->id);});
         Menu::creating(function ($menu) { $this->clearCache($menu->id);});
         Menu::deleting(function ($menu) { $this->clearCache($menu->id);});
 
@@ -39,11 +39,12 @@ class MenuRepositoryServiceProvider extends ServiceProvider
     }
 
     private function clearCache($menuId)
-    {
-        Cache::forget('menus.all');
-        Cache::forget('menus.byId.'.$menuId);
-        foreach (crminfo('menu_groups') as $menugroup) {
-            Cache::forget('menus.byGroup.'.$menugroup);
-        }
+    {   
+        Cache::tags('menus')->flush();
+        // Cache::forget('menus.all');
+        // Cache::forget('menus.byId.'.$menuId);
+        // foreach (crminfo('menu_groups') as $menugroup) {
+        //     Cache::forget('menus.byGroup.'.$menugroup);
+        // }
     }
 }

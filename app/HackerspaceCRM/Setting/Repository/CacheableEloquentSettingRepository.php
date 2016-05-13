@@ -29,7 +29,7 @@ class CacheableEloquentSettingRepository implements SettingRepositoryInterface
      */
     public function getAll()
     {
-        return $this->cache->remember('setting.all', 24 * 60, function () {
+        return $this->cache->tags('settings')->rememberForever('setting.all', function () {
             return $this->settingRepository->getAll();
         });
     }
@@ -41,7 +41,7 @@ class CacheableEloquentSettingRepository implements SettingRepositoryInterface
      */
     public function byKey($key)
     {
-        return $this->cache->remember('setting.byKey.'.$key, 24 * 60, function () use ($key) {
+        return $this->cache->tags('settings')->rememberForever('setting.byKey.'.$key, function () use ($key) {
             return $this->settingRepository->byKey($key);
         });
     }

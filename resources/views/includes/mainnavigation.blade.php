@@ -1,6 +1,7 @@
 <li class="header"><i class="fa fa-bars" style="margin-right:5px;"></i> {{ trans('hackerspacecrm.menus.mainnavigation') }}</li>
 @include('includes.publicnavigation')
 @can('menu_view')
+@cache($main)
 @foreach( $main as $menu )
 	@if($menu->children->count())
 		@if($menu->parent_id == 0 and hasPermission($menu->permission))
@@ -29,4 +30,5 @@
 		@endif
 	@endif
 @endforeach
+@endcache
 @endcan
