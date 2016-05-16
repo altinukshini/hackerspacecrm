@@ -31,7 +31,7 @@ class EditMenuRequest extends Request
             'title' => 'required|string|max:100',
             // 'url' => '', not required, can be empty
             // 'description' => '', not required, can be empty
-            'permission' => 'required|string',
+            'permission' => 'required|string|exists:permissions,name',
             'menu_group' => 'required|string|in:'.implode(",", crminfo('menu_groups')),
         ];
     }

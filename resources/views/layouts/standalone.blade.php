@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	
 	<title>{{ crminfo('name') }} | Login</title>
 
 	<!-- Tell the browser to be responsive to screen width -->

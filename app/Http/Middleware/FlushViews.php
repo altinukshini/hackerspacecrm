@@ -15,7 +15,6 @@ class FlushViews
     public function handle($request, $next)
     {
         Cache::tags('views')->flush();
-        // Cache::flush();
         return $next($request);
     }
 }

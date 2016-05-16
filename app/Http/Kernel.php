@@ -30,6 +30,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \App\Http\Middleware\SetApplicationLocale::class,
+            \App\Http\Middleware\RevalidateBackHistory::class,
         ],
 
         'api' => [
@@ -52,5 +53,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'role' => \App\Http\Middleware\MustHaveRole::class,
         'permission' => \App\Http\Middleware\MustHavePermission::class,
+        'revalidate' => \App\Http\Middleware\RevalidateBackHistory::class,
     ];
 }

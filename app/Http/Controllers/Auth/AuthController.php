@@ -17,286 +17,293 @@ use HackerspaceCRM\Mailers\UserMailer as Mailer;
 
 class AuthController extends Controller
 {
-	/*
-	|--------------------------------------------------------------------------
-	| Registration & Login Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller handles the registration of new users, as well as the
-	| authentication of existing users. By default, this controller uses
-	| a simple trait to add these behaviors. Why don't you explore it?
-	|
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Registration & Login Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles the registration of new users, as well as the
+    | authentication of existing users. By default, this controller uses
+    | a simple trait to add these behaviors. Why don't you explore it?
+    |
+    */
 
-	protected $mailer;
+    protected $mailer;
 
-	use AuthenticatesAndRegistersUsers;
+    use AuthenticatesAndRegistersUsers;
 
-	/**
-	 * Where to redirect users after login / registration.
-	 *
-	 * @var string
-	 */
-	protected $redirectTo = '/';
+    /**
+     * Where to redirect users after login / registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
 
-	/**
-	 * Overwrited original method: Return user's profile path
-	 * or '/' if user has no profile
-	 * Get the post register / login redirect path.
-	 *
-	 * @return string
-	 */
-	public function redirectPath()
-	{
-		if (Auth::check()) {
-			return Auth::user()->profilePath();
-		}
+    /**
+     * Where to redirect users after logout.
+     *
+     * @var string
+     */
+    protected $redirectAfterLogout = '/login';
 
-		return '/';
-	}
+    /**
+     * Overwrited original method: Return user's profile path
+     * or '/' if user has no profile
+     * Get the post register / login redirect path.
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+        if (Auth::check()) {
+            return Auth::user()->profilePath();
+        }
 
-	/**
-	 * Create a new authentication controller instance.
-	 */
-	public function __construct(Mailer $mailer)
-	{
-		$this->middleware($this->guestMiddleware(), ['except' => 'logout']);
-		$this->mailer = $mailer;
-	}
+        return '/';
+    }
 
-	/**
-	 * Get a validator for an incoming registration request.
-	 *
-	 * @param array $data
-	 *
-	 * @return \Illuminate\Contracts\Validation\Validator
-	 */
-	protected function validator(array $data)
-	{
-		return Validator::make($data, [
-			'full_name' => 'required|max:255',
-			'username' => 'required|max:255|unique:users',
-			'email' => 'required|email|max:255|unique:users',
-			'password' => 'required|min:6|confirmed',
-		]);
-	}
+    /**
+     * Create a new authentication controller instance.
+     */
+    public function __construct(Mailer $mailer)
+    {
+        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->mailer = $mailer;
+    }
 
-	/**
-	 * Create a new user instance after a valid registration.
-	 *
-	 * @param array $data
-	 *
-	 * @return User
-	 */
-	protected function create(array $data)
-	{
-		return User::create([
-			'full_name' => $data['full_name'],
-			'username' => $data['username'],
-			'email' => $data['email'],
-			'password' => bcrypt($data['password']),
-		]);
-	}
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param array $data
+     *
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'full_name' => 'required|max:255',
+            'username' => 'required|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+    }
 
-	/**
-	 * Overwritten method: Added handling app locale via session (based on user settings)
-	 * Handle a login request to the application.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function login(Request $request)
-	{
-		$this->validateLogin($request);
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param array $data
+     *
+     * @return User
+     */
+    protected function create(array $data)
+    {
+        return User::create([
+            'full_name' => $data['full_name'],
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
+    }
 
-		// If the class is using the ThrottlesLogins trait, we can automatically throttle
-		// the login attempts for this application. We'll key this by the username and
-		// the IP address of the client making these requests into this application.
-		$throttles = $this->isUsingThrottlesLoginsTrait();
+    /**
+     * Overwritten method: Added handling app locale via session (based on user settings)
+     * Handle a login request to the application.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
 
-		if ($throttles && $lockedOut = $this->hasTooManyLoginAttempts($request)) {
-			$this->fireLockoutEvent($request);
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        $throttles = $this->isUsingThrottlesLoginsTrait();
 
-			return $this->sendLockoutResponse($request);
-		}
+        if ($throttles && $lockedOut = $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
 
-		$credentials = $this->getCredentials($request);
+            return $this->sendLockoutResponse($request);
+        }
 
-		if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
-			$user = User::find(Auth::user()->id);
-			$user->setLastLogin();
+        $credentials = $this->getCredentials($request);
 
-			if (!empty($user->locale)) {
-				Session::put('locale', $user->locale);
-			}
+        if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
+            $user = User::find(Auth::user()->id);
+            $user->setLastLogin();
 
-			Flash::success('Welcome to '. crminfo('name'));
+            if (!empty($user->locale)) {
+                Session::put('locale', $user->locale);
+            }
 
-			return $this->handleUserWasAuthenticated($request, $throttles);
-		}
+            Flash::success('Welcome to '. crminfo('name'));
 
-		// If the login attempt was unsuccessful we will increment the number of attempts
-		// to login and redirect the user back to the login form. Of course, when this
-		// user surpasses their maximum number of attempts they will get locked out.
+            return $this->handleUserWasAuthenticated($request, $throttles);
+        }
 
-		if ($throttles && !$lockedOut) {
-			$this->incrementLoginAttempts($request);
-		}
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
 
-		return $this->sendFailedLoginResponse($request);
-	}
+        if ($throttles && !$lockedOut) {
+            $this->incrementLoginAttempts($request);
+        }
 
-	/**
-	 * Overwritten: check if login field is username or email
-	 * Validate the user login request.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 *
-	 * @return void
-	 */
-	protected function validateLogin(Request $request)
-	{
-		$field = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-		$request->merge([$field => $request->input('login')]);
+        return $this->sendFailedLoginResponse($request);
+    }
 
-		$this->validate($request, [
-			$this->loginUsername($request) => 'required', 'password' => 'required',
-		]);
-	}
+    /**
+     * Overwritten: check if login field is username or email
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return void
+     */
+    protected function validateLogin(Request $request)
+    {
+        $field = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $request->merge([$field => $request->input('login')]);
 
-	/**
-	 * Overwritten: check if username or email sent in "login" input
-	 * Get the login username to be used by the controller.
-	 *
-	 * @return string
-	 */
-	public function loginUsername(Request $request)
-	{
-		// return property_exists($this, 'username') ? $this->username : 'email';
-		return $request->has('username') ? 'username' : 'email';
+        $this->validate($request, [
+            $this->loginUsername($request) => 'required', 'password' => 'required',
+        ]);
+    }
 
-	}
+    /**
+     * Overwritten: check if username or email sent in "login" input
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function loginUsername(Request $request)
+    {
+        // return property_exists($this, 'username') ? $this->username : 'email';
+        return $request->has('username') ? 'username' : 'email';
 
-	/**
-	 * Overwritten: Changed loginUsername() to 'login'
-	 * Get the failed login response instance.
-	 *
-	 * @param \Illuminate\Http\Request  $request
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	protected function sendFailedLoginResponse(Request $request)
-	{
-		Flash::warning('We could not sign you in.');
-		
-		return redirect()->back()
-			->withInput($request->only('login', 'remember'))
-			->withErrors([
-				'login' => $this->getFailedLoginMessage(),
-				'password' => $this->getFailedLoginMessage(),
-			]);
-	}
+    }
 
-	/**
-	 * Overwritten method: Added verified value
-	 * Get the needed authorization credentials from the request.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 *
-	 * @return array
-	 */
-	protected function getCredentials(Request $request)
-	{
-		// return $request->only($this->loginUsername(), 'password');
-		return [
-			$this->loginUsername($request) => $request->only($this->loginUsername($request)),
-			'password' => $request->input('password'),
-			'verified' => true,
-		];
-	}
+    /**
+     * Overwritten: Changed loginUsername() to 'login'
+     * Get the failed login response instance.
+     *
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        Flash::warning('We could not sign you in.');
+        
+        return redirect()->back()
+            ->withInput($request->only('login', 'remember'))
+            ->withErrors([
+                'login' => $this->getFailedLoginMessage(),
+                'password' => $this->getFailedLoginMessage(),
+            ]);
+    }
 
-	/**
-	 * In case we want to flush session after logout
-	 * Overwritten method: Added Session::flush();
-	 * Log the user out of the application.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function logout()
-	{
-		Auth::guard($this->getGuard())->logout();
+    /**
+     * Overwritten method: Added verified value
+     * Get the needed authorization credentials from the request.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return array
+     */
+    protected function getCredentials(Request $request)
+    {
+        // return $request->only($this->loginUsername(), 'password');
+        return [
+            $this->loginUsername($request) => $request->only($this->loginUsername($request)),
+            'password' => $request->input('password'),
+            'verified' => true,
+        ];
+    }
 
-		Session::flush();
+    /**
+     * In case we want to flush session after logout
+     * Overwritten method: Added Session::flush();
+     * Log the user out of the application.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function logout()
+    {
+        Auth::guard($this->getGuard())->logout();
 
-		Flash::success('You have been signed out. See you!');
+        Session::flush();
 
-		return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
-	}
+        Flash::success('You have been signed out. See you!');
 
-	/*
-	 * Overwriting original method
-	 * Handle a registration request for the application.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
-	 */
-	public function register(Request $request)
-	{
-		if (crminfo('enable_registration') == 0) {
-			return redirect('/');
-		}
+        return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
+    }
 
-		$validator = $this->validator($request->all());
+    /*
+     * Overwriting original method
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        if (crminfo('enable_registration') == 0) {
+            return redirect('/');
+        }
 
-		if ($validator->fails()) {
-			$this->throwValidationException($request, $validator);
-		}
+        $validator = $this->validator($request->all());
 
-		$user = $this->create($request->all());
+        if ($validator->fails()) {
+            $this->throwValidationException($request, $validator);
+        }
 
-		$this->mailer->confirmation($user);
+        $user = $this->create($request->all());
 
-		Flash::info('Please check your email address to confirm and activate your account.');
+        $this->mailer->confirmation($user);
 
-		return back();
-	}
+        Flash::info('Please check your email address to confirm and activate your account.');
 
-	/*
-	 * Overwriting original method
-	 * Disable or enable registration globally
-	 */
-	public function showRegistrationForm()
-	{
-		if (crminfo('enable_registration') == 0) {
-			return redirect('/');
-		}
+        return back();
+    }
 
-		if (property_exists($this, 'registerView')) {
-			return view($this->registerView);
-		}
+    /*
+     * Overwriting original method
+     * Disable or enable registration globally
+     */
+    public function showRegistrationForm()
+    {
+        if (crminfo('enable_registration') == 0) {
+            return redirect('/');
+        }
 
-		return view('auth.register');
-	}
+        if (property_exists($this, 'registerView')) {
+            return view($this->registerView);
+        }
 
-	/*
-	 * Verify user account.
-	 *
-	 * @param  Email token $email_token
-	 * @return void
-	 */
-	public function confirmEmail($email_token)
-	{
-		try {
-			$user = User::where('email_token', $email_token)->firstOrFail()->confirmEmail();
-		} catch (ModelNotFoundException $e) {
-			Flash::warning('User with provided token was not found in the database');
+        return view('auth.register');
+    }
 
-			return redirect('/');
-		}
+    /*
+     * Verify user account.
+     *
+     * @param  Email token $email_token
+     * @return void
+     */
+    public function confirmEmail($email_token)
+    {
+        try {
+            $user = User::where('email_token', $email_token)->firstOrFail()->confirmEmail();
+        } catch (ModelNotFoundException $e) {
+            Flash::warning('User with provided token was not found in the database');
 
-		Flash::success('Your account has been verified. You may now log in.');
+            return redirect('/');
+        }
 
-		return redirect('/login');
-	}
+        Flash::success('Your account has been verified. You may now log in.');
+
+        return redirect('/login');
+    }
 }

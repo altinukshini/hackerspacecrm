@@ -30,5 +30,7 @@ return [
 	'enable_registration' => 1, // 1 = true, 0 = false
 
 	'new_user_role' => 'authenticated',
+
+	'caching_driver' => 'memcached', // file, memcached
 	
 ];

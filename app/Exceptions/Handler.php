@@ -3,8 +3,10 @@
 namespace App\Exceptions;
 
 use Exception;
+use Flash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -45,6 +47,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof TokenMismatchException){
+            Flash::warning('Your session has expired');
+            return redirect()->back()->withInput()->with('error', 'Your session has expired');
+        }
         return parent::render($request, $e);
     }
 }
