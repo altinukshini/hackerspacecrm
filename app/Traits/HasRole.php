@@ -26,6 +26,10 @@ trait HasRole
      */
     public function hasRole($role)
     {
+        if (is_int($role)) {
+            return $this->roles->contains($role);
+        }
+
         if (is_string($role)) {
             return $this->roles->contains('name', $role);
         }
@@ -163,7 +167,7 @@ trait HasRole
      */
     public function hasPermission($permission)
     {
-        if (is_string($permission)) {
+        if (is_string($permission) || is_int($permission)) {
             foreach ($this->roles as $role) {
                 return $role->hasPermission($permission);
             }

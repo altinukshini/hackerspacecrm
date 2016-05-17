@@ -16,7 +16,7 @@ class MenusTableSeeder extends Seeder
 
 			[
 				'parent_id' => 0,
-				'permission' => 'public',
+				'permission_id' => 1,
 				'menu_group' => 'public',
 				'menu_order' => 0,
 				'title' => 'Home',
@@ -26,7 +26,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Dashboard',
@@ -36,7 +36,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 1,
 				'title' => 'Reports',
@@ -46,7 +46,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 3,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 1,
 				'title' => 'Expenses',
@@ -56,7 +56,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 3,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 2,
 				'title' => 'Membership',
@@ -66,7 +66,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 3,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 3,
 				'title' => 'Frequentation',
@@ -76,7 +76,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 2,
 				'title' => 'Membership',
@@ -86,7 +86,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 7,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Members',
@@ -96,7 +96,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 7,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 1,
 				'title' => 'Mentors',
@@ -106,7 +106,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 7,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 2,
 				'title' => 'Plans',
@@ -116,7 +116,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 3,
 				'title' => 'Finances',
@@ -126,7 +126,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 11,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Transactions',
@@ -136,7 +136,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 11,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Billing',
@@ -146,7 +146,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 11,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Accounts',
@@ -156,7 +156,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 11,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Stripe',
@@ -166,7 +166,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 11,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Paypal',
@@ -176,7 +176,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 4,
 				'title' => 'Access control',
@@ -186,7 +186,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 17,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 0,
 				'title' => 'Keys',
@@ -196,7 +196,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 17,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 1,
 				'title' => 'RFID Cards',
@@ -206,7 +206,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 17,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 2,
 				'title' => 'Alarm Pins',
@@ -216,7 +216,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 17,
-				'permission' => 'menu_view',
+				'permission_id' => 11,
 				'menu_group' => 'main',
 				'menu_order' => 3,
 				'title' => 'HACCSY',
@@ -226,7 +226,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission' => 'setting_edit',
+				'permission_id' => 4,
 				'menu_group' => 'settings',
 				'menu_order' => 0,
 				'title' => 'General',
@@ -236,7 +236,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission' => 'setting_edit',
+				'permission_id' => 4,
 				'menu_group' => 'settings',
 				'menu_order' => 1,
 				'title' => 'Emails',
@@ -246,7 +246,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission' => 'setting_edit',
+				'permission_id' => 4,
 				'menu_group' => 'settings',
 				'menu_order' => 1,
 				'title' => 'Users',
@@ -256,7 +256,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 24,
-				'permission' => 'setting_edit',
+				'permission_id' => 4,
 				'menu_group' => 'settings',
 				'menu_order' => 0,
 				'title' => 'All Users',
@@ -266,7 +266,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 24,
-				'permission' => 'setting_edit',
+				'permission_id' => 4,
 				'menu_group' => 'settings',
 				'menu_order' => 1,
 				'title' => 'Roles',
@@ -276,17 +276,17 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 24,
-				'permission' => 'setting_edit',
+				'permission_id' => 4,
 				'menu_group' => 'settings',
 				'menu_order' => 2,
-				'title' => 'Permissions',
-				'url' => 'settings/users/permissions',
+				'title' => 'Permission_ids',
+				'url' => 'settings/users/permission_ids',
 				'description' => null,
 				'icon' => 'fa-exclamation-triangle',
 			],
 			[
 				'parent_id' => 0,
-				'permission' => 'setting_edit',
+				'permission_id' => 4,
 				'menu_group' => 'settings',
 				'menu_order' => 3,
 				'title' => 'Modules',
@@ -296,7 +296,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 28,
-				'permission' => 'setting_edit',
+				'permission_id' => 4,
 				'menu_group' => 'settings',
 				'menu_order' => 0,
 				'title' => 'Installed Modules',
@@ -306,7 +306,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 28,
-				'permission' => 'setting_edit',
+				'permission_id' => 4,
 				'menu_group' => 'settings',
 				'menu_order' => 1,
 				'title' => 'Add new',
@@ -316,7 +316,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission' => 'setting_edit',
+				'permission_id' => 4,
 				'menu_group' => 'settings',
 				'menu_order' => 4,
 				'title' => 'Appearance',
@@ -326,7 +326,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 31,
-				'permission' => 'setting_edit',
+				'permission_id' => 4,
 				'menu_group' => 'settings',
 				'menu_order' => 0,
 				'title' => 'Menus',
@@ -336,7 +336,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 31,
-				'permission' => 'setting_edit',
+				'permission_id' => 4,
 				'menu_group' => 'settings',
 				'menu_order' => 1,
 				'title' => 'Themes',

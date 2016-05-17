@@ -27,7 +27,7 @@ function editMenu(id) {
             $('#editMenuForm [name="title"]').val(data.title);
             $('#editMenuForm [name="url"]').val(data.url);
             $('#editMenuForm [name="description"]').val(data.description);
-            $('#editMenuForm [name="permission"]').val(data.permission);
+            $('#editMenuForm [name="permission_id"]').val(data.permission_id);
             $('#editMenuForm [name="menu_group"]').val(data.menu_group);
             $('#editMenuForm option[value="'+data.menu_group+'"] ').attr('selected', true);
 

@@ -20,7 +20,8 @@ class MenusController extends Controller
         $this->menuRepository = $menuRepository;
 
         $this->middleware('auth');
-        $this->middleware('role:administrator');
+        // haven't decided yet if I should use role middleware for the whole controller or just check permission for each method separately.
+        $this->middleware('role:administrator'); 
     }
 
 
@@ -60,6 +61,9 @@ class MenusController extends Controller
      */
     public function add(AddMenuRequest $request)
     {
+        // see if user has permission to delete menu
+        if (!hasPermission('menu_create', true)) return back();
+
         $menuApplicationService = new MenuApplicationService();
 
         $requestArray = $this->normalizeNewMenuRequest($request);
@@ -83,6 +87,9 @@ class MenusController extends Controller
      */
     public function update(EditMenuRequest $request, $menuId)
     {
+        // see if user has permission to delete menu
+        if (!hasPermission('menu_update', true)) return back();
+
         $menuApplicationService = new MenuApplicationService();
         $menu = $this->menuRepository->byId($menuId);
 
@@ -103,9 +110,7 @@ class MenusController extends Controller
     public function delete($menuId)
     {
         // see if user has permission to delete menu
-        if (!hasPermission('menu_delete', true)) {
-            return back();
-        }
+        if (!hasPermission('menu_delete', true)) return back();
 
         $menuApplicationService = new MenuApplicationService();
         $menu = $this->menuRepository->byId($menuId);

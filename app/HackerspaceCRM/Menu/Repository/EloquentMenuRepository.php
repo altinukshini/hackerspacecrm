@@ -26,7 +26,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface
      */
     public function byId($menuId)
     {
-        return Menu::find($menuId);
+        return Menu::with('permission')->find($menuId);
     }
 
     /**
@@ -39,7 +39,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface
      */
     public function byGroup($group = '*')
     {
-        return Menu::with('children')->where('menu_group', $group)
+        return Menu::with('children')->with('permission')->where('menu_group', $group)
         ->where('parent_id', '0')
         ->orderBy('menu_order', 'asc')
         ->get();
@@ -60,7 +60,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface
         $menu->menu_order = $attributes['menu_order'];
         $menu->title = $attributes['title'];
         $menu->url = $attributes['url'];
-        $menu->permission = $attributes['permission'];
+        $menu->permission_id = $attributes['permission_id'];
         if (array_key_exists('menu_group', $attributes))
             $menu->menu_group = $attributes['menu_group'];
         if (array_key_exists('parent_id', $attributes))

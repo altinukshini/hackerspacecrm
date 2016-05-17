@@ -17,36 +17,38 @@ class PermissionsTableSeeder extends Seeder
 		 */
 		$permissions = [
 
-			['name' => 'permission_edit', 'label' => 'Edit permissions'],
+			['name' => 'public', 'label' => 'Public'],
 
-			['name' => 'setting_view', 'label' => 'View settings'],
-			['name' => 'setting_edit', 'label' => 'Edit settings'],
-			['name' => 'setting_delete', 'label' => 'Delete settings'],
+			['name' => 'permission_edit', 'label' => 'Edit permission'],
 
-			['name' => 'role_create', 'label' => 'Create roles'],
-			['name' => 'role_view', 'label' => 'View roles'],
-			['name' => 'role_edit', 'label' => 'Edit roles'],
-			['name' => 'role_delete', 'label' => 'Delete roles'],
+			['name' => 'setting_view', 'label' => 'View setting'],
+			['name' => 'setting_edit', 'label' => 'Edit setting'],
+			['name' => 'setting_delete', 'label' => 'Delete setting'],
 
-			['name' => 'menu_create', 'label' => 'Create menus'],
-			['name' => 'menu_view', 'label' => 'View menus'],
-			['name' => 'menu_edit', 'label' => 'Edit menus'],
-			['name' => 'menu_delete', 'label' => 'Delete menus'],
+			['name' => 'role_create', 'label' => 'Create role'],
+			['name' => 'role_view', 'label' => 'View role'],
+			['name' => 'role_edit', 'label' => 'Edit role'],
+			['name' => 'role_delete', 'label' => 'Delete role'],
 
-			['name' => 'module_install', 'label' => 'Install modules'],
-			['name' => 'module_view', 'label' => 'View modules'],
-			['name' => 'module_update', 'label' => 'Update modules'],
-			['name' => 'module_delete', 'label' => 'Delete modules'],
+			['name' => 'menu_create', 'label' => 'Create menu'],
+			['name' => 'menu_view', 'label' => 'View menu'],
+			['name' => 'menu_edit', 'label' => 'Edit menu'],
+			['name' => 'menu_delete', 'label' => 'Delete menu'],
 
-			['name' => 'user_create', 'label' => 'Create users'],
-			['name' => 'user_view', 'label' => 'View users'],
-			['name' => 'user_edit', 'label' => 'Edit users'],
-			['name' => 'user_delete', 'label' => 'Delete users'],
+			['name' => 'module_install', 'label' => 'Install module'],
+			['name' => 'module_view', 'label' => 'View module'],
+			['name' => 'module_update', 'label' => 'Update module'],
+			['name' => 'module_delete', 'label' => 'Delete module'],
 
-			['name' => 'profile_create', 'label' => 'Create profiles'],
-			['name' => 'profile_view', 'label' => 'View profiles'],
-			['name' => 'profile_edit', 'label' => 'Edit profiles'],
-			['name' => 'profile_delete', 'label' => 'Delete profiles'],
+			['name' => 'user_create', 'label' => 'Create user'],
+			['name' => 'user_view', 'label' => 'View user'],
+			['name' => 'user_edit', 'label' => 'Edit user'],
+			['name' => 'user_delete', 'label' => 'Delete user'],
+
+			['name' => 'profile_create', 'label' => 'Create profile'],
+			['name' => 'profile_view', 'label' => 'View profile'],
+			['name' => 'profile_edit', 'label' => 'Edit profile'],
+			['name' => 'profile_delete', 'label' => 'Delete profile'],
 
 		];
 

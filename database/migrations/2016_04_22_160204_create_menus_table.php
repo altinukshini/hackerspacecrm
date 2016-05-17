@@ -14,8 +14,11 @@ class CreateMenusTable extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
+            
+            // relations
             $table->integer('parent_id')->unsigned()->default(0);
-            $table->string('permission')->nullable()->default(NULL);
+            $table->integer('permission_id')->references('id')->on('permissions');
+
             $table->string('menu_group')->default('');
             $table->integer('menu_order')->unsigned()->default(0);
             $table->string('title')->default('');

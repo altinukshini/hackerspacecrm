@@ -58,7 +58,7 @@
 										<td>{{ $menu->title }}</td>
 										<td>{{ $menu->url }}</td>
 										<td>{{ $menu->parent_id == 0 ? '' : $menu->parent_id }}</td>
-										<td>{{ $menu->permission }}</td>
+										<td>{{ $menu->permission->label }}</td>
 										<td>{{ $menu->menu_group }}</td>
 										<td>{{ $menu->menu_order }}</td>
 										<td>{{ $menu->description }}</td>
@@ -75,7 +75,7 @@
 										<td>{{ $child->title }}</td>
 										<td>{{ $child->url }}</td>
 										<td>{{ $child->parent_id == 0 ? '' : $child->parent_id }}</td>
-										<td>{{ $child->permission }}</td>
+										<td>{{ $child->permission->label }}</td>
 										<td>{{ $child->menu_group }}</td>
 										<td>{{ $child->menu_order }}</td>
 										<td>{{ $child->description }}</td>
@@ -95,7 +95,7 @@
 										<td>{{ $menu->title }}</td>
 										<td>{{ $menu->url }}</td>
 										<td>{{ $menu->parent_id == 0 ? '' : $menu->parent_id }}</td>
-										<td>{{ $menu->permission }}</td>
+										<td>{{ $menu->permission->label }}</td>
 										<td>{{ $menu->menu_group }}</td>
 										<td>{{ $menu->menu_order }}</td>
 										<td>{{ $menu->description }}</td>
@@ -196,26 +196,30 @@
 												@endif
 											</div>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group{{ $errors->has('permission') ? ' has-error' : ' has-feedback' }}">
-												<label for="permission">Permission*</label>
-												<input type="text" class="form-control" placeholder="menu_view" name="permission" value="{{ old('permission') }}" required>
-												<p>Permission which can access this menu. Exc: menu_view, members_edit etc. 
-												<br />Type "public" for non aithenticated users to see it.</p>
-												@if ($errors->has('permission'))
+										<div class="col-md-7">
+											<div class="form-group{{ $errors->has('permission_id') ? ' has-error' : ' has-feedback' }}">
+												<label for="permission_id">Permission*</label>
+												<select class="form-control" name="permission_id" required>
+													<option disabled selected>Select permission</option>
+													@foreach (crmPermissions() as $permission)
+														<option value="{{ $permission->id }}" {{ old('permission_id') == $permission->id ? "selected" : "" }}>{{ $permission->name . ' - ' .$permission->label }}</option>
+													@endforeach
+												</select>
+												<p>Permission which can access this menu. <br />Select "public" for non aithenticated users to see it.</p>
+												@if ($errors->has('permission_id'))
 												<span class="help-block">
-													<strong>{{ $errors->first('permission') }}</strong>
+													<strong>{{ $errors->first('permission_id') }}</strong>
 												</span>
 												@endif
 											</div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-5">
 											<div class="form-group{{ $errors->has('menu_group') ? ' has-error' : ' has-feedback' }}">
 												<label for="menu_group">Group*</label>
 												<select class="form-control" name="menu_group" required>
 													<option disabled selected>Select group</option>
 													@foreach (crminfo('menu_groups') as $menugroup)
-														<option value="{{ $menugroup }}" {{ Request::old('menu_group') == $menugroup ? "selected" : "" }}>{{ ucfirst($menugroup) }}</option>
+														<option value="{{ $menugroup }}" {{ old('menu_group') == $menugroup ? "selected" : "" }}>{{ ucfirst($menugroup) }}</option>
 													@endforeach
 												</select>
 												@if ($errors->has('menu_group'))
@@ -319,20 +323,24 @@
 												@endif
 											</div>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group{{ $errors->has('permission') ? ' has-error' : ' has-feedback' }}">
-												<label for="permission">Permission*</label>
-												<input type="text" class="form-control" placeholder="menu_view" name="permission" value="{{ old('permission') }}" required>
-												<p>Permission which can access this menu. Exc: menu_view, member_edit etc. 
-												<br />Type "public" for non aithenticated users to see it.</p>
-												@if ($errors->has('permission'))
+										<div class="col-md-7">
+											<div class="form-group{{ $errors->has('permission_id') ? ' has-error' : ' has-feedback' }}">
+												<label for="permission_id">Permission*</label>
+												<select class="form-control" name="permission_id" required>
+													<option disabled selected>Select permission</option>
+													@foreach (crmPermissions() as $permission)
+														<option value="{{ $permission->id }}" {{ Request::old('permission_id') == $permission->id ? "selected" : "" }}>{{ $permission->name . ' - ' .$permission->label }}</option>
+													@endforeach
+												</select>
+												<p>Permission which can access this menu. <br />Select "public" for non aithenticated users to see it.</p>
+												@if ($errors->has('permission_id'))
 												<span class="help-block">
-													<strong>{{ $errors->first('permission') }}</strong>
+													<strong>{{ $errors->first('permission_id') }}</strong>
 												</span>
 												@endif
 											</div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-5">
 											<div class="form-group{{ $errors->has('menu_group') ? ' has-error' : ' has-feedback' }}">
 												<label for="menu_group">Group*</label>
 												<select class="form-control" name="menu_group" required>

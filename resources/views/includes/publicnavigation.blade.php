@@ -1,6 +1,6 @@
 @foreach( $public as $menu )
 	@if($menu->children->count())
-		@if($menu->parent_id == 0 and hasPermission($menu->permission))
+		@if($menu->parent_id == 0 and hasPermission($menu->permission_id))
 			<li class="treeview {{ setMenuActive($menu->url) }}">
 				<a href="{{$menu->url}}">
 					<i class="fa {{$menu->icon}}"></i>
@@ -9,7 +9,7 @@
 				</a>
 				<ul class="treeview-menu">
 					@foreach($menu->children as $child)
-						@if(hasPermission($child->permission))
+						@if(hasPermission($child->permission_id))
 							<li class="{{ setMenuActive($child->url) }}"><a href="{{ url('/'.$child->url) }}"><i class="fa {{$child->icon}}"></i> {{$child->title}}</a></li>
 						@endif
 					@endforeach
@@ -17,7 +17,7 @@
 			</li>
 		@endif
 	@else
-		@if($menu->parent_id == 0 and hasPermission($menu->permission))
+		@if($menu->parent_id == 0 and hasPermission($menu->permission_id))
 		<li class="{{ setMenuActive($menu->url) }}">
 			<a href="{{ url('/'.$menu->url) }}">
 				<i class="fa {{$menu->icon}}"></i> <span>{{$menu->title}}</span>

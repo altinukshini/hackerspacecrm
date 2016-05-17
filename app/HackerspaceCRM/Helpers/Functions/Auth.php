@@ -9,7 +9,7 @@ if (!function_exists('hasPermission')) {
      */
     function hasPermission($permission = '', $flash = false)
     {
-        if ($permission == '' || $permission == 'public') {
+        if ($permission == '' || $permission == 'public' || $permission == 1) {
             return true;
         }
 
@@ -40,5 +40,31 @@ if (!function_exists('hasRole')) {
         }
 
         return true;
+    }
+}
+
+if (!function_exists('crmPermissions')) {
+
+    /**
+     * Return array of all permissions
+     *
+     * @return array
+     */
+    function crmPermissions()
+    {
+        return App\Models\Permission::all();
+    }
+}
+
+if (!function_exists('crmRoles')) {
+
+    /**
+     * Return array of all Roles
+     *
+     * @return array
+     */
+    function crmRoles()
+    {
+        return App\Models\Role::all();
     }
 }

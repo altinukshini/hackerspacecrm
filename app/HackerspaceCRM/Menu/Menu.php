@@ -3,7 +3,7 @@
 namespace HackerspaceCRM\Menu;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Permission;
 use HackerspaceCRM\Traits\Cacheable;
 
 class Menu extends Model
@@ -79,4 +79,15 @@ class Menu extends Model
     {
         return $this->parent ? true : false;
     }
+
+    /**
+     * Relation between a Menu and Permission.
+     *
+     * @return Permission
+     */
+    public function permission()
+    {
+        return $this->belongsTo(Permission::class);
+    }
+
 }

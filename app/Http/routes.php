@@ -40,6 +40,7 @@ Route::get('/members', function () {
     return redirect('/');
 });
 Route::get('/members/{profile}', 'ProfilesController@show');
+Route::patch('/members/{profileId}', 'ProfilesController@update');
 
 /*
  * Application settings routes

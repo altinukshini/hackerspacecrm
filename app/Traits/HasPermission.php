@@ -26,6 +26,10 @@ trait HasPermission
      */
     public function hasPermission($permission)
     {
+        if (is_int($permission)) {
+            return $this->permissions->contains($permission);
+        }
+
         if (is_string($permission)) {
             return $this->permissions->contains('name', $permission);
         }
