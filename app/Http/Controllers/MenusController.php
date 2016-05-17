@@ -88,7 +88,7 @@ class MenusController extends Controller
     public function update(EditMenuRequest $request, $menuId)
     {
         // see if user has permission to delete menu
-        if (!hasPermission('menu_update', true)) return back();
+        if (!hasPermission('menu_edit', true)) return back();
 
         $menuApplicationService = new MenuApplicationService();
         $menu = $this->menuRepository->byId($menuId);

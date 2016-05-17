@@ -16,7 +16,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface
      */
     public function getAll()
     {
-        return Menu::all();
+        return Menu::with('permission')->get();
     }
 
     /**

@@ -18,9 +18,9 @@ trait HasPermission
     }
 
     /**
-     * Check if user has a specific role.
+     * Check if user has a specific permission.
      *
-     * @param Role name
+     * @param Permission name
      *
      * @return bool
      */
