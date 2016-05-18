@@ -3,9 +3,9 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-	<h1>Member Profile</h1>
+	<h1>Member profile</h1>
 	<ol class="breadcrumb">
-		<li><a href="#"><i class="fa fa-dashboard"></i> Members</a></li>
+		<li><a href="{{ url('members') }}"><i class="fa fa-users"></i> Members</a></li>
 		<li class="active"><a href="#"> {{ $user->username }}</a></li> 
 	</ol>
 </section>

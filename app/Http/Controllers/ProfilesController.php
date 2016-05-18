@@ -30,19 +30,15 @@ class ProfilesController extends Controller
     {
         // TODO: Open user profile only if member and has profile
         // Handle Model not found exceptions in global.php
-        try {
-            $user = User::whereUsername($username)->firstOrFail();
+        $user = User::whereUsername($username)->first();
 
-            if ($user->hasProfile()) {
-                $user->load('profile.user');
+        if (!is_null($user) && $user->hasProfile()) {
+            $user->load('profile.user');
 
-                return view('profiles.show', compact('user'));
-            }
-        } catch (ModelNotFoundException $e) {
-            return redirect('/');
+            return view('profiles.show', compact('user'));
         }
 
-        Flash::info('You do not have a profile created yet!');
+        Flash::info('No profile with username: '.$username);
 
         return redirect('/');
     }

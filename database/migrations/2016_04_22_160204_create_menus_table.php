@@ -17,7 +17,7 @@ class CreateMenusTable extends Migration
             
             // relations
             $table->integer('parent_id')->unsigned()->default(0);
-            $table->integer('permission_id')->references('id')->on('permissions');
+            $table->integer('permission_id')->unsigned()->references('id')->on('permissions');
 
             $table->string('menu_group')->default('');
             $table->integer('menu_order')->unsigned()->default(0);

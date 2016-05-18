@@ -84,3 +84,30 @@ Route::patch('/settings/menus/{menuId}', 'MenusController@update');
 // \DB::listen(function($query) {
 //     var_dump($query);
 // });
+
+Route::get('menus', function() {
+	// return crmPermissions();
+	$menus = App::make('HackerspaceCRM\Menu\Repository\MenuRepositoryInterface');
+
+	return $menus->byId(1);
+
+});
+
+// Route::get('test', function() {
+// 	// return crmPermissions();
+// 	$user = App\Models\User::find(1);
+
+// 	return $user->getPermissions();
+// 	// return $user->getRoles();
+
+// 	if ($user->hasPermission('menu_update')) {
+// 		echo 'yes';
+// 	}
+// 	else {
+// 		echo 'no';
+// 	}
+// 	// return $user->load('roles.permissions');
+
+// 	// return $menus->byId(1)->permission;
+
+// });
