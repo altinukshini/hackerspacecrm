@@ -58,7 +58,11 @@
 							<!-- Menu Footer-->
 							<li class="user-footer">
 								<div class="pull-left">
-									<a href="{{ Auth::user()->profilePath() }}" class="btn btn-default btn-flat">Profile</a>
+									@if (!Auth::user()->hasProfile() AND Auth::user()->hasRole(['member', 'administrator']))
+										<a href="{{ url('profiles/'. Auth::user()->username .'/create') }}" class="btn btn-success btn-flat">Create profile</a>
+									@elseif (Auth::user()->hasProfile())
+										<a href="{{ Auth::user()->profilePath() }}" class="btn btn-default btn-flat">Profile</a>
+									@endif
 								</div>
 								<div class="pull-right">
 									<a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>

@@ -39,7 +39,7 @@ trait HasRole
         }
 
         foreach ($role as $r) {
-            return $this->hasRole($r);
+            if ($this->hasRole($r)) return true;
         }
 
         return false;
@@ -180,7 +180,7 @@ trait HasRole
         }
 
         foreach ($permission as $p) {
-            return $this->hasPermission($p);
+            if ($this->hasPermission($p)) return true;
         }
 
         return false;

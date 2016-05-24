@@ -16,31 +16,52 @@
 		<!-- Profile Image -->
 		<div class="col-md-4">
 			<div class="box box-widget widget-user-2">
-				<div class="widget-user-header bg-blue">
+				<div class="widget-user-header bg-{{ $user->profile->gender == 'male' ? 'blue' : ($user->profile->gender == 'female' ? 'red' : 'purple') }}">
 					<div class="widget-user-image">
 						<img class="img-circle" src="/dist/img/user1-128x128.jpg" alt="User Avatar">
 					</div>
-					<a class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#editProfileModal">
-						<i class="fa fa-edit"></i> Edit account
-					</a>
+					@if (hasPermission('profile_update') || Auth::user()->id == $user->id)
+						<a class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#editProfileModal">
+							<i class="fa fa-edit"></i> Edit account
+						</a>
+					@endif
 					<h3 class="widget-user-username">{{ $user->full_name }}</h3><!-- Button trigger modal -->
 					<h5 class="widget-user-desc">{{ $user->username }} </h5>
 					<h6 class="widget-user-desc">In space <i class="fa fa-circle text-success"></i></h6>            
 				</div>
 				<div class="box-body">
-					<p><b>Email:</b> <a class="pull-right">{{ $user->email }}</a></p>
-					<p><b>Website:</b> <a class="pull-right" target="_blank" href="{{ $user->profile->website }}">{{ $user->profile->website }}</a></p>
-					<p><b>Phone:</b> <a class="pull-right">{{ $user->profile->phone }}</a></p>
+					<p><b><i class="fa fa-envelope margin-r-5"></i>Email:</b> <a class="pull-right">{{ $user->email }}</a></p>
+					@if($user->profile->website != '')
+						<p><b><i class="fa fa-globe margin-r-5"></i>Website:</b> <a class="pull-right" target="_blank" href="{{ $user->profile->website }}">{{ $user->profile->website }}</a></p>
+					@endif
+					@if($user->profile->address != '')
+						<p><b><i class="fa fa-map-marker margin-r-5"></i>Address:</b> <a class="pull-right">{{ $user->profile->address }}</a></p>
+					@endif
+					@if($user->profile->phone != '')
+						<p><b><i class="fa fa-phone margin-r-5"></i>Phone:</b> <a class="pull-right">{{ $user->profile->phone }}</a></p>
+					@endif
 					<p>
-						<b>Social media:</b> 
+						<b><i class="fa fa-link margin-r-5"></i>Social media:</b> 
 						<span class="pull-right" style="font-size:18px;">
-							<a target="_blank" href="http://www.facebook.com/{{ $user->profile->facebook_username }}"><i class="fa fa-facebook margin-r-5"></i></a> 
-							<a target="_blank" href="http://www.twitter.com/{{ $user->profile->twitter_username }}"><i class="fa fa-twitter margin-r-5"></i></a> 
-							<a target="_blank" href="http://www.linkedin.com/{{ $user->profile->linkedin_username }}"><i class="fa fa-linkedin margin-r-5"></i></a> 
-							<a target="_blank" href="http://www.github.com/{{ $user->profile->github_username }}"><i class="fa fa-github margin-r-5"></i></a> 
+							@if($user->profile->facebook_username != '') <a target="_blank" href="http://www.facebook.com/{{ $user->profile->facebook_username }}"><i class="fa fa-facebook margin-r-5"></i></a>@endif
+							@if($user->profile->twitter_username != '') <a target="_blank" href="http://www.twitter.com/{{ $user->profile->twitter_username }}"><i class="fa fa-twitter margin-r-5"></i></a>@endif 
+							@if($user->profile->linkedin_username != '') <a target="_blank" href="http://www.linkedin.com/{{ $user->profile->linkedin_username }}"><i class="fa fa-linkedin margin-r-5"></i></a>@endif 
+							@if($user->profile->github_username != '') <a target="_blank" href="http://www.github.com/{{ $user->profile->github_username }}"><i class="fa fa-github margin-r-5"></i></a>@endif 
 						</span>
 					</p>
-					<br>
+					<hr>
+					@if($user->profile->skills != '')
+						<p>
+							<strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong><br />
+						</p>
+						<p>
+							<?php $skills = explode(',',$user->profile->skills); ?>
+							@foreach ($skills as $skill)
+							<span class="label label-primary">{{ $skill }}</span>
+							@endforeach
+						</p>
+						<hr>
+					@endif
 
 					<!-- <ul class="list-group list-group-unbordered">
 						<li class="list-group-item">
@@ -73,22 +94,14 @@
 					<!-- About Box -->
 					<div class="box-body">
 						<strong><i class="fa fa-file-text-o margin-r-5"></i> Bio</strong>
-						<p>{!! $user->profile->biography !!}</p>
-						<hr>
-						<strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
-						<p>
-							<?php $skills = explode(',',$user->profile->skills); ?>
-							@foreach ($skills as $skill)
-							<span class="label label-primary">{{ $skill }}</span>
-							@endforeach
-						</p>
-						
+						<p>{!! $user->profile->biography !!}</p>					
 					</div>
 				</div>
 			</div>
 		</div>
 	</div><!-- /.row -->
 
+	@if (hasPermission('profile_update') || Auth::user()->id == $user->id)
 	<div class="row">
 		<div class="modal fade" tabindex="-1" role="dialog" id="editProfileModal">
 			<div class="modal-dialog modal-lg">
@@ -175,7 +188,7 @@
 									</div>
 								</div>
 								<div class="tab-pane" id="profileTab">
-									<form ole="form" id="editProfileForm" method="POST" action="{{ url('members/'.$user->username) }}">
+									<form ole="form" id="editProfileForm" method="POST" action="{{ url('profiles/'.$user->username) }}">
 										{!! method_field('PATCH') !!}
 										{!! csrf_field() !!}
 										<div class="row">
@@ -210,7 +223,7 @@
 												</div>
 												<div class="form-group{{ $errors->has('socialid') ? ' has-error' : ' has-feedback' }}">
 													<label for="socialid">Social ID*</label>
-													<input type="text" class="form-control" placeholder="1234567890" name="socialid" value="{{ old('socialid') ? old('socialid') : $user->profile->socialid }}" required>
+													<input type="text" class="form-control" placeholder="1234567890" name="socialid" value="{{ old('socialid') ? old('socialid') : $user->profile->socialid }}" />
 													@if ($errors->has('socialid'))
 													<span class="help-block">
 														<strong>{{ $errors->first('socialid') }}</strong>
@@ -244,10 +257,10 @@
 											</div>
 											<div class="col-md-6">
 												<div class="form-group{{ $errors->has('website') ? ' has-error' : ' has-feedback' }}">
-													<label for="website">Website*</label>
+													<label for="website">Website</label>
 													<div class="input-group">
 														<span class="input-group-addon"><i class="fa fa-globe"></i></span>
-														<input type="text" class="form-control" placeholder="http://www.example.com" name="website" value="{{ old('website') ? old('website') : $user->profile->website }}" required>
+														<input type="text" class="form-control" placeholder="http://www.example.com" name="website" value="{{ old('website') ? old('website') : $user->profile->website }}" />
 													</div>
 													<p>Provide full URL. Exc: http://example.com</p>
 
@@ -352,6 +365,13 @@
 			</div>
 		</div>
 	</div>
+	<!-- If edit menu request has error, open editmenu modal -->
+	@if ($errors->has('error_code') AND $errors->first('error_code') == '6')
+	<script type="text/javascript">
+		$('#editProfileModal').modal('show');
+	</script>
+	@endif
+	@endif
 
 	<!-- <div class="row">
 		<div class="col-md-12">
@@ -435,12 +455,5 @@
 	</div> -->
 
 </section><!-- /.content -->
-
-<!-- If edit menu request has error, open editmenu modal -->
-@if ($errors->has('error_code') AND $errors->first('error_code') == '6')
-<script type="text/javascript">
-	$('#editProfileModal').modal('show');
-</script>
-@endif
 
 @stop

@@ -37,7 +37,10 @@ Route::get('locale/{locale}', ['as'=>'locale.switch', 'uses'=>'LocaleController@
  */
 Route::get('/members', 'ProfilesController@all');
 Route::get('/members/{username}', 'ProfilesController@show');
-Route::patch('/members/{username}', 'ProfilesController@update');
+
+Route::patch('/profiles/{username}', 'ProfilesController@update');
+Route::get('/profiles/{username}/create', 'ProfilesController@showCreateForm');
+Route::post('/profiles/{username}/create', 'ProfilesController@create');
 // Route::delete('/members/{profileId}', 'ProfilesController@delete');
 
 Route::get('/users', 'UsersController@all');

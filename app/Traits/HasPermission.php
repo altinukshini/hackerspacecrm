@@ -39,7 +39,7 @@ trait HasPermission
         }
 
         foreach ($permission as $p) {
-            return $this->hasPermission($p);
+            if ($this->hasPermission($p)) return true;
         }
 
         return false;
