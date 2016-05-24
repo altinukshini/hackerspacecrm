@@ -172,6 +172,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Folklore\Image\ImageServiceProvider::class,
 
         HackerspaceCRM\Helpers\HelpersServiceProvider::class,
         HackerspaceCRM\Flasher\FlashServiceProvider::class,
@@ -223,9 +224,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
         'Flash' => HackerspaceCRM\Flasher\Facades\Flash::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Image' => Folklore\Image\Facades\Image::class,
 
     ],
 

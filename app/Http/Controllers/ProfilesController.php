@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Flash;
-use App\Models\User;
 use App\Http\Requests;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateProfileRequest;
+use App\Models\User;
+use Flash;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 class ProfilesController extends Controller
 {
@@ -17,6 +18,13 @@ class ProfilesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function all()
+    {
+        Flash:info('Page not created yet');
+
+        return redirect('/');
     }
 
     /**
@@ -39,6 +47,24 @@ class ProfilesController extends Controller
         }
 
         Flash::info('No profile with username: '.$username);
+
+        return redirect('/');
+    }
+
+    public function update(UpdateProfileRequest $request, $username)
+    {
+        $user = User::with('profile')->whereUsername($username)->first();
+
+        if (!is_null($user) && $user->hasProfile()) {
+
+            $user->profile->update($request->all());
+
+            Flash::success('Profile updated successfully');
+
+            return back();
+        }
+
+        Flash::info('No user with username: '.$username);
 
         return redirect('/');
     }

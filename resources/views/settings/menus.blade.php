@@ -133,9 +133,10 @@
 								<div class="col-md-4">
 									<div class="form-group{{ $errors->has('icon') ? ' has-error' : ' has-feedback' }}">
 										<label for="icon">Font awesome icon*</label>
-										<input name="icon" class="form-control icp icp-auto iconpicker-input iconpicker-element" value="fa-circle-o" type="text" required>
-										<span class="input-group-addon"></span>
-
+										<div class="input-group">
+											<input name="icon" class="form-control icp icp-auto iconpicker-input iconpicker-element" value="fa-circle-o" type="text" required>
+											<span class="input-group-addon"></span>
+										</div>
 										@if ($errors->has('icon'))
 										<span class="help-block">
 											<strong>{{ $errors->first('icon') }}</strong>
@@ -261,8 +262,10 @@
 								<div class="col-md-4">
 									<div class="form-group{{ $errors->has('icon') ? ' has-error' : ' has-feedback' }}">
 										<label for="icon">Font awesome icon*</label>
-										<input name="icon" class="form-control icp icp-auto iconpicker-input iconpicker-element" value="fa-circle-o" type="text" required>
-										<span class="input-group-addon"></span>
+										<div class="input-group">
+											<input name="icon" class="form-control icp icp-auto iconpicker-input iconpicker-element" value="fa-circle-o" type="text" required>
+											<span class="input-group-addon"></span>
+										</div>
 										@if ($errors->has('icon'))
 										<span class="help-block">
 											<strong>{{ $errors->first('icon') }}</strong>
@@ -329,7 +332,7 @@
 												<select class="form-control" name="permission_id" required>
 													<option disabled selected>Select permission</option>
 													@foreach (crmPermissions() as $permission)
-														<option value="{{ $permission->id }}" {{ Request::old('permission_id') == $permission->id ? "selected" : "" }}>{{ $permission->name . ' - ' .$permission->label }}</option>
+														<option value="{{ $permission->id }}" {{ old('permission_id') == $permission->id ? "selected" : "" }}>{{ $permission->name . ' - ' .$permission->label }}</option>
 													@endforeach
 												</select>
 												<p>Permission which can access this menu. <br />Select "public" for non aithenticated users to see it.</p>

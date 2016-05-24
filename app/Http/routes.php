@@ -35,19 +35,16 @@ Route::get('locale/{locale}', ['as'=>'locale.switch', 'uses'=>'LocaleController@
 /*
  * User / Member / Profile Routes
  */
-Route::get('/members', function () {
-	Flash::info('Page not created yet');
-    return redirect('/');
-});
-Route::get('/members/{profile}', 'ProfilesController@show');
-Route::patch('/members/{profileId}', 'ProfilesController@update');
+Route::get('/members', 'ProfilesController@all');
+Route::get('/members/{username}', 'ProfilesController@show');
+Route::patch('/members/{username}', 'ProfilesController@update');
+// Route::delete('/members/{profileId}', 'ProfilesController@delete');
 
-/*
- * Application settings routes
- */
-Route::get('/reports/membership', function () {
-	return view('settings.users.roles');
-});
+Route::get('/users', 'UsersController@all');
+Route::patch('/users/{username}', 'UsersController@update');
+Route::patch('/users/{username}/password', 'UsersController@changePassword');
+// Route::delete('/users/{username}', 'UsersController@delete');
+
 
 /*
  * Application settings routes
@@ -77,37 +74,10 @@ Route::get('/settings/users/permissions', function () {
  */
 Route::get('/settings/menus', 'MenusController@show');
 Route::get('/settings/menus/{menuId}', 'MenusController@getMenu'); // for ajax request that populates the form
-Route::post('settings/menus','MenusController@add');
-Route::delete('settings/menus/{menuId}', 'MenusController@delete');
+Route::post('/settings/menus','MenusController@create');
+Route::delete('/settings/menus/{menuId}', 'MenusController@delete');
 Route::patch('/settings/menus/{menuId}', 'MenusController@update');
 
 // \DB::listen(function($query) {
 //     var_dump($query);
-// });
-
-Route::get('menus', function() {
-	// return crmPermissions();
-	$menus = App::make('HackerspaceCRM\Menu\Repository\MenuRepositoryInterface');
-
-	return $menus->byId(1);
-
-});
-
-// Route::get('test', function() {
-// 	// return crmPermissions();
-// 	$user = App\Models\User::find(1);
-
-// 	return $user->getPermissions();
-// 	// return $user->getRoles();
-
-// 	if ($user->hasPermission('menu_update')) {
-// 		echo 'yes';
-// 	}
-// 	else {
-// 		echo 'no';
-// 	}
-// 	// return $user->load('roles.permissions');
-
-// 	// return $menus->byId(1)->permission;
-
 // });

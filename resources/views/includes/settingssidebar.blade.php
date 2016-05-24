@@ -1,4 +1,4 @@
-@can('setting_edit')
+@can('setting_update')
 <!-- Control Sidebar -->
 <aside class="sidebar control-sidebar control-sidebar-dark">
 	<ul class="sidebar-menu">

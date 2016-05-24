@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Flash;
 use App\Http\Requests\Request;
-use App\Http\Requests\AddMenuRequest;
-use App\Http\Requests\EditMenuRequest;
+use App\Http\Requests\CreateMenuRequest;
+use App\Http\Requests\UpdateMenuRequest;
 
 use HackerspaceCRM\Menu\Menu;
 use HackerspaceCRM\Menu\MenuApplicationService;
@@ -55,11 +55,11 @@ class MenusController extends Controller
     }
 
     /**
-     * @param AddMenuRequest $request
+     * @param CreateMenuRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function add(AddMenuRequest $request)
+    public function create(CreateMenuRequest $request)
     {
         // see if user has permission to delete menu
         if (!hasPermission('menu_create', true)) return back();
@@ -82,13 +82,13 @@ class MenusController extends Controller
     /**
      * Update an existing menu
      *
-     * @param App\Http\Requests\EditMenuRequest
+     * @param App\Http\Requests\UpdateMenuRequest
      * @param menuId
      */
-    public function update(EditMenuRequest $request, $menuId)
+    public function update(UpdateMenuRequest $request, $menuId)
     {
         // see if user has permission to delete menu
-        if (!hasPermission('menu_edit', true)) return back();
+        if (!hasPermission('menu_update', true)) return back();
 
         $menuApplicationService = new MenuApplicationService();
         $menu = $this->menuRepository->byId($menuId);

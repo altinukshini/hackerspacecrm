@@ -86,7 +86,12 @@
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('new_user_role') ? ' has-error' : ' has-feedback' }}">
-											<input class="form-control" id="new_user_role" name="new_user_role" placeholder="authenticated" type="text" value="{{ old('new_user_role') ? old('new_user_role') : $settings['new_user_role'] }}" required/>
+											<select class="form-control" id="new_user_role" name="new_user_role" required>
+												<option disabled selected>Select role</option>
+												@foreach (crmRoles() as $role)
+													<option value="{{ $role->name }}" {{ old('new_user_role') == $role->name ? "selected" : ($settings['new_user_role'] == $role->name ? "selected" : "") }}>{{ $role->name . ' - ' .$role->label }}</option>
+												@endforeach
+											</select>
 											@if ($errors->has('new_user_role'))
 											<span class="help-block">
 												<strong>{{ $errors->first('new_user_role') }}</strong>

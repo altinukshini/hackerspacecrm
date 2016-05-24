@@ -15,6 +15,21 @@ class Profile extends Model
      */
     protected $table = 'profiles';
 
+    protected $fillable = [
+        'birthday',
+        'gender',
+        'socialid',
+        'phone',
+        'address',
+        'website',
+        'github_username',
+        'facebook_username',
+        'twitter_username',
+        'linkedin_username',
+        'skills',
+        'biography'
+    ];
+
 	/**
      * Relation between a profile and the user.
      *

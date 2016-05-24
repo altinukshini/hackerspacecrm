@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Contracts\Validation\Validator;
 
-class EditMenuRequest extends Request
+class UpdateMenuRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class EditMenuRequest extends Request
      */
     public function authorize()
     {
-        return hasPermission('menu_edit');
+        return hasPermission('menu_update');
     }
 
     /**

@@ -1,3 +1,17 @@
+$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+  checkboxClass: 'icheckbox_minimal-blue',
+  radioClass: 'iradio_minimal-blue',
+  increaseArea: '15%' // optional
+});
+$('input[type="checkbox"].minimal, input[type="radio"].minimal').css('padding-left', '10px');
+
+$('.datepicker').datepicker({
+  autoclose: true,
+  format: 'yyyy-mm-dd'
+});
+
+$(".wysitextarea").wysihtml5();
+
 $('.sidebar-menu li').each(function(){
 	if ($(this).hasClass('active')) {
 		$(this).parent('ul').parent('li').addClass('active');

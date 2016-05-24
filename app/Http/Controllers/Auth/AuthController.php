@@ -295,7 +295,9 @@ class AuthController extends Controller
     public function confirmEmail($email_token)
     {
         try {
-            $user = User::where('email_token', $email_token)->firstOrFail()->confirmEmail();
+            $user = User::where('email_token', $email_token)->firstOrFail();
+            $user->confirmEmail();
+            $user->assignRoleByName(crminfo('new_user_role'));
         } catch (ModelNotFoundException $e) {
             Flash::warning('User with provided token was not found in the database');
 

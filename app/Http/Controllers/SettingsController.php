@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Flash;
 use Illuminate\Http\Request;
-use App\Http\Requests\EditGeneralSettingsRequest;
+use App\Http\Requests\UpdateGeneralSettingsRequest;
 
 use HackerspaceCRM\Setting\Setting;
 use HackerspaceCRM\Setting\SettingApplicationService;
@@ -26,10 +26,10 @@ class SettingsController extends Controller
     /**
      * Update an existing setting
      *
-     * @param App\Http\Requests\EditSettingRequest
+     * @param App\Http\Requests\UpdateGeneralSettingsRequest
      * @param menuId
      */
-    public function editGeneral(EditGeneralSettingsRequest $request)
+    public function editGeneral(UpdateGeneralSettingsRequest $request)
     {
         $settingApplicationService = new SettingApplicationService();
         $requestArray = $request->all();

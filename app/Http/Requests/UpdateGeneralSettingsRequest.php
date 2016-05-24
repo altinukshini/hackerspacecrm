@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Contracts\Validation\Validator;
 
-class EditGeneralSettingsRequest extends Request
+class UpdateGeneralSettingsRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class EditGeneralSettingsRequest extends Request
      */
     public function authorize()
     {
-        return hasPermission('setting_edit');
+        return hasPermission('setting_update');
     }
 
     /**

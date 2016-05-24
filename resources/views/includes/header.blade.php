@@ -67,7 +67,7 @@
 						</ul>
 						@endif
 					</li>
-					@if (hasRole('administrator'))
+					@if ( hasPermission('setting_update') )
 					<!-- Control Sidebar Toggle Button -->
 					<li>
 						<a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>

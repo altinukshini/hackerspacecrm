@@ -10,9 +10,9 @@
 	<!-- Bootstrap 3.3.5 -->
 	<link rel="stylesheet" href="{{ asset('/bootstrap/css/bootstrap.min.css') }}">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{{ asset('/dist/css/font-awesome.min.css') }}">
 	<!-- Ionicons -->
-	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="{{ asset('/dist/css/ionicons.min.css') }}">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="{{ asset('/dist/css/AdminLTE.min.css') }}">
 	<!-- iCheck -->
@@ -34,11 +34,11 @@
 	@yield('content')
 
 	<!-- jQuery 2.1.4 -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="{{ asset('/dist/js/jquery-2.1.4.min.js') }}"></script>
 	<!-- jQuery UI 1.11.4 -->
-	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	<!-- <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script> -->
 
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="{{ asset('/dist/js/bootstrap.min.js') }}"></script>
 
 	{{-- <script src="{{ elixir('/js/app.js') }}"></script> --}}
 

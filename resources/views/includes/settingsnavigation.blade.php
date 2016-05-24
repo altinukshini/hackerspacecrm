@@ -1,4 +1,4 @@
-@can('setting_edit')
+@can('setting_update')
 <li class="header"><i class="fa fa-sliders" style="margin-right:5px;"></i> {{ trans('hackerspacecrm.menus.settings') }}</li>
 @foreach( $settings as $menu )
 	@if($menu->children->count())

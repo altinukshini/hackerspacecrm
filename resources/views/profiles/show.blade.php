@@ -21,7 +21,7 @@
 						<img class="img-circle" src="/dist/img/user1-128x128.jpg" alt="User Avatar">
 					</div>
 					<a class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#editProfileModal">
-						<i class="fa fa-edit"></i> Edit profile
+						<i class="fa fa-edit"></i> Edit account
 					</a>
 					<h3 class="widget-user-username">{{ $user->full_name }}</h3><!-- Button trigger modal -->
 					<h5 class="widget-user-desc">{{ $user->username }} </h5>
@@ -29,6 +29,7 @@
 				</div>
 				<div class="box-body">
 					<p><b>Email:</b> <a class="pull-right">{{ $user->email }}</a></p>
+					<p><b>Website:</b> <a class="pull-right" target="_blank" href="{{ $user->profile->website }}">{{ $user->profile->website }}</a></p>
 					<p><b>Phone:</b> <a class="pull-right">{{ $user->profile->phone }}</a></p>
 					<p>
 						<b>Social media:</b> 
@@ -41,7 +42,7 @@
 					</p>
 					<br>
 
-					<ul class="list-group list-group-unbordered">
+					<!-- <ul class="list-group list-group-unbordered">
 						<li class="list-group-item">
 							<b>Membership status:</b> <span class="badge bg-green pull-right">Active</span> <span class="badge bg-grey pull-right">Inactive</span> <span class="badge bg-red pull-right">Banned</span> <span class="badge bg-yellow pull-right">Pending</span>
 						</li>
@@ -57,7 +58,7 @@
 						<li class="list-group-item">
 							<b>Roles:</b> <span class="pull-right">Director, Voting, Member</span>
 						</li>
-					</ul>
+					</ul> -->
 				</div><!-- /.box-body -->
 			</div><!-- /.box -->
 		</div><!-- /.col -->
@@ -72,7 +73,7 @@
 					<!-- About Box -->
 					<div class="box-body">
 						<strong><i class="fa fa-file-text-o margin-r-5"></i> Bio</strong>
-						<p>{{ $user->profile->biography }}</p>
+						<p>{!! $user->profile->biography !!}</p>
 						<hr>
 						<strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
 						<p>
@@ -94,64 +95,265 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">×</span></button>
-							<h4 class="modal-title">Edit profile</h4>
-						</div>
-						<div class="modal-body">
-							<form class="form-horizontal">
-								<div class="form-group">
-									<label for="inputName" class="col-sm-2 control-label">Name</label>
-									<div class="col-sm-10">
-										<input type="email" class="form-control" id="inputName" placeholder="Name">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputEmail" class="col-sm-2 control-label">Email</label>
-									<div class="col-sm-10">
-										<input type="email" class="form-control" id="inputEmail" placeholder="Email">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputName" class="col-sm-2 control-label">Name</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control" id="inputName" placeholder="Name">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-									<div class="col-sm-10">
-										<textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-									<div class="col-sm-10">
-										<input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-offset-2 col-sm-10">
-										<div class="checkbox">
-											<label>
-												<input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-											</label>
+						<span aria-hidden="true">×</span></button>
+						<h4 class="modal-title">Edit account</h4>
+					</div>
+					<div class="modal-body">
+						<div class="nav-tabs-custom">
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#accountTab" id="accountTabButton" data-toggle="tab">Account</a></li>
+								<li><a href="#profileTab" id="profileTabButton" data-toggle="tab">Profile</a></li>
+							</ul>
+
+							<div class="tab-content">
+								<div class="active tab-pane" id="accountTab">
+									<div class="row">
+										<div class="col-md-6">
+											<form ole="form" id="editUserForm" method="POST" action="{{ url('users/'.$user->username) }}">
+												{!! method_field('PATCH') !!}
+												{!! csrf_field() !!}
+												<div class="form-group{{ $errors->has('full_name') ? ' has-error' : ' has-feedback' }}">
+													<label for="full_name">Full Name*</label>
+													<input type="text" class="form-control" placeholder="Name Surname" name="full_name" value="{{ old('full_name') ? old('full_name') : $user->full_name }}" required>
+													@if ($errors->has('full_name'))
+													<span class="help-block">
+														<strong>{{ $errors->first('full_name') }}</strong>
+													</span>
+													@endif
+												</div>
+												<div class="form-group{{ $errors->has('email') ? ' has-error' : ' has-feedback' }}">
+													<label for="email">Email*</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+														<input type="email" class="form-control" placeholder="user@email.com" name="email" value="{{ old('email') ? old('email') : $user->email }}" required>
+													</div>
+													@if ($errors->has('email'))
+													<span class="help-block">
+														<strong>{{ $errors->first('email') }}</strong>
+													</span>
+													@endif
+												</div>
+												<div class="form-group">
+													<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+												</div>
+											</form>
+										</div>
+										<div class="col-md-6">
+											<!-- <h4>Change password</h4> -->
+											<form ole="form" id="editPasswordForm" method="POST" action="{{ url('users/'.$user->username.'/password') }}">
+												{!! method_field('PATCH') !!}
+												{!! csrf_field() !!}
+												<div class="form-group{{ $errors->has('password') ? ' has-error' : ' has-feedback' }}">
+													<label for="password">New password*</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+														<input type="password" class="form-control" name="password" value="{{ old('password') }}" required>
+													</div>
+													@if ($errors->has('password'))
+													<span class="help-block">
+														<strong>{{ $errors->first('password') }}</strong>
+													</span>
+													@endif
+												</div>
+												<div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : ' has-feedback' }}">
+													<label for="password_confirmation">Confirm new password*</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+														<input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" required>
+													</div>
+													@if ($errors->has('password_confirmation'))
+													<span class="help-block">
+														<strong>{{ $errors->first('password_confirmation') }}</strong>
+													</span>
+													@endif
+												</div>
+												<div class="form-group">
+													<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Change</button>
+												</div>
+											</form>
 										</div>
 									</div>
 								</div>
-								<div class="form-group">
-									<div class="col-sm-offset-2 col-sm-10">
-										<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-									</div>
+								<div class="tab-pane" id="profileTab">
+									<form ole="form" id="editProfileForm" method="POST" action="{{ url('members/'.$user->username) }}">
+										{!! method_field('PATCH') !!}
+										{!! csrf_field() !!}
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group{{ $errors->has('birthday') ? ' has-error' : ' has-feedback' }}">
+													<label for="birthday">Birthday*</label>
+													<div class="input-group date">
+													  <div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													  </div>
+													  <input type="text" class="form-control pull-right datepicker" name="birthday" value="{{ old('birthday') ? old('birthday') : $user->profile->birthday }}" required/>
+													</div>
+													
+													@if ($errors->has('birthday'))
+													<span class="help-block">
+														<strong>{{ $errors->first('birthday') }}</strong>
+													</span>
+													@endif
+												</div>
+												<div class="form-group{{ $errors->has('gender') ? ' has-error' : ' has-feedback' }}">
+													<label for="gender">Gender*</label>
+													<br />
+													<input type="radio" class="minimal" id="gender" name="gender" value="male" {{ old('gender') == 'male' ? old('gender') : ($user->profile->gender == 'male' ? 'checked' : "") }} /> Male 
+													<input type="radio" class="minimal" id="gender" name="gender" value="female" {{ old('gender') == 'female' ? old('gender') : ($user->profile->gender == 'female' ? 'checked' : "") }} /> Female 
+													<input type="radio" class="minimal" id="gender" name="gender" value="other" {{ old('gender') == 'other' ? old('gender') : ($user->profile->gender == 'other' ? 'checked' : "") }} /> Other 
+
+													@if ($errors->has('gender'))
+													<span class="help-block">
+														<strong>{{ $errors->first('gender') }}</strong>
+													</span>
+													@endif
+												</div>
+												<div class="form-group{{ $errors->has('socialid') ? ' has-error' : ' has-feedback' }}">
+													<label for="socialid">Social ID*</label>
+													<input type="text" class="form-control" placeholder="1234567890" name="socialid" value="{{ old('socialid') ? old('socialid') : $user->profile->socialid }}" required>
+													@if ($errors->has('socialid'))
+													<span class="help-block">
+														<strong>{{ $errors->first('socialid') }}</strong>
+													</span>
+													@endif
+												</div>
+												<div class="form-group{{ $errors->has('phone') ? ' has-error' : ' has-feedback' }}">
+													<label for="phone">Phone</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+														<input type="text" class="form-control" placeholder="+1 555 555 555" name="phone" value="{{ old('phone') ? old('phone') : $user->profile->phone }}"/>
+													</div>
+													@if ($errors->has('phone'))
+													<span class="help-block">
+														<strong>{{ $errors->first('phone') }}</strong>
+													</span>
+													@endif
+												</div>
+												<div class="form-group{{ $errors->has('address') ? ' has-error' : ' has-feedback' }}">
+													<label for="address">Address</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+														<input type="text" class="form-control" placeholder="Example st, City" name="address" value="{{ old('address') ? old('address') : $user->profile->address }}" />
+													</div>
+													@if ($errors->has('address'))
+													<span class="help-block">
+														<strong>{{ $errors->first('address') }}</strong>
+													</span>
+													@endif
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group{{ $errors->has('website') ? ' has-error' : ' has-feedback' }}">
+													<label for="website">Website*</label>
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-globe"></i></span>
+														<input type="text" class="form-control" placeholder="http://www.example.com" name="website" value="{{ old('website') ? old('website') : $user->profile->website }}" required>
+													</div>
+													<p>Provide full URL. Exc: http://example.com</p>
+
+													@if ($errors->has('website'))
+													<span class="help-block">
+														<strong>{{ $errors->first('website') }}</strong>
+													</span>
+													@endif
+												</div>
+												<br />
+												<label>Social media:</label>
+												<div class="form-group{{ $errors->has('github_username') ? ' has-error' : ' has-feedback' }}">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-github"></i></span>
+														<input type="text" class="form-control" placeholder="username" name="github_username" value="{{ old('github_username') ? old('github_username') : $user->profile->github_username }}" />
+													</div>
+													@if ($errors->has('github_username'))
+													<span class="help-block">
+														<strong>{{ $errors->first('github_username') }}</strong>
+													</span>
+													@endif
+												</div>
+												<div class="form-group{{ $errors->has('facebook_username') ? ' has-error' : ' has-feedback' }}">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-facebook-official"></i></span>
+														<input type="text" class="form-control" placeholder="username" name="facebook_username" value="{{ old('facebook_username') ? old('facebook_username') : $user->profile->facebook_username }}" />
+													</div>
+													@if ($errors->has('facebook_username'))
+													<span class="help-block">
+														<strong>{{ $errors->first('facebook_username') }}</strong>
+													</span>
+													@endif
+												</div>
+												<div class="form-group{{ $errors->has('twitter_username') ? ' has-error' : ' has-feedback' }}">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+														<input type="text" class="form-control" placeholder="username" name="twitter_username" value="{{ old('twitter_username') ? old('twitter_username') : $user->profile->twitter_username }}" />
+													</div>
+													@if ($errors->has('twitter_username'))
+													<span class="help-block">
+														<strong>{{ $errors->first('twitter_username') }}</strong>
+													</span>
+													@endif
+												</div>
+												<div class="form-group{{ $errors->has('linkedin_username') ? ' has-error' : ' has-feedback' }}">
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-linkedin"></i></span>
+														<input type="text" class="form-control" placeholder="username" name="linkedin_username" value="{{ old('linkedin_username') ? old('linkedin_username') : $user->profile->linkedin_username }}" />
+													</div>
+													@if ($errors->has('linkedin_username'))
+													<span class="help-block">
+														<strong>{{ $errors->first('linkedin_username') }}</strong>
+													</span>
+													@endif
+												</div>
+											</div>
+											<br style="clear:both;">
+											<br style="clear:both;">
+											<div class="col-md-12">
+												<div class="form-group{{ $errors->has('skills') ? ' has-error' : ' has-feedback' }}">
+													<label for="skills">Skills</label>
+													
+													<div class="input-group">
+														<span class="input-group-addon"><i class="fa fa-tasks"></i></span>
+														<input type="text" class="form-control" placeholder="skill1, skill2, skill3" name="skills" value="{{ old('skills') ? old('skills') : $user->profile->skills }}" />
+													</div>
+													<p>Separate each skill with a comma. Exc: skill1, skill2, skill3</p>
+
+													@if ($errors->has('skills'))
+													<span class="help-block">
+														<strong>{{ $errors->first('skills') }}</strong>
+													</span>
+													@endif
+												</div>
+												<div class="form-group {{ $errors->has('biography') ? ' has-error' : ' has-feedback' }}">
+													<label for="biography">Biography</label>
+													
+													<div class="box-body pad">
+														<textarea class="form-control wysitextarea" id="biography" rows="15" placeholder="Enter text here" type="text" name="biography" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required/>{{ old('biography') ? old('biography') : $user->profile->biography }}</textarea>
+													</div>
+													@if ($errors->has('biography'))
+													<span class="help-block">
+														<strong>{{ $errors->first('biography') }}</strong>
+													</span>
+													@endif
+												</div>
+											</div>
+											<br style="clear:both;">
+											<div class="col-md-12">
+												<div class="form-group">
+													<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+												</div>
+											</div>
+										</div>
+									</form>
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
-					<!-- /.modal-content -->
 				</div>
+					<!-- /.modal-content -->
 			</div>
 		</div>
+	</div>
 
-	<div class="row">
+	<!-- <div class="row">
 		<div class="col-md-12">
 			<div class="nav-tabs-custom">
 				<ul class="nav nav-tabs">
@@ -171,7 +373,7 @@
 						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					</div><!-- /.tab-pane -->
+					</div>
 
 					<div class="tab-pane" id="role">
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -186,7 +388,7 @@
 						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					</div><!-- /.tab-pane -->
+					</div>
 
 					<div class="tab-pane" id="keys">
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -207,7 +409,7 @@
 						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					</div><!-- /.tab-pane -->
+					</div>
 
 					<div class="tab-pane" id="payments">
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -216,7 +418,7 @@
 						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					</div><!-- /.tab-pane -->
+					</div>
 
 					<div class="tab-pane" id="mentor">
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -225,19 +427,20 @@
 						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					</div><!-- /.tab-pane -->
+					</div>
 
-				</div><!-- /.tab-content -->
-			</div><!-- /.nav-tabs-custom -->
-		</div><!-- /.col -->
-	</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
 
 </section><!-- /.content -->
 
+<!-- If edit menu request has error, open editmenu modal -->
+@if ($errors->has('error_code') AND $errors->first('error_code') == '6')
 <script type="text/javascript">
-	$('#myModal').on('shown.bs.modal', function () {
-		$('#myInput').focus()
-	})
+	$('#editProfileModal').modal('show');
 </script>
+@endif
 
 @stop

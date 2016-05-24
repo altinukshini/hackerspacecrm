@@ -81,6 +81,8 @@
 	<script src="{{ asset('/dist/js/demo.js') }}"></script>
 	<!-- FontAwesome Icon Picker for demo purposes -->
 	<script src="{{ asset('/dist/js/fontawesome-iconpicker.js') }}"></script>
+	<!-- iCheck -->
+	<script src="{{ asset('/plugins/iCheck/icheck.min.js') }}"></script>
 
 	@yield('headerscripts')
 
