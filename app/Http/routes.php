@@ -44,9 +44,10 @@ Route::post('/profiles/{username}/create', 'ProfilesController@create');
 // Route::delete('/members/{profileId}', 'ProfilesController@delete');
 
 Route::get('/users', 'UsersController@all');
+Route::get('/users/{username}', 'UsersController@getUser');
 Route::patch('/users/{username}', 'UsersController@update');
 Route::patch('/users/{username}/password', 'UsersController@changePassword');
-// Route::delete('/users/{username}', 'UsersController@delete');
+Route::delete('/users/{username}', 'UsersController@delete');
 
 
 /*
@@ -62,9 +63,6 @@ Route::get('/settings/emails', function () {
 	return view('settings.emails');
 });
 
-Route::get('/settings/users/all', function () {
-	return view('settings.users.all');
-});
 Route::get('/settings/users/roles', function () {
 	return view('settings.users.roles');
 });

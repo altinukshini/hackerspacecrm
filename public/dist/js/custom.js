@@ -54,6 +54,32 @@ function editMenu(id) {
     });
 }
 
+function editUser(username) {
+    $('#editUserForm')[0].reset();
+    $.ajax({
+        url: "/users/" + username,
+        type: "GET",
+        dataType: "JSON",
+        success: function (data) {
+            $('#editUserForm').attr('action', '/users/'+data.username);
+            $('#editUserForm [name="full_name"]').val(data.full_name);
+            $('#editUserForm [name="email"]').val(data.email);
+            // Open modal for edit:
+            $('#editUser').modal('show');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('Error getting data!');
+        }
+    });
+}
+// triggered when modal is about to be shown
+$('#confirmUserDelete').on('show.bs.modal', function(e) {
+    //get data-id attribute of the clicked element
+    username = $(e.relatedTarget).data('username');
+    $("#confirmUserDelete #username").html( username );
+    $("#delForm").attr('action', '/users/' + username);//e.g. 'domainname/products/' + menuId
+});
+
 // triggered when modal is about to be shown
 $('#confirmDelete').on('show.bs.modal', function(e) {
 	//get data-id attribute of the clicked element

@@ -18,9 +18,19 @@ class UsersController extends Controller
 
     public function all()
     {
-        Flash:info('Page not created yet');
+        if (!hasPermission('user_update', true)) return redirect('/');
 
-        return redirect('/');
+        $users = User::all();
+
+        return view('settings.users.all')->with('users', $users);
+    }
+
+    public function getUser($username)
+    {
+        // see if user has permission to view menu
+        if (!hasPermission('user_view', true)) return redirect('/');
+
+        return User::whereUsername($username)->first();
     }
 
     public function show()
@@ -39,6 +49,10 @@ class UsersController extends Controller
 
     public function update(UpdateUserRequest $request, $username)
     {
+        if(!(hasPermission('user_update') || Auth::user()->username == $username)) {
+            Flash::warning('You do not have the right permission to perform this action');
+            return redirect('/');
+        }
 
         $user = User::whereUsername($username)->first();
 
@@ -58,12 +72,31 @@ class UsersController extends Controller
         return redirect('/');
     }
 
-    public function delete()
+    public function delete($username)
     {
+        // see if user has permission to delete menu
+        if (!hasPermission('user_delete', true)) return redirect('/');
+
+        $user = User::whereUsername($username)->first();
+
+        if(!is_null($user) && $username != 'admin') {
+            $user->delete();
+            Flash::success('User was successfully deleted!');
+            return back();
+        }
+
+        Flash::error('User could not be deleted!');
+
+        return back();
     }
 
     public function changePassword(UpdateUserPasswordRequest $request, $username)
     {
+
+        if(!(hasPermission('user_update') || Auth::user()->username == $username)) {
+            Flash::warning('You do not have the right permission to perform this action');
+            return redirect('/');
+        }
 
         $user = User::whereUsername($username)->first();
 
