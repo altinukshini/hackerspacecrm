@@ -72,6 +72,28 @@ function editUser(username) {
         }
     });
 }
+
+function editUserRoles(username) {
+  
+    $("#updateUserRolesForm input").attr("checked", false);
+    $('#updateUserRolesForm')[0].reset();
+    $.ajax({
+        url: "/roles/" + username,
+        type: "GET",
+        dataType: "JSON",
+        success: function (data) {
+            $('#updateUserRolesForm').attr('action', '/roles/'+username);
+            for (var key in data) {
+              $('#updateUserRolesForm input[value="'+data[key]+'"] ').attr("checked", true);
+            }
+            // Open modal for edit:
+            $('#editUserRoles').modal('show');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('Error getting data!');
+        }
+    });
+}
 // triggered when modal is about to be shown
 $('#confirmUserDelete').on('show.bs.modal', function(e) {
     //get data-id attribute of the clicked element

@@ -39,6 +39,10 @@
 								<td>{!! $user->verified == 1 ? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-close text-red"></i>' !!}</td>
 								<td>{{ $user->created_at }}</td>
 								<td>
+									@if(hasPermission('role_update'))
+										<button type="button" class="btn btn-xs btn-warning btn-flat" onclick="editUserRoles('{{ $user->username }}')"><i class="fa fa-eye"></i> roles</button>
+									@endif
+
 									<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editUser('{{ $user->username }}')"><i class="fa fa-edit text-blue"></i></button>
 
 									@if($user->username != 'admin')
@@ -154,6 +158,37 @@
 				</div>
 				<!-- /.modal-content -->
 			</div>
+	</div>
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="editUserRoles">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span></button>
+					<h4 class="modal-title">Edit roles</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<form role="form" id="updateUserRolesForm" method="POST" action="">
+								{!! csrf_field() !!}
+								<div class="form-group{{ $errors->has('enable_registration') ? ' has-error' : ' has-feedback' }}">
+									<label for="roles">Roles</label><br />
+									@foreach(crmRoles() as $role)
+										<input type="checkbox" class="" name="roles[]" value="{{ $role->name }}" /> {{ $role->label . ' (' . $role->name . ')' }}<br />
+									@endforeach
+								</div>
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
 	</div>
 </section><!-- /.content -->
 <!-- If edit menu request has error, open editmenu modal -->

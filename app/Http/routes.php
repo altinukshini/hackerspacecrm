@@ -20,14 +20,15 @@ Route::get('/', function () {
 Route::auth();
 
 /* Email Confirmation Routes */
-Route::get('/login/confirm', function () {
+Route::get('login/confirm', function () {
 	Flash::error('You don\'t have permission to access this page');
     return redirect('/');
 });
-Route::get('/login/confirm/{email_token}', 'Auth\AuthController@confirmEmail');
+Route::get('login/confirm/{email_token}', 'Auth\AuthController@confirmEmail');
 
 
-Route::get('/dashboard', 'DashboardController@index');
+Route::get('dashboard', 'DashboardController@index');
+
 
 /* Application Locale switch */
 Route::get('locale/{locale}', ['as'=>'locale.switch', 'uses'=>'LocaleController@switchLocale']);
@@ -35,14 +36,12 @@ Route::get('locale/{locale}', ['as'=>'locale.switch', 'uses'=>'LocaleController@
 /*
  * User / Member / Profile Routes
  */
-Route::get('/members', 'ProfilesController@all');
-Route::get('/members/{username}', 'ProfilesController@show');
-
-Route::patch('/profiles/{username}', 'ProfilesController@update');
-Route::get('/profiles/{username}/create', 'ProfilesController@showCreateForm');
-Route::post('/profiles/{username}/create', 'ProfilesController@create');
-// Route::delete('/members/{profileId}', 'ProfilesController@delete');
-
+Route::get('members', 'ProfilesController@all');
+Route::get('members/{username}', 'ProfilesController@show');
+Route::patch('profiles/{username}', 'ProfilesController@update');
+Route::get('profiles/{username}/create', 'ProfilesController@showCreateForm');
+Route::post('profiles/{username}/create', 'ProfilesController@create');
+// Route::delete('profiles/{username}', 'ProfilesController@delete');
 Route::get('/users', 'UsersController@all');
 Route::get('/users/{username}', 'UsersController@getUser');
 Route::patch('/users/{username}', 'UsersController@update');
@@ -63,13 +62,6 @@ Route::get('/settings/emails', function () {
 	return view('settings.emails');
 });
 
-Route::get('/settings/users/roles', function () {
-	return view('settings.users.roles');
-});
-Route::get('/settings/users/permissions', function () {
-	return view('settings.users.permissions');
-});
-
 /*
  * Menus routes
  */
@@ -78,6 +70,15 @@ Route::get('/settings/menus/{menuId}', 'MenusController@getMenu'); // for ajax r
 Route::post('/settings/menus','MenusController@create');
 Route::delete('/settings/menus/{menuId}', 'MenusController@delete');
 Route::patch('/settings/menus/{menuId}', 'MenusController@update');
+
+Route::get('roles', 'RolesController@show');
+Route::get('roles/{username}', 'RolesController@getUserRoles');
+Route::post('roles/{username}', 'RolesController@update');
+Route::get('permissions', function () {
+	return view('settings.users.permissions');
+});
+
+
 
 // \DB::listen(function($query) {
 //     var_dump($query);
