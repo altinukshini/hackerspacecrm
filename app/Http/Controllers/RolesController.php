@@ -14,6 +14,11 @@ class RolesController extends Controller
         $this->middleware('auth');
     }
 
+    public function show()
+    {
+    	return redirect('users');
+    }
+
     public function getUserRoles($username)
     {
     	if (!hasPermission('role_view', true)) return redirect('/');
@@ -44,19 +49,13 @@ class RolesController extends Controller
 		]);
 
 		if ($validator->fails()) {
-			dd('fails');
-        	return back()
-            	->withInput()
-            	->withErrors($validator);
+			Flash::error('Roles could not be assigned to user: '.$username.'. Wrong input data sent.');
+        	return back();
     	}
 
         $roles = $request->input('roles');
 
-        $user->revokeAllRoles();
-
-        foreach ($roles as $key => $value) {
-        	$user->assignRoleByName($value);
-        }
+        $user->syncRoles(array_keys($roles));
 
         Flash::success('User roles updated successfully!');
 

@@ -18,7 +18,7 @@ class UsersController extends Controller
 
     public function all()
     {
-        if (!hasPermission('user_update', true)) return redirect('/');
+        if (!hasPermission('user_view', true)) return redirect('/');
 
         $users = User::all();
 

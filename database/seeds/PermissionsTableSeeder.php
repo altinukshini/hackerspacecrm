@@ -19,7 +19,7 @@ class PermissionsTableSeeder extends Seeder
 
 			['name' => 'public', 'label' => 'Public'],
 
-			['name' => 'permission_edit', 'label' => 'Edit permission'],
+			['name' => 'permission_update', 'label' => 'Edit permission'],
 
 			['name' => 'setting_view', 'label' => 'View setting'],
 			['name' => 'setting_update', 'label' => 'Update setting'],

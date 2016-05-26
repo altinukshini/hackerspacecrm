@@ -20,7 +20,7 @@ class SettingsController extends Controller
         $this->settingRepository = $settingRepository;
 
         $this->middleware('auth');
-        $this->middleware('role:administrator');
+        $this->middleware('permission:setting_update');
     }
 
     /**

@@ -68,11 +68,23 @@ trait HasPermission
      */
     public function givePermissionByName($name)
     {
-        if (!$this->hasPemrission($name)) {
-            return $this->pemrissions()->attach(
+        if (!$this->hasPermission($name)) {
+            return $this->permissions()->attach(
                 Permission::whereName($name)->firstOrFail()
             );
         }
+    }
+
+    /**
+     * Sync Permissions to Role.
+     *
+     * @param array $permissionIds
+     *
+     * @return bool
+     */
+    public function syncPermissions(array $permissionIds)
+    {
+        return $this->permissions()->sync($permissionIds);
     }
 
     /**

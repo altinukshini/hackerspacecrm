@@ -75,6 +75,9 @@ function editUser(username) {
 
 function editUserRoles(username) {
   
+    $("#updateUserRolesForm input").parent('div').attr('aria-checked', 'false').removeClass('checked');
+    $("#updateUserRolesForm input").parent('div').removeClass('checked');
+    // $("#updateUserRolesForm input").parent('div')
     $("#updateUserRolesForm input").attr("checked", false);
     $('#updateUserRolesForm')[0].reset();
     $.ajax({
@@ -84,7 +87,9 @@ function editUserRoles(username) {
         success: function (data) {
             $('#updateUserRolesForm').attr('action', '/roles/'+username);
             for (var key in data) {
-              $('#updateUserRolesForm input[value="'+data[key]+'"] ').attr("checked", true);
+                $('#updateUserRolesForm input[value="'+data[key]+'"] ').parent('div').attr('aria-checked', 'true').removeClass('checked');
+                $('#updateUserRolesForm input[value="'+data[key]+'"] ').parent('div').addClass('checked');
+                $('#updateUserRolesForm input[value="'+data[key]+'"] ').attr("checked", true);
             }
             // Open modal for edit:
             $('#editUserRoles').modal('show');

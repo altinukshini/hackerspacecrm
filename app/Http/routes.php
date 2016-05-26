@@ -74,11 +74,8 @@ Route::patch('/settings/menus/{menuId}', 'MenusController@update');
 Route::get('roles', 'RolesController@show');
 Route::get('roles/{username}', 'RolesController@getUserRoles');
 Route::post('roles/{username}', 'RolesController@update');
-Route::get('permissions', function () {
-	return view('settings.users.permissions');
-});
-
-
+Route::get('permissions', 'PermissionsController@show');
+Route::patch('permissions', 'PermissionsController@update');
 
 // \DB::listen(function($query) {
 //     var_dump($query);

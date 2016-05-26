@@ -256,7 +256,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 24,
-				'permission_id' => 4,
+				'permission_id' => 19,
 				'menu_group' => 'settings',
 				'menu_order' => 0,
 				'title' => 'All Users',
@@ -266,7 +266,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 24,
-				'permission_id' => 4,
+				'permission_id' => 7,
 				'menu_group' => 'settings',
 				'menu_order' => 1,
 				'title' => 'Roles',
@@ -276,7 +276,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 24,
-				'permission_id' => 4,
+				'permission_id' => 2,
 				'menu_group' => 'settings',
 				'menu_order' => 2,
 				'title' => 'Permissions',

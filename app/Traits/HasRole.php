@@ -90,6 +90,18 @@ trait HasRole
     }
 
     /**
+     * Sync Roles to User.
+     *
+     * @param array $roleIds
+     *
+     * @return bool
+     */
+    public function syncRoles(array $roleIds)
+    {
+        return $this->roles()->sync($roleIds);
+    }
+
+    /**
      * Revoke role to a user.
      *
      * @param App\Models\Role $role
@@ -169,14 +181,17 @@ trait HasRole
     {
         if (is_string($permission) || is_int($permission)) {
             foreach ($this->roles as $role) {
-                return $role->hasPermission($permission);
+                if ($role->hasPermission($permission)) return true;
             }
+
+            return false;
         }
 
         if ($permission instanceof Collection) {
             foreach ($this->roles as $role) {
-                return $role->hasPermission($permission);
+                if ($role->hasPermission($permission)) return true;
             }
+            return false;
         }
 
         foreach ($permission as $p) {
