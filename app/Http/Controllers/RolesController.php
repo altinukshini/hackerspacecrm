@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Flash;
-use Validator;
 use Illuminate\Http\Request;
+use Validator;
 
 class RolesController extends Controller
 {
@@ -16,7 +17,9 @@ class RolesController extends Controller
 
     public function show()
     {
-    	return redirect('users');
+    	$roles = Role::all();
+
+    	return view('settings.users.roles', compact('roles'));
     }
 
     public function getUserRoles($username)

@@ -11,7 +11,7 @@
 				</a>
 				<ul class="treeview-menu">
 					@foreach($menu->children as $child)
-						@if(hasPermission($menu->permission_id))
+						@if(hasPermission($child->permission_id))
 							<li class="{{ setMenuActive($child->url) }}"><a href="{{ url('/'.$child->url) }}"><i class="fa {{$child->icon}}"></i> {{$child->title}}</a></li>
 						@endif
 					@endforeach
