@@ -15,7 +15,7 @@
 					<h3 class="box-title">{{ $user->full_name . ' (' .$user->username.')' }}</h3>
 				</div>
 				<div class="box-body">
-					<form ole="form" id="createProfileForm" method="POST" action="{{ url('profiles/'.$user->username.'/create') }}">
+					<form ole="form" id="createProfileForm" method="POST" action="{{ url('profiles/'.$user->username) }}">
 						{{ csrf_field() }}
 						<div class="row">
 							<div class="col-md-6">

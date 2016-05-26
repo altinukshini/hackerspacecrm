@@ -25,7 +25,7 @@ class ProfilesController extends Controller
 
     public function all()
     {
-        Flash:info('Page not created yet');
+        Flash::info('Page not created yet');
 
         return redirect('/');
     }

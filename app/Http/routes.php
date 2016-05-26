@@ -16,19 +16,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/* Authentication Routes provided by Laravel */
-Route::auth();
-
-/* Email Confirmation Routes */
-Route::get('login/confirm', function () {
-	Flash::error('You don\'t have permission to access this page');
-    return redirect('/');
-});
-Route::get('login/confirm/{email_token}', 'Auth\AuthController@confirmEmail');
-
-
 Route::get('dashboard', 'DashboardController@index');
 
+/* Authentication Routes provided by Laravel */
+Route::auth();
+/* Email Confirmation Routes */
+Route::get('login/confirm/{email_token}', 'Auth\AuthController@confirmEmail');
+Route::get('login/confirm', function () {
+    return redirect('login');
+});
 
 /* Application Locale switch */
 Route::get('locale/{locale}', ['as'=>'locale.switch', 'uses'=>'LocaleController@switchLocale']);
@@ -39,42 +35,40 @@ Route::get('locale/{locale}', ['as'=>'locale.switch', 'uses'=>'LocaleController@
 Route::get('members', 'ProfilesController@all');
 Route::get('members/{username}', 'ProfilesController@show');
 Route::patch('profiles/{username}', 'ProfilesController@update');
+Route::post('profiles/{username}', 'ProfilesController@create');
 Route::get('profiles/{username}/create', 'ProfilesController@showCreateForm');
-Route::post('profiles/{username}/create', 'ProfilesController@create');
 // Route::delete('profiles/{username}', 'ProfilesController@delete');
-Route::get('/users', 'UsersController@all');
-Route::get('/users/{username}', 'UsersController@getUser');
-Route::patch('/users/{username}', 'UsersController@update');
-Route::patch('/users/{username}/password', 'UsersController@changePassword');
-Route::delete('/users/{username}', 'UsersController@delete');
+
+Route::get('users', 'UsersController@all');
+Route::get('users/{username}', 'UsersController@getUser'); // for ajax request that populates the form
+Route::patch('users/{username}', 'UsersController@update');
+Route::patch('users/{username}/password', 'UsersController@changePassword');
+Route::delete('users/{username}', 'UsersController@delete');
 
 
 /*
  * Application settings routes
  */
-Route::get('/settings', function () {
-	return redirect('/');
-});
-Route::get('/settings/general', 'SettingsController@showGeneral');
-Route::patch('/settings/general', 'SettingsController@editGeneral');
-
-Route::get('/settings/emails', function () {
+Route::get('settings', function () { return redirect('/'); });
+Route::get('settings/general', 'SettingsController@showGeneralSettingsForm');
+Route::patch('settings/general', 'SettingsController@editGeneralSettings');
+Route::get('settings/emails', function () {
 	return view('settings.emails');
 });
 
 /*
  * Menus routes
  */
-Route::get('/settings/menus', 'MenusController@show');
-Route::get('/settings/menus/{menuId}', 'MenusController@getMenu'); // for ajax request that populates the form
-Route::post('/settings/menus','MenusController@create');
-Route::delete('/settings/menus/{menuId}', 'MenusController@delete');
-Route::patch('/settings/menus/{menuId}', 'MenusController@update');
+Route::get('settings/menus', 'MenusController@show');
+Route::get('settings/menus/{menuId}', 'MenusController@getMenu'); // for ajax request that populates the form
+Route::post('settings/menus','MenusController@create');
+Route::patch('settings/menus/{menuId}', 'MenusController@update');
+Route::delete('settings/menus/{menuId}', 'MenusController@delete');
 
 Route::get('roles', 'RolesController@show');
-Route::get('roles/{username}', 'RolesController@getUserRoles');
+Route::get('roles/{username}', 'RolesController@getUserRoles'); // for ajax request that populates the form
 Route::post('roles/{username}', 'RolesController@update');
-Route::get('permissions', 'PermissionsController@show');
+Route::get('permissions', 'PermissionsController@showPermissionsForm');
 Route::patch('permissions', 'PermissionsController@update');
 
 // \DB::listen(function($query) {

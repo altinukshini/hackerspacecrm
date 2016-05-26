@@ -29,7 +29,7 @@ class SettingsController extends Controller
      * @param App\Http\Requests\UpdateGeneralSettingsRequest
      * @param menuId
      */
-    public function editGeneral(UpdateGeneralSettingsRequest $request)
+    public function editGeneralSettings(UpdateGeneralSettingsRequest $request)
     {
         $settingApplicationService = new SettingApplicationService();
         $requestArray = $request->all();
@@ -50,7 +50,7 @@ class SettingsController extends Controller
         return back();
     }
 
-    public function showGeneral()
+    public function showGeneralSettingsForm()
     {
         $settings = $this->settingRepository->getAll()->lists('value', 'key')->toArray();
 
