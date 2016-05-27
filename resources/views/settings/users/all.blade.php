@@ -75,7 +75,7 @@
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-md-6">
-								<form ole="form" id="editUserForm" method="POST" action="{{ url('users/'.$user->username) }}">
+								<form role="form" id="editUserForm" method="POST" action="{{ url('users/'.$user->username) }}">
 									{!! method_field('PATCH') !!}
 									{!! csrf_field() !!}
 									<div class="form-group{{ $errors->has('full_name') ? ' has-error' : ' has-feedback' }}">
@@ -106,7 +106,7 @@
 							</div>
 							<div class="col-md-6">
 								<!-- <h4>Change password</h4> -->
-								<form ole="form" id="editPasswordForm" method="POST" action="{{ url('users/'.$user->username.'/password') }}">
+								<form role="form" id="editPasswordForm" method="POST" action="{{ url('users/'.$user->username.'/password') }}">
 									{!! method_field('PATCH') !!}
 									{!! csrf_field() !!}
 									<div class="form-group{{ $errors->has('password') ? ' has-error' : ' has-feedback' }}">
