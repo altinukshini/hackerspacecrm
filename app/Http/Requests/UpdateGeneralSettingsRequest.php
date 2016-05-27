@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Flash;
 use App\Http\Requests\Request;
 use Illuminate\Contracts\Validation\Validator;
 
@@ -33,6 +34,15 @@ class UpdateGeneralSettingsRequest extends Request
             'url' => 'required|string',
             'crmfooter' => 'required|string',
         ];
+    }
+
+    /**
+     * Get the response for a forbidden operation.
+     */
+    public function forbiddenResponse()
+    {
+        Flash::error('You do not have the right permission to perform this action');
+        return back();
     }
 
 }

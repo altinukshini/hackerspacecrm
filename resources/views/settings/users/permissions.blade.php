@@ -32,7 +32,7 @@
 									@foreach($roles as $role)
 										<td class="text-center">
 											<div class="form-group{{ $errors->has('enable_registration') ? ' has-error' : ' has-feedback' }}">
-												<input type="checkbox" class="minimal" name="roles[{{ $role->name }}][{{ $permission->id }}]" value="{{ $permission->name }}" {{ $role->hasPermission($permission->id) ? 'checked' : '' }} />
+												<input type="checkbox" class="minimal" name="roles[{{ $role->id }}][{{ $permission->id }}]" value="{{ $permission->name }}" {{ $role->hasPermission($permission->id) ? 'checked' : '' }} />
 											</div>
 										</td>
 									@endforeach

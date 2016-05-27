@@ -21,7 +21,7 @@ class MenusController extends Controller
 
         $this->middleware('auth');
         // haven't decided yet if I should use role middleware for the whole controller or just check permission for each method separately.
-        $this->middleware('role:administrator'); 
+        $this->middleware('permission:menu_view'); 
     }
 
 

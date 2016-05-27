@@ -25,14 +25,26 @@ class PermissionsController extends Controller
 
     public function update(Request $request)
     {
-        // dd($request->input('roles'));
+        $requestRoles = $request->input('roles');
 
-        $roles = $request->input('roles');
+        $roles = Role::all()->lists('name', 'id')->toArray();
 
-        foreach ($roles as $role => $permissions) {
-            $role = Role::whereName($role)->first();
+        $rolesDiff = array_diff(array_keys($roles), array_keys($requestRoles));
 
-            $role->syncPermissions(array_keys($permissions));
+        foreach ($rolesDiff as $key => $role) {
+            $role = Role::find($role);
+
+            if (!is_null($role)) {
+                $role->revokeAllPermissions();
+            }
+        }
+
+        foreach ($requestRoles as $role => $permissions) {
+            $role = Role::find($role);
+
+            if (!is_null($role)) {
+                $role->syncPermissions(array_keys($permissions));
+            }
         }
 
         return back();

@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use HackerspaceCRM\Menu\Menu;
+use Illuminate\Database\Seeder;
 
 class MenusTableSeeder extends Seeder
 {
@@ -10,7 +10,7 @@ class MenusTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		Db::table('menus')->truncate();
+		DB::table('menus')->truncate();
 
 		$menus = [
 
@@ -226,7 +226,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission_id' => 4,
+				'permission_id' => 3,
 				'menu_group' => 'settings',
 				'menu_order' => 0,
 				'title' => 'General',
@@ -236,7 +236,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission_id' => 4,
+				'permission_id' => 3,
 				'menu_group' => 'settings',
 				'menu_order' => 1,
 				'title' => 'Emails',
@@ -246,7 +246,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission_id' => 4,
+				'permission_id' => 19,
 				'menu_group' => 'settings',
 				'menu_order' => 1,
 				'title' => 'Users',
@@ -286,7 +286,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission_id' => 4,
+				'permission_id' => 11,
 				'menu_group' => 'settings',
 				'menu_order' => 3,
 				'title' => 'Modules',
@@ -296,7 +296,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 28,
-				'permission_id' => 4,
+				'permission_id' => 11,
 				'menu_group' => 'settings',
 				'menu_order' => 0,
 				'title' => 'Installed Modules',
@@ -306,7 +306,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 28,
-				'permission_id' => 4,
+				'permission_id' => 11,
 				'menu_group' => 'settings',
 				'menu_order' => 1,
 				'title' => 'Add new',
@@ -316,7 +316,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 0,
-				'permission_id' => 4,
+				'permission_id' => 3,
 				'menu_group' => 'settings',
 				'menu_order' => 4,
 				'title' => 'Appearance',
@@ -326,7 +326,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 31,
-				'permission_id' => 4,
+				'permission_id' => 11,
 				'menu_group' => 'settings',
 				'menu_order' => 0,
 				'title' => 'Menus',
@@ -336,7 +336,7 @@ class MenusTableSeeder extends Seeder
 			],
 			[
 				'parent_id' => 31,
-				'permission_id' => 4,
+				'permission_id' => 3,
 				'menu_group' => 'settings',
 				'menu_order' => 1,
 				'title' => 'Themes',

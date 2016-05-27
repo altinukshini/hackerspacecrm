@@ -47,4 +47,13 @@ class UpdateUserRequest extends Request
         $validator->errors()->add('error_code', '6');
         return parent::formatErrors($validator);
     }
+
+    /**
+     * Get the response for a forbidden operation.
+     */
+    public function forbiddenResponse()
+    {
+        Flash::error('You do not have the right permission to perform this action');
+        return back();
+    }
 }

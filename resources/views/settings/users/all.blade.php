@@ -27,7 +27,7 @@
 							<th>verified</th>
 							<th>created at</th>
 							@can('user_update')
-							<th>action</th>
+								<th>action</th>
 							@endcan
 						</tr>
 						@foreach( $users as $user )

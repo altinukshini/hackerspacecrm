@@ -71,12 +71,10 @@
 						</ul>
 						@endif
 					</li>
-					@if ( hasPermission('setting_update') )
-					<!-- Control Sidebar Toggle Button -->
-					<li>
-						<a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-					</li>
-					@endif
+					@can('setting_view')
+						<!-- Control Sidebar Toggle Button -->
+						<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a></li>
+					@endcan
 				</ul>
 			</div>
 		</nav>

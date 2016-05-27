@@ -20,7 +20,7 @@ class SettingsController extends Controller
         $this->settingRepository = $settingRepository;
 
         $this->middleware('auth');
-        $this->middleware('permission:setting_update');
+        $this->middleware('permission:setting_view');
     }
 
     /**
@@ -29,8 +29,11 @@ class SettingsController extends Controller
      * @param App\Http\Requests\UpdateGeneralSettingsRequest
      * @param menuId
      */
-    public function editGeneralSettings(UpdateGeneralSettingsRequest $request)
+    public function updateGeneralSettings(UpdateGeneralSettingsRequest $request)
     {
+
+        if (!hasPermission('setting_update', true)) return back();
+
         $settingApplicationService = new SettingApplicationService();
         $requestArray = $request->all();
 

@@ -13,6 +13,7 @@ class RolesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:role_view');
     }
 
     public function show()
@@ -24,8 +25,6 @@ class RolesController extends Controller
 
     public function getUserRoles($username)
     {
-    	if (!hasPermission('role_view', true)) return redirect('/');
-
         $user = User::whereUsername($username)->first();
 
         if (is_null($user)) {
@@ -57,6 +56,14 @@ class RolesController extends Controller
     	}
 
         $roles = $request->input('roles');
+
+        if (is_null($roles)) {
+            $user->revokeAllRoles();
+
+            Flash::success('User roles updated successfully!');
+
+            return back();
+        }
 
         $user->syncRoles(array_keys($roles));
 

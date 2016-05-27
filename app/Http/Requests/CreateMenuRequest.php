@@ -45,4 +45,13 @@ class CreateMenuRequest extends Request
         return parent::formatErrors($validator);
     }
 
+    /**
+     * Get the response for a forbidden operation.
+     */
+    public function forbiddenResponse()
+    {
+        Flash::error('You do not have the right permission to perform this action');
+        return back();
+    }
+
 }

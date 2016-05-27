@@ -50,7 +50,9 @@
 									<th>group</th>
 									<th>order</th>
 									<th>description</th>
-									<th>action</th>
+									@can('menu_update')
+										<th>action</th>
+									@endcan
 								</tr>
 								@foreach( $submenus as $menu )
 									@if($menu->children->count())
@@ -65,14 +67,14 @@
 												<td>{{ $menu->menu_group }}</td>
 												<td>{{ $menu->menu_order }}</td>
 												<td>{{ $menu->description }}</td>
-												<td>
-													@can('menu_update')
+												@can('menu_update')
+													<td>
 														<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu({{ $menu->id }})"><i class="fa fa-edit text-blue"></i></button>
-													@endcan
-													@can('menu_delete')
-														<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
-													@endcan
-												</td>
+														@can('menu_delete')
+															<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
+														@endcan
+													</td>
+												@endcan
 											</tr>
 											@foreach($menu->children as $child)
 											<tr>
@@ -85,11 +87,15 @@
 												<td>{{ $child->menu_group }}</td>
 												<td>{{ $child->menu_order }}</td>
 												<td>{{ $child->description }}</td>
-												<td>
-													<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu({{ $child->id }})"><i class="fa fa-edit text-blue"></i></button>
+												@can('menu_update')
+													<td>
+														<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu({{ $child->id }})"><i class="fa fa-edit text-blue"></i></button>
 
-													<button type="button" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
-												</td>
+														@can('menu_delete')
+															<button type="button" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
+														@endcan
+													</td>
+												@endcan
 											</tr>
 											@endforeach
 										@endif
@@ -105,11 +111,14 @@
 												<td>{{ $menu->menu_group }}</td>
 												<td>{{ $menu->menu_order }}</td>
 												<td>{{ $menu->description }}</td>
-												<td>
-													<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu({{ $menu->id }})"><i class="fa fa-edit text-blue"></i></button>
-
-													<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
-												</td>
+												@can('menu_update')
+													<td>
+														<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu({{ $menu->id }})"><i class="fa fa-edit text-blue"></i></button>
+														@can('menu_delete')
+															<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
+														@endcan
+													</td>
+												@endcan
 											</tr>
 										@endif
 									@endif
