@@ -14,7 +14,7 @@ class UpdateProfileRequest extends Request
      */
     public function authorize()
     {
-        if(!(hasPermission('profile_create') || (Auth::user()->hasRole('member') && Auth::user()->username == $this->route('username')))) {
+        if(!(hasPermission('profile_update') || (Auth::user()->hasRole('member') && Auth::user()->username == $this->route('username')))) {
             return false;
         }
 
@@ -31,7 +31,7 @@ class UpdateProfileRequest extends Request
         return [
             'birthday' => 'required|string|date_format:Y-m-d',
             'gender' => 'required|string',
-            'socialid' => 'string',
+            'socialid' => 'sometimes|string',
             'phone' => 'sometimes|string|max:18',
             'address' => 'sometimes|string',
             'website' => 'sometimes|url',

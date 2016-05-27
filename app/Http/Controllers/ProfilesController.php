@@ -49,7 +49,7 @@ class ProfilesController extends Controller
             return view('profiles.show', compact('user'));
         }
 
-        // Flash::info('No profile with username: '.$username);
+        Flash::info('No profile with username: '.$username);
 
         return redirect('/');
     }

@@ -211,9 +211,9 @@
 												<div class="form-group{{ $errors->has('gender') ? ' has-error' : ' has-feedback' }}">
 													<label for="gender">Gender*</label>
 													<br />
-													<input type="radio" class="minimal" id="gender" name="gender" value="male" {{ old('gender') == 'male' ? old('gender') : ($user->profile->gender == 'male' ? 'checked' : "") }} /> Male 
-													<input type="radio" class="minimal" id="gender" name="gender" value="female" {{ old('gender') == 'female' ? old('gender') : ($user->profile->gender == 'female' ? 'checked' : "") }} /> Female 
-													<input type="radio" class="minimal" id="gender" name="gender" value="other" {{ old('gender') == 'other' ? old('gender') : ($user->profile->gender == 'other' ? 'checked' : "") }} /> Other 
+													<input type="radio" class="minimal" id="gender" name="gender" value="male" {{ old('gender') == 'male' ? "checked" : ($user->profile->gender == 'male' ? 'checked' : "") }} /> Male 
+													<input type="radio" class="minimal" id="gender" name="gender" value="female" {{ old('gender') == 'female' ? "checked" : ($user->profile->gender == 'female' ? 'checked' : "") }} /> Female 
+													<input type="radio" class="minimal" id="gender" name="gender" value="other" {{ old('gender') == 'other' ? "checked" : ($user->profile->gender == 'other' ? 'checked' : "") }} /> Other 
 
 													@if ($errors->has('gender'))
 													<span class="help-block">
@@ -222,7 +222,7 @@
 													@endif
 												</div>
 												<div class="form-group{{ $errors->has('socialid') ? ' has-error' : ' has-feedback' }}">
-													<label for="socialid">Social ID*</label>
+													<label for="socialid">Social ID</label>
 													<input type="text" class="form-control" placeholder="1234567890" name="socialid" value="{{ old('socialid') ? old('socialid') : $user->profile->socialid }}" />
 													@if ($errors->has('socialid'))
 													<span class="help-block">
