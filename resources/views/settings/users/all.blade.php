@@ -147,9 +147,9 @@
 			</div>
 		</div>
 			@if ($errors->has('error_code') AND $errors->first('error_code') == 6)
-			<script type="text/javascript">
-				$('#editUser').modal('show');
-			</script>
+				<script type="text/javascript">
+					$('#editUser').modal('show');
+				</script>
 			@endif
 	@endif
 	@can('user_delete')
