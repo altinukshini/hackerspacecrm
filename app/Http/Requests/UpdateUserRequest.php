@@ -16,9 +16,7 @@ class UpdateUserRequest extends Request
      */
     public function authorize()
     {
-        $username = $this->route('username');
-
-        if (hasPermission('user_update') || Auth::user()->username == $username) {
+        if (hasPermission('user_update') || Auth::user()->username == $this->route('username')) {
             return true;
         }
 

@@ -13,8 +13,18 @@ use HackerspaceCRM\Setting\Repository\SettingRepositoryInterface;
 class SettingsController extends Controller
 {
 
+    /**
+     * Instance of HackerspaceCRM\Setting\Repository\SettingRepositoryInterface
+     *
+     * @var Object
+     */
     private $settingRepository;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct(SettingRepositoryInterface $settingRepository)
     {
         $this->settingRepository = $settingRepository;
@@ -53,6 +63,11 @@ class SettingsController extends Controller
         return back();
     }
 
+    /**
+     * Show general settings in /settings/general
+     *
+     * @return View;
+     **/
     public function showGeneralSettingsForm()
     {
         $settings = $this->settingRepository->getAll()->lists('value', 'key')->toArray();

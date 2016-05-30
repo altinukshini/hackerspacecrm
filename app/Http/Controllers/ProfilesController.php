@@ -23,6 +23,11 @@ class ProfilesController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Show all profiles in /members
+     *
+     * @return View;
+     **/
     public function all()
     {
         Flash::info('Page not created yet');
@@ -31,47 +36,57 @@ class ProfilesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show a members profile
      *
      * @param $username
      *
-     * @return Response
+     * @return View
      */
     public function show($username)
     {
-        // TODO: Open user profile only if member and has profile
-        // Handle Model not found exceptions in global.php
         $user = User::whereUsername($username)->first();
 
-        if (!is_null($user) && $user->hasProfile()) {
-            $user->load('profile.user');
-
-            return view('profiles.show', compact('user'));
+        if (is_null($user) || !$user->hasProfile()) {
+            Flash::info('No profile with username: '.$username);
+            return redirect('/');
         }
 
-        Flash::info('No profile with username: '.$username);
+        $user->load('profile.user');
 
-        return redirect('/');
+        return view('profiles.show', compact('user'));
     }
 
+    /**
+     * Update profile data
+     *
+     * @param App\Http\Requests\UpdateProfileRequest
+     * @param string
+     *
+     * @return Void;
+     **/
     public function update(UpdateProfileRequest $request, $username)
     {
         $user = User::with('profile')->whereUsername($username)->first();
 
-        if (!is_null($user) && $user->hasProfile()) {
-
-            $user->profile->update($request->all());
-
-            Flash::success('Profile updated successfully');
-
-            return back();
+        if (is_null($user) || !$user->hasProfile()) {
+            Flash::info('No user with username: '.$username);
+            return redirect('/');
         }
 
-        Flash::info('No user with username: '.$username);
+        $user->profile->update($request->all());
 
-        return redirect('/');
+        Flash::success('Profile updated successfully');
+
+        return back();       
     }
 
+    /**
+     * Show create profile form for a user
+     *
+     * @param string
+     *
+     * @return View;
+     **/
     public function showCreateForm($username)
     {
         $user = User::whereUsername($username)->first();
@@ -81,11 +96,13 @@ class ProfilesController extends Controller
             return redirect('/');
         }
 
+        // check if user has permission to create profile, or if a member, create his/her own profile
         if(!(hasPermission('profile_create') || (Auth::user()->hasRole('member') && Auth::user()->username == $username))) {
             Flash::warning('You do not have the right permission to perform this action');
             return redirect('/');
         }
 
+        // if already has profile, redirect to it
         if ($user->hasProfile()) {
             return redirect($user->profilePath());
         }
@@ -94,6 +111,14 @@ class ProfilesController extends Controller
 
     }
 
+    /**
+     * Create profile for a user
+     *
+     * @param App\Http\Requests\CreateProfileRequest
+     * @param string
+     *
+     * @return Void;
+     **/
     public function create(CreateProfileRequest $request, $username)
     {
         $user = User::whereUsername($username)->first();

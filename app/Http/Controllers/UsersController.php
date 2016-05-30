@@ -10,12 +10,21 @@ use Flash;
 
 class UsersController extends Controller
 {
-    //
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * Show all users in /users
+     *
+     * @return View;
+     **/
     public function all()
     {
         if (!hasPermission('user_view', true)) return redirect('/');
@@ -25,53 +34,53 @@ class UsersController extends Controller
         return view('settings.users.all')->with('users', $users);
     }
 
+    /**
+     * Get data for one user as json
+     *
+     * @param string
+     * @return App\Models\User;
+     **/
     public function getUser($username)
     {
-        // see if user has permission to view menu
-        if (!hasPermission('user_view', true)) return redirect('/');
+        // see if user has permission to view another user
+        if (!hasPermission('user_view', true) || Auth::user()->username != $username) return redirect('/');
 
         return User::whereUsername($username)->first();
     }
 
-    public function show()
-    {
-        Flash:info('Page not created yet');
-
-        return redirect('/');
-    }
-
-    public function create()
-    {
-        Flash:info('Page not created yet');
-
-        return redirect('/');
-    }
-
+    /**
+     * Update user data
+     *
+     * @param App\Http\Requests\UpdateUserRequest
+     * @param string
+     *
+     * @return Void;
+     **/
     public function update(UpdateUserRequest $request, $username)
     {
-        if(!(hasPermission('user_update') || Auth::user()->username == $username)) {
-            Flash::warning('You do not have the right permission to perform this action');
+        $user = User::whereUsername($username)->first();
+
+        if (is_null($user)) {
+            Flash::info('No user with username: '.$username);
             return redirect('/');
         }
 
-        $user = User::whereUsername($username)->first();
+        $user->full_name = $request->input('full_name');
+        $user->email = $request->input('email');
 
-        if (!is_null($user)) {
-            $user->full_name = $request->input('full_name');
-            $user->email = $request->input('email');
+        $user->save();
 
-            $user->save();
+        Flash::success('User info updated successfully');
 
-            Flash::success('User info updated successfully');
-
-            return back();
-        }
-
-        Flash::info('No user with username: '.$username);
-
-        return redirect('/');
+        return back();
     }
 
+    /**
+     * Delete user
+     *
+     * @param string
+     * @return Void;
+     **/
     public function delete($username)
     {
         // see if user has permission to delete menu
@@ -79,42 +88,50 @@ class UsersController extends Controller
 
         $user = User::whereUsername($username)->first();
 
-        if(!is_null($user) && $username != 'admin') {
-            $user->delete();
-            Flash::success('User was successfully deleted!');
+        if(is_null($user) || $username == 'admin') {
+            Flash::error('User could not be deleted!');
             return back();
         }
 
-        Flash::error('User could not be deleted!');
+        $user->delete();
+
+        Flash::success('User was successfully deleted!');
+
+        return back(); 
+    }
+
+    /**
+     * Change password for user
+     *
+     * @param App\Http\Requests\UpdateUserPasswordRequest
+     * @param string
+     *
+     * @return Void;
+     **/
+    public function changePassword(UpdateUserPasswordRequest $request, $username)
+    {
+        $user = User::whereUsername($username)->first();
+
+        if (is_null($user)) {
+            Flash::info('No user with username: '.$username);
+            return redirect('/');
+        }
+
+        $user->password = $this->encryptPassword($request->input('password'));
+
+        $user->save();
+
+        Flash::success('User password changed successfully');
 
         return back();
     }
 
-    public function changePassword(UpdateUserPasswordRequest $request, $username)
-    {
-
-        if(!(hasPermission('user_update') || Auth::user()->username == $username)) {
-            Flash::warning('You do not have the right permission to perform this action');
-            return redirect('/');
-        }
-
-        $user = User::whereUsername($username)->first();
-
-        if (!is_null($user)) {
-            $user->password = $this->encryptPassword($request->input('password'));
-
-            $user->save();
-
-            Flash::success('User password changed successfully');
-
-            return back();
-        }
-
-        Flash::info('No user with username: '.$username);
-
-        return redirect('/');
-    }
-
+    /**
+     * Encrypt password
+     *
+     * @param string
+     * @return string;
+     **/
     public function encryptPassword($password)
     {
         return bcrypt($password);

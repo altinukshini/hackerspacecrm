@@ -6,24 +6,32 @@ use Flash;
 use App\Http\Requests\Request;
 use App\Http\Requests\CreateMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
-
 use HackerspaceCRM\Menu\Menu;
 use HackerspaceCRM\Menu\MenuApplicationService;
 use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;
 
 class MenusController extends Controller
 {
+
+    /**
+     * Instance of HackerspaceCRM\Menu\Repository\MenuRepositoryInterface
+     *
+     * @var Object
+     */
     private $menuRepository;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct(MenuRepositoryInterface $menuRepository)
     {
         $this->menuRepository = $menuRepository;
 
         $this->middleware('auth');
-        // haven't decided yet if I should use role middleware for the whole controller or just check permission for each method separately.
         $this->middleware('permission:menu_view'); 
     }
-
 
     /**
      * Show all menus /settings/menus
@@ -48,9 +56,6 @@ class MenusController extends Controller
      **/
     public function getMenu($menuId)
     {
-        // see if user has permission to view menu
-        if (!hasPermission('menu_view', true)) return redirect('/');
-
         return $this->menuRepository->byId($menuId);
     }
 
@@ -61,7 +66,7 @@ class MenusController extends Controller
      */
     public function create(CreateMenuRequest $request)
     {
-        // see if user has permission to delete menu
+        // see if user has permission to create menu
         if (!hasPermission('menu_create', true)) return back();
 
         $menuApplicationService = new MenuApplicationService();
@@ -87,7 +92,7 @@ class MenusController extends Controller
      */
     public function update(UpdateMenuRequest $request, $menuId)
     {
-        // see if user has permission to delete menu
+        // see if user has permission to update menu
         if (!hasPermission('menu_update', true)) return back();
 
         $menuApplicationService = new MenuApplicationService();
