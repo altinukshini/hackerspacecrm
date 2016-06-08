@@ -104,6 +104,6 @@
 	<!-- Custom scripts -->
 	<script src="{{ asset('/dist/js/custom.js') }}"></script>
 
-	@yield('headerscripts')
+	@yield('footerscripts')
 </body>
 </html>
