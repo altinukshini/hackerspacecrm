@@ -52,6 +52,10 @@ Hardware for developing the Checkin System and Door Access control System (in la
 I’ve already done something for this, but will have to adapt and refactor the code so that it’ll work with Hackerspace CRM: https://github.com/altinukshini/HACCSY
 
 
+## Server requirements
+
+- Memcached (php5-memcached and memcached)
+
 # Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)

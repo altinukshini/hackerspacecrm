@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'prishtina.hackerspace@gmail.com', 'name' => 'Hackerspace CRM'],
+    'from' => ['address' => 'info@hackerspacecrm.org', 'name' => 'Hackerspace CRM'],
 
     /*
     |--------------------------------------------------------------------------
