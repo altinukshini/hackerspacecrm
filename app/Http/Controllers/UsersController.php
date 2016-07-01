@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UpdateUserPasswordRequest;
 
+use Auth;
 use App\Models\User;
 use Flash;
 
@@ -43,7 +44,7 @@ class UsersController extends Controller
     public function getUser($username)
     {
         // see if user has permission to view another user
-        if (!hasPermission('user_view', true) || Auth::user()->username != $username) return redirect('/');
+        if (!(hasPermission('user_view', true) || Auth::user()->username == $username)) return redirect('/');
 
         return User::whereUsername($username)->first();
     }
@@ -83,13 +84,18 @@ class UsersController extends Controller
      **/
     public function delete($username)
     {
-        // see if user has permission to delete menu
+        // see if authenticated user has permission to delete users
         if (!hasPermission('user_delete', true)) return redirect('/');
 
         $user = User::whereUsername($username)->first();
 
-        if(is_null($user) || $username == 'admin') {
-            Flash::error('User could not be deleted!');
+        if(is_null($user)) {
+            Flash::error('Username could not be found!');
+            return back();
+        }
+
+        if ($username == crminfo('admin_username')) {
+            Flash::error('You can not delete the CRM Administrator user!');
             return back();
         }
 

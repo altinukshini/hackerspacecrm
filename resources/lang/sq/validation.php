@@ -78,7 +78,9 @@ return [
     'string'               => 'Atributi :attribute duhet të jetë string.',
     'timezone'             => 'Atributi :attribute duhet të jetë zonë valide.',
     'unique'               => 'Atributi :attribute është në shfrytëzim.',
-    'url'                  => 'Formati i atributit :attribute nuk është valid',
+    'url'                  => 'Formati i atributit :attribute nuk është valid.',
+    'no_spaces'            => 'Atributi :attribute nuk duhet të përmbajë hapësira.',
+    'no_specials_lower_u'          => 'Atributi :attribute nuk duhet të përmbajë karaktere speciale ose shkronja të mëdha. Lejohen vetëm nënvizat.',
 
     /*
     |--------------------------------------------------------------------------

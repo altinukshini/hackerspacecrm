@@ -66,10 +66,20 @@ Route::patch('settings/menus/{menuId}', 'MenusController@update');
 Route::delete('settings/menus/{menuId}', 'MenusController@delete');
 
 Route::get('roles', 'RolesController@show');
-Route::get('roles/{username}', 'RolesController@getUserRoles'); // for ajax request that populates the form
-Route::post('roles/{username}', 'RolesController@update');
+Route::post('roles', 'RolesController@create');
+Route::get('roles/{roleId}', 'RolesController@getRole');
+Route::patch('roles/{roleId}', 'RolesController@update');
+Route::delete('roles/{roleId}', 'RolesController@delete');
+
+Route::get('roles/user/{username}', 'RolesController@getUserRoles'); // for ajax request that populates the form
+Route::post('roles/user/{username}', 'RolesController@updateUserRoles'); // to update roles for a single username
+
 Route::get('permissions', 'PermissionsController@showPermissionsForm');
 Route::patch('permissions', 'PermissionsController@update');
+
+Route::get('roles/test', function(){
+	return App\Models\Role::exists('avdi') ? 'true':'false';
+});
 
 // \DB::listen(function($query) {
 //     var_dump($query);

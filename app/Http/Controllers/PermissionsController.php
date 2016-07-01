@@ -58,7 +58,8 @@ class PermissionsController extends Controller
         if (is_null($requestRoles)) {
             foreach (array_keys($roles) as $key => $role) {
                 $role = Role::find($role);
-                $role->revokeAllPermissions();
+                if($role->name != 'administrator')
+                    $role->revokeAllPermissions();
             }
 
             Flash::success('Permissions updated succesfully');
@@ -77,7 +78,7 @@ class PermissionsController extends Controller
         foreach ($rolesDiff as $key => $role) {
             $role = Role::find($role);
 
-            if (!is_null($role)) {
+            if (!is_null($role) && $role->name != 'administrator') {
                 $role->revokeAllPermissions();
             }
         }
@@ -86,7 +87,7 @@ class PermissionsController extends Controller
         foreach ($requestRoles as $role => $permissions) {
             $role = Role::find($role);
 
-            if (!is_null($role)) {
+            if (!is_null($role) && $role->name != 'administrator') {
                 $role->syncPermissions(array_keys($permissions));
             }
         }

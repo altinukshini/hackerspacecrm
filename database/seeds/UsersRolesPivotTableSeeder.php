@@ -13,7 +13,7 @@ class UsersRolesPivotTableSeeder extends Seeder
 	{
 		DB::table('role_user')->truncate();
 
-		$admin = User::whereUsername('admin')->firstOrFail();
+		$admin = User::whereUsername(crminfo('admin_username'))->firstOrFail();
 		$admin->roles()->attach(Role::whereName('administrator')->firstOrFail());
 	}
 }

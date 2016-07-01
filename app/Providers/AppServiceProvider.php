@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Blade;
+use Validator;
 // use App\Models\Menu;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Http\Kernel;
@@ -19,6 +20,14 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->isLocal()) {
             $kernel->pushMiddleware('App\Http\Middleware\FlushViews');
         }
+
+        Validator::extend('no_spaces', function($attr, $value){
+            return preg_match('/^\S*$/u', $value);
+        });
+
+        Validator::extend('no_specials_lower_u', function($attr, $value){
+            return preg_match('/^[a-z0-9_]+$/', $value);
+        });
 
         Blade::directive('cache', function ($expression) {
             return "<?php if (! app('App\Models\BladeDirective')->setUp{$expression}) { ?>";

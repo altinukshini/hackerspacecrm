@@ -13,6 +13,7 @@ class RolesTableSeeder extends Seeder
 		DB::table('roles')->truncate();
 
 		$roles = [
+			['name' => 'administrator', 'label' => 'CRM Administrator'],
 			['name' => 'authenticated', 'label' => 'Authenticated'],
 			['name' => 'member', 'label' => 'Member'],
 			['name' => 'director', 'label' => 'Director'],
@@ -20,7 +21,6 @@ class RolesTableSeeder extends Seeder
 			['name' => 'vp', 'label' => 'VP'],
 			['name' => 'secretary', 'label' => 'Secretary'],
 			['name' => 'treasurer', 'label' => 'Treasurer'],
-			['name' => 'administrator', 'label' => 'CRM Administrator'],
 		];
 
 		foreach ($roles as $role) {

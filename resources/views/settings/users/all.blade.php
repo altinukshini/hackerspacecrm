@@ -31,7 +31,7 @@
 							@endcan
 						</tr>
 						@foreach( $users as $user )
-							<tr {!! $user->username == 'admin' ? 'style="background-color:#ebebeb;"' : '' !!}>
+							<tr {!! $user->username == crminfo('admin_username') ? 'style="background-color:#ebebeb;"' : '' !!}>
 								<td>{{ $user->id }}</td>
 								<td>{{ $user->full_name }}</td>
 								<td>{{ $user->username }}</td>
@@ -43,7 +43,7 @@
 								@can('user_update')
 									<td>
 										@can('role_update')
-											@if($user->username != 'admin')
+											@if($user->username != crminfo('admin_username'))
 												<button type="button" class="btn btn-xs btn-warning btn-flat" onclick="editUserRoles('{{ $user->username }}')"><i class="fa fa-eye"></i> roles</button>
 											@endif
 										@endcan
@@ -51,7 +51,7 @@
 											<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editUser('{{ $user->username }}')"><i class="fa fa-edit text-blue"></i></button>
 										@endcan
 										@can('user_delete')
-											@if($user->username != 'admin')
+											@if($user->username != crminfo('admin_username'))
 												<button type="button" data-username="{{ $user->username }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmUserDelete"><i class="fa fa-trash text-red"></i></button>
 											@endif
 										@endcan
