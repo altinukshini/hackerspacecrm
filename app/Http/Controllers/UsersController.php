@@ -2,23 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Flash;
+use App\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UpdateUserPasswordRequest;
+use HackerspaceCRM\Mailers\UserMailer as Mailer;
 
-use Auth;
-use App\Models\User;
-use Flash;
 
 class UsersController extends Controller
 {
+
+    protected $mailer;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Mailer $mailer)
     {
         $this->middleware('auth');
+        $this->mailer = $mailer;
     }
 
     /**
@@ -36,17 +43,75 @@ class UsersController extends Controller
     }
 
     /**
+     * Show all users in /users
+     *
+     * @return View;
+     **/
+    public function showUpdateUserForm($username)
+    {
+        // see if user has permission to update user
+        if (!(Auth::user()->username == $username || hasPermission('user_update', true))) return redirect('/');
+
+        $user = User::whereUsername($username)->first();
+
+        if (is_null($user)) {
+            Flash::info('Requested user does not exist!');
+            return redirect('/');
+        }
+
+        if ($user->hasProfile()) {
+            return redirect($user->profilePath());
+        }
+
+        return view('settings.users.edit')->with(compact('user'));
+    }
+
+    /**
      * Get data for one user as json
      *
      * @param string
      * @return App\Models\User;
      **/
-    public function getUser($username)
+    public function getUser(Request $request, $username)
     {
         // see if user has permission to view another user
         if (!(hasPermission('user_view', true) || Auth::user()->username == $username)) return redirect('/');
 
+        if (!$request->wantsJson()) {
+            return redirect('/');
+        }
+
         return User::whereUsername($username)->first();
+    }
+
+    /**
+     * Create user
+     *
+     * @param App\Http\Requests\CreateUserRequest
+     * @param string
+     *
+     * @return Void;
+     **/
+    public function create(CreateUserRequest $request)
+    {
+        $user = User::create([
+            'full_name' => $request->input('full_name'),
+            'username' => $request->input('username'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+        ]);
+        $user->verified = 1;
+        $user->save();
+
+        $user->assignRoleByName(crminfo('new_user_role'));
+
+        if ($request->input('notify') == 'yes') {
+            $this->mailer->accountCreated($user, $request->input('password'));
+        }
+
+        Flash::success('User created successfully');
+
+        return back();
     }
 
     /**

@@ -61,6 +61,23 @@ class UserMailer extends Mailer
 	}
 
 	/*
+	 * Send email notification for new account on CRM
+	 *
+	 * @param App\Models\User $user
+	 * @return void
+	 */
+	public function accountCreated(User $user, $plainPassword)
+	{
+		$this->to = $user->email;
+		$this->subject = 'New account created at ' . crminfo('name');
+		$this->view = 'emails.newaccount';
+		$this->data = compact('user');
+		$this->data['password'] = compact('plainPassword');
+
+		return $this->sendEmail();
+	}
+
+	/*
 	 * Send email with class properties
 	 *
 	 * @return void

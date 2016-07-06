@@ -59,13 +59,16 @@
 							<li class="user-footer">
 								<div class="pull-left">
 									@if (!Auth::user()->hasProfile() AND Auth::user()->hasRole(['member', 'administrator']))
+										<a href="{{ url('users/'.Auth::user()->username.'/edit') }}" class="btn btn-default btn-flat">Edit Account</a><br /><br />
 										<a href="{{ url('profiles/'. Auth::user()->username .'/create') }}" class="btn btn-success btn-flat">Create profile</a>
 									@elseif (Auth::user()->hasProfile())
-										<a href="{{ Auth::user()->profilePath() }}" class="btn btn-default btn-flat">Profile</a>
+										<a href="{{ url(Auth::user()->profilePath()) }}" class="btn btn-default btn-flat">Profile</a>
+									@else
+										<a href="{{ url('users/'.Auth::user()->username.'/edit') }}" class="btn btn-default btn-flat">Edit Account</a>
 									@endif
 								</div>
 								<div class="pull-right">
-									<a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>
+									<a href="{{ url('/logout') }}" class="btn btn-default btn-flat"><i class="fa fa-power-off text-red"></i> Sign out</a>
 								</div>
 							</li>
 						</ul>

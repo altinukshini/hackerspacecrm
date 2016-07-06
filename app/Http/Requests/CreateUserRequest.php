@@ -2,13 +2,11 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
-use App\Http\Requests\Request;
-use App\Models\User;
-use Auth;
 use Flash;
+use App\Http\Requests\Request;
+use Illuminate\Contracts\Validation\Validator;
 
-class UpdateUserRequest extends Request
+class CreateUserRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,11 +15,7 @@ class UpdateUserRequest extends Request
      */
     public function authorize()
     {
-        if (hasPermission('user_update') || Auth::user()->username == $this->route('username')) {
-            return true;
-        }
-
-        return false;
+        return hasPermission('user_create');
     }
 
     /**
@@ -31,10 +25,11 @@ class UpdateUserRequest extends Request
      */
     public function rules()
     {
-        $user = User::whereUsername($this->route('username'))->first();
         return [
-            'full_name' => 'required|string',
-            'email' => 'required|email|unique:users,email,'.$user->id,
+            'full_name' => 'required|max:255|string',
+            'username'  => 'required|max:255|username|unique:users',
+            'email'  => 'required|max:255|unique:users',
+            'password'  => 'required|min:6|confirmed',
         ];
     }
 
@@ -43,7 +38,7 @@ class UpdateUserRequest extends Request
     */
     protected function formatErrors(Validator $validator)
     {
-        $validator->errors()->add('error_code', '6');
+        $validator->errors()->add('error_code', '5');
         return parent::formatErrors($validator);
     }
 

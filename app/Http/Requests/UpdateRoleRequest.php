@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Flash;
 use App\Http\Requests\Request;
 use Illuminate\Contracts\Validation\Validator;
 
@@ -14,11 +15,7 @@ class UpdateRoleRequest extends Request
      */
     public function authorize()
     {
-        if (hasPermission('role_update')) {
-            return true;
-        }
-
-        return false;
+        return hasPermission('role_update');
     }
 
     /**
@@ -40,5 +37,14 @@ class UpdateRoleRequest extends Request
     {
         $validator->errors()->add('error_code', '6');
         return parent::formatErrors($validator);
+    }
+
+    /**
+     * Get the response for a forbidden operation.
+     */
+    public function forbiddenResponse()
+    {
+        Flash::error('You do not have the right permission to perform this action');
+        return back();
     }
 }

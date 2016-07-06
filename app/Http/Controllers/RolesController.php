@@ -126,8 +126,13 @@ class RolesController extends Controller
      * @param string
      * @return array;
      **/
-    public function getUserRoles($username)
+    public function getUserRoles(Request $request, $username)
     {
+
+        if (!$request->wantsJson()) {
+            return redirect('/');
+        }
+
         $user = User::whereUsername($username)->first();
 
         if (is_null($user)) {
@@ -159,7 +164,7 @@ class RolesController extends Controller
         }
 
         // Check if trying to change CRM Administrator's roles
-        if ($user->username != crminfo('admin_username')){
+        if ($user->username == crminfo('admin_username')){
             Flash::info('You can not edit CRM Administrator roles');
             return back();
         }

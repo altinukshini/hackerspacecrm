@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 use Auth;
+use Flash;
 
 class CreateProfileRequest extends Request
 {

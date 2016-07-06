@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use App\Http\Requests\Request;
 use App\Models\User;
 use Auth;
+use Flash;
 
 class UpdateUserPasswordRequest extends Request
 {

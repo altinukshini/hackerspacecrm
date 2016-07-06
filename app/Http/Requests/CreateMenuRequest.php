@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Flash;
 use App\Http\Requests\Request;
 use Illuminate\Contracts\Validation\Validator;
 

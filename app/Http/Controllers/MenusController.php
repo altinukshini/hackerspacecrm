@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Flash;
-use App\Http\Requests\Request;
 use App\Http\Requests\CreateMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
+use Flash;
 use HackerspaceCRM\Menu\Menu;
 use HackerspaceCRM\Menu\MenuApplicationService;
 use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;
+use Illuminate\Http\Request;
 
 class MenusController extends Controller
 {
@@ -54,8 +54,12 @@ class MenusController extends Controller
      *
      * @return Menu
      **/
-    public function getMenu($menuId)
+    public function getMenu(Request $request, $menuId)
     {
+        if (!$request->wantsJson()) {
+            return redirect('/');
+        }
+
         return $this->menuRepository->byId($menuId);
     }
 
@@ -74,10 +78,6 @@ class MenusController extends Controller
         $requestArray = $this->normalizeNewMenuRequest($request);
 
         $menu = $menuApplicationService->create($requestArray);
-
-        if ($request->wantsJson()) {
-            return $menu;
-        }
 
         Flash::success('Menu was created successfully');
 

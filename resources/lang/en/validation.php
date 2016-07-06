@@ -81,6 +81,7 @@ return [
     'url'                  => 'The :attribute format is invalid.',
     'no_spaces'            => 'The :attribute must not contain spaces.',
     'no_specials_lower_u'          => 'The :attribute must not contain special characters or capital letters. Only underscore allowed.',
+    'username'          => 'The :attribute must not contain spaces or special characters.',
 
     /*
     |--------------------------------------------------------------------------
