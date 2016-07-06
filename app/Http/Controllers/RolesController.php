@@ -50,76 +50,29 @@ class RolesController extends Controller
     }
 
     /**
-     * Get user roles as json
+     * Create a role
      *
-     * @param string
-     * @return array;
-     **/
-    public function getUserRoles($username)
-    {
-        $user = User::whereUsername($username)->first();
-
-        if (is_null($user)) {
-        	Flash::info('There is no user with username: '.$username);
-        	return back();
-        }
-
-        return $user->getRoles();
-    }
-
-    /**
-     * Update Roles for a given user
-     *
-     * @param App\Http\Requests\Request
-     * @param string
+     * @param App\Http\Requests\CreateRoleRequest
      *
      * @return Void;
      **/
-    public function updateUserRoles(Request $request, $username)
+    public function create(CreateRoleRequest $request)
     {
-        if (!hasPermission('role_update', true)) return redirect('/');
+        Role::create($request->all());
 
-        $user = User::whereUsername($username)->first();
-
-        // Check if user exists
-        if (is_null($user)) {
-        	Flash::info('There is no user with username: '.$username);
-        	return back();
-        }
-
-        // Check if trying to change CRM Administrator's roles
-        if ($user->username != crminfo('admin_username')){
-            Flash::info('You can not edit CRM Administrator roles');
-            return back();
-        }
-
-        // Validate request
-        $validator = Validator::make($request->all(), [
-			'roles' => 'exists:roles,name',
-		]);
-
-		if ($validator->fails()) {
-			Flash::error('Roles could not be assigned to user: '.$username.'. Wrong input data sent.');
-        	return back();
-    	}
-
-        $roles = $request->input('roles');
-
-        // If no roles sent in request, revoke all roles
-        if (is_null($roles)) {
-            $user->revokeAllRoles();
-
-        // else, sync roles with the new ones
-        } else {
-            $user->syncRoles(array_keys($roles));
-        }
-
-        Flash::success('User roles updated successfully!');
+        Flash::success('Role created succesfully');
 
         return back();
-        
     }
 
+    /**
+     * Update a role
+     *
+     * @param App\Http\Requests\UpdateRoleRequest
+     * @param integer
+     *
+     * @return Void;
+     **/
     public function update(UpdateRoleRequest $request, $roleId)
     {
         $role = Role::find($roleId);
@@ -136,7 +89,13 @@ class RolesController extends Controller
         return back();
     }
 
-
+    /**
+     * Delete a role
+     *
+     * @param integer
+     *
+     * @return Void;
+     **/
     public function delete($roleId)
     {
         if (!hasPermission('role_delete')) return redirect('/');
@@ -161,12 +120,74 @@ class RolesController extends Controller
 
     }
 
-    public function create(CreateRoleRequest $request)
+    /**
+     * Get user roles as json
+     *
+     * @param string
+     * @return array;
+     **/
+    public function getUserRoles($username)
     {
-        Role::create($request->all());
+        $user = User::whereUsername($username)->first();
 
-        Flash::success('Role created succesfully');
+        if (is_null($user)) {
+            Flash::info('There is no user with username: '.$username);
+            return back();
+        }
+
+        return $user->getRoles();
+    }
+
+    /**
+     * Update Roles for a given user
+     *
+     * @param App\Http\Requests\Request
+     * @param string
+     *
+     * @return Void;
+     **/
+    public function updateUserRoles(Request $request, $username)
+    {
+        if (!hasPermission('role_update', true)) return redirect('/');
+
+        $user = User::whereUsername($username)->first();
+
+        // Check if user exists
+        if (is_null($user)) {
+            Flash::info('There is no user with username: '.$username);
+            return back();
+        }
+
+        // Check if trying to change CRM Administrator's roles
+        if ($user->username != crminfo('admin_username')){
+            Flash::info('You can not edit CRM Administrator roles');
+            return back();
+        }
+
+        // Validate request
+        $validator = Validator::make($request->all(), [
+            'roles' => 'exists:roles,name',
+        ]);
+
+        if ($validator->fails()) {
+            Flash::error('Roles could not be assigned to user: '.$username.'. Wrong input data sent.');
+            return back();
+        }
+
+        $roles = $request->input('roles');
+
+        // If no roles sent in request, revoke all roles
+        if (is_null($roles)) {
+            $user->revokeAllRoles();
+
+        // else, sync roles with the new ones
+        } else {
+            $user->syncRoles(array_keys($roles));
+        }
+
+        Flash::success('User roles updated successfully!');
 
         return back();
+        
     }
 }

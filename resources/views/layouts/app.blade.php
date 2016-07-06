@@ -32,6 +32,8 @@
 	<link rel="stylesheet" href="{{ asset('/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
 	<!-- FontAwesome Icon picker -->
 	<link rel="stylesheet" href="{{ asset('/dist/css/fontawesome-iconpicker.min.css') }}">
+	<!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('/plugins/datatables/dataTables.bootstrap.css') }}">
 
 	<!-- Styles -->
 	{{-- <link href="{{ elixir('/css/app.css') }}" rel="stylesheet"> --}}
@@ -48,6 +50,10 @@
 	<!-- jQuery UI 1.11.4 -->
 	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> -->
 	<script src="{{ asset('/dist/js/bootstrap.min.js') }}"></script>
+
+	<!-- DataTables -->
+	<script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 
 	{{-- <script src="{{ elixir('/js/app.js') }}"></script> --}}
 
@@ -83,6 +89,7 @@
 	<script src="{{ asset('/dist/js/fontawesome-iconpicker.js') }}"></script>
 	<!-- iCheck -->
 	<script src="{{ asset('/plugins/iCheck/icheck.min.js') }}"></script>
+
 
 	@yield('headerscripts')
 

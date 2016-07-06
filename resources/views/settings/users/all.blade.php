@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
+
 @section('content')
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
 	<h1>Settings</h1>
@@ -13,52 +15,77 @@
 			<h3 class="box-title">All users</h3>
 		</div>
 		<div class="box-body">
+			@can('user_create')
+				<a class="btn btn-success btn-md" data-toggle="modal" data-target="#addneuser">
+					<i class="fa fa-plus"></i> Add new
+				</a>
+			@endcan
+			<br style="clear:both;">
 			<br style="clear:both;">
 			@can('user_view')
-				<table class="table table-responsive no-padding table-hover">
+				<table id="alluserstable" class="table table-responsive table-bordered table-hover">
 					<tbody>
-						<tr>
-							<th>ID</th>
-							<th>Full name</th>
-							<th>username</th>
-							<th>email</th>
-							<th>profile</th>
-							<th>last login</th>
-							<th>verified</th>
-							<th>created at</th>
-							@can('user_update')
-								<th>action</th>
-							@endcan
-						</tr>
-						@foreach( $users as $user )
-							<tr {!! $user->username == crminfo('admin_username') ? 'style="background-color:#ebebeb;"' : '' !!}>
-								<td>{{ $user->id }}</td>
-								<td>{{ $user->full_name }}</td>
-								<td>{{ $user->username }}</td>
-								<td>{{ $user->email }}</td>
-								<td>{!! $user->hasProfile() ? '<a href="'.url($user->profilePath()).'"><i class="fa fa-external-link text-blue"></i></a>' : '<a href="'.url("profiles/".$user->username."/create").'"><i class="fa fa-plus text-green"></i></a>' !!}</td>
-								<td>{{ $user->last_login }}</td>
-								<td>{!! $user->verified == 1 ? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-close text-red"></i>' !!}</td>
-								<td>{{ $user->created_at }}</td>
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Full name</th>
+								<th>username</th>
+								<th>email</th>
+								<th>profile</th>
+								<th>last login</th>
+								<th>verified</th>
+								<th>created at</th>
 								@can('user_update')
-									<td>
-										@can('role_update')
-											@if($user->username != crminfo('admin_username'))
-												<button type="button" class="btn btn-xs btn-warning btn-flat" onclick="editUserRoles('{{ $user->username }}')"><i class="fa fa-eye"></i> roles</button>
-											@endif
-										@endcan
-										@can('user_update')
-											<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editUser('{{ $user->username }}')"><i class="fa fa-edit text-blue"></i></button>
-										@endcan
-										@can('user_delete')
-											@if($user->username != crminfo('admin_username'))
-												<button type="button" data-username="{{ $user->username }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmUserDelete"><i class="fa fa-trash text-red"></i></button>
-											@endif
-										@endcan
-									</td>
+									<th>action</th>
 								@endcan
 							</tr>
-						@endforeach
+						</thead>
+						<tbody>
+							@foreach( $users as $user )
+								<tr {!! $user->username == crminfo('admin_username') ? 'style="background-color:#ebebeb;"' : '' !!}>
+									<td>{{ $user->id }}</td>
+									<td>{{ $user->full_name }}</td>
+									<td>{{ $user->username }}</td>
+									<td>{{ $user->email }}</td>
+									<td>{!! $user->hasProfile() ? '<a href="'.url($user->profilePath()).'"><i class="fa fa-external-link text-blue"></i></a>' : '<a href="'.url("profiles/".$user->username."/create").'"><i class="fa fa-plus text-green"></i></a>' !!}</td>
+									<td>{{ $user->last_login }}</td>
+									<td>{!! $user->verified == 1 ? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-close text-red"></i>' !!}</td>
+									<td>{{ $user->created_at }}</td>
+									@can('user_update')
+										<td>
+											@can('role_update')
+												@if($user->username != crminfo('admin_username'))
+													<button type="button" class="btn btn-xs btn-warning btn-flat" onclick="editUserRoles('{{ $user->username }}')"><i class="fa fa-eye"></i> roles</button>
+												@endif
+											@endcan
+											@can('user_update')
+												<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editUser('{{ $user->username }}')"><i class="fa fa-edit text-blue"></i></button>
+											@endcan
+											@can('user_delete')
+												@if($user->username != crminfo('admin_username'))
+													<button type="button" data-username="{{ $user->username }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmUserDelete"><i class="fa fa-trash text-red"></i></button>
+												@endif
+											@endcan
+										</td>
+									@endcan
+								</tr>
+							@endforeach
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>ID</th>
+								<th>Full name</th>
+								<th>username</th>
+								<th>email</th>
+								<th>profile</th>
+								<th>last login</th>
+								<th>verified</th>
+								<th>created at</th>
+								@can('user_update')
+									<th>action</th>
+								@endcan
+							</tr>
+						</tfoot>
 					</tbody>
 				</table>
 			@endcan
@@ -209,5 +236,7 @@
 		</div>
 	@endcan
 </section><!-- /.content -->
-
+<script type="text/javascript">
+	$("#alluserstable").DataTable();
+</script>
 @stop
