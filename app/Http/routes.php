@@ -79,10 +79,6 @@ Route::post('roles/user/{username}', 'RolesController@updateUserRoles'); // to u
 Route::get('permissions', 'PermissionsController@showPermissionsForm');
 Route::patch('permissions', 'PermissionsController@update');
 
-Route::get('roles/test', function(){
-	return App\Models\Role::exists('avdi') ? 'true':'false';
-});
-
 // \DB::listen(function($query) {
 //     var_dump($query);
 // });

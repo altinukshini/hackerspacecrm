@@ -262,7 +262,8 @@ class AuthController extends Controller
 
         $user = $this->create($request->all());
 
-        $this->mailer->confirmation($user);
+        $data['confirmation_link'] = url('login/confirm/'.$user->email_token);
+        $this->mailer->mail($user, 'confirmation', $data);
 
         Flash::info('Please check your email address to confirm and activate your account.');
 

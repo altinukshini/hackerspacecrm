@@ -39,6 +39,10 @@ class UsersController extends Controller
 
         $users = User::all();
 
+        if (request()->wantsJson()) {
+            return $users;
+        }
+
         return view('settings.users.all')->with('users', $users);
     }
 
@@ -72,12 +76,12 @@ class UsersController extends Controller
      * @param string
      * @return App\Models\User;
      **/
-    public function getUser(Request $request, $username)
+    public function getUser($username)
     {
         // see if user has permission to view another user
         if (!(hasPermission('user_view', true) || Auth::user()->username == $username)) return redirect('/');
 
-        if (!$request->wantsJson()) {
+        if (!request()->wantsJson()) {
             return redirect('/');
         }
 
@@ -106,7 +110,15 @@ class UsersController extends Controller
         $user->assignRoleByName(crminfo('new_user_role'));
 
         if ($request->input('notify') == 'yes') {
-            $this->mailer->accountCreated($user, $request->input('password'));
+            $data['password'] = $request->input('password');
+            $data['edit_link'] = url('/users/'.$user->username.'/edit');
+            $data['reset_link'] = url('/password/reset');
+            
+            $this->mailer->mail($user, 'newaccount', $data);
+        }
+
+        if ($request->wantsJson()) {
+            return $user;
         }
 
         Flash::success('User created successfully');

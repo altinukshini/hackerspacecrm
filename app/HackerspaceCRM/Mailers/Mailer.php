@@ -3,13 +3,14 @@
 namespace HackerspaceCRM\Mailers;
 
 use Mail;
+use App\Models\EmailTemplate;
 use HackerspaceCRM\Mailers\EmailAddress;
 
 abstract class Mailer
 {
 
 	/* 
-	 * Deliver email
+	 * Deliver email with View template
 	 *
 	 * @param $view
 	 * @param $subject
@@ -18,9 +19,9 @@ abstract class Mailer
 	 * @param HackerspaceCRM\Mailers\EmailAddress $to
 	 * @param $data
 	 */
-	public function deliver($view, $subject, $fromName, EmailAddress $fromEmail, EmailAddress $to, $data = array())
+	public function deliverView($view, $subject, $fromName, EmailAddress $fromEmail, EmailAddress $to, array $data = array())
 	{
-		$this->validateParameters($view, $subject, $fromName);
+		$this->validateParameters([$view, $subject, $fromName]);
 
 		return Mail::queue($view, $data, function($message) 
 			use ($fromEmail, $fromName, $subject, $to){
@@ -31,18 +32,44 @@ abstract class Mailer
 	}
 
 	/* 
-	 * Validate given parameters
+	 * Deliver email with View template
 	 *
 	 * @param $view
 	 * @param $subject
 	 * @param $fromName
+	 * @param HackerspaceCRM\Mailers\EmailAddress $fromEmail
+	 * @param HackerspaceCRM\Mailers\EmailAddress $to
+	 * @param $data
 	 */
-	public function validateParameters($view, $subject, $fromName)
+	public function deliverDB(EmailTemplate $template, $fromName, EmailAddress $fromEmail, EmailAddress $to, array $data = array())
 	{
-		if (empty($view) && empty($subject) && empty($fromName))
+		$this->validateParameters($fromName);
+
+		return Mail::queue([], [], function($message) 
+			use ($template, $fromEmail, $fromName, $to, $data){
+				$message->from($fromEmail->getEmail(), $fromName)
+					->subject($template->email_subject)
+					->to($to->getEmail())
+					->setBody($template->bladeCompile($data), 'text/html');
+		});
+	}
+
+	/* 
+	 * Validate given parameters
+	 *
+	 * @param $parameter
+	 */
+	public function validateParameters($parameter)
+	{
+		if (is_array($parameter)) {
+			foreach ($parameter as $param) {
+				$this->validateParameters($param);
+			}
+		}
+
+		if (empty($parameter))
 			throw new InvalidParameterException('Mailer parameters should not be empty');
 
-		return true;
 	}
 
 }

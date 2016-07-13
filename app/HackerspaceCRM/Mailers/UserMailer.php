@@ -3,9 +3,10 @@
 namespace HackerspaceCRM\Mailers;
 
 use Config;
+use App\Models\EmailTemplate;
 use App\Models\User;
-use HackerspaceCRM\Mailers\Mailer;
 use HackerspaceCRM\Mailers\EmailAddress;
+use HackerspaceCRM\Mailers\Mailer;
 
 class UserMailer extends Mailer
 {
@@ -26,55 +27,44 @@ class UserMailer extends Mailer
 	{
 		$this->fromName = Config::get('mail.from.name');
 		$this->fromEmail = Config::get('mail.from.address');
+		$this->data['crm'] = (object) CRMSettings();
 	}
 
 	/*
-	 * Send email confirmation email to User
+	 * Send email template to a user with given data
 	 *
 	 * @param App\Models\User $user
+	 * @param string
+	 * @param array
 	 * @return void
 	 */
-	public function confirmation(User $user)
+	public function mail(User $user, $template, array $data = array())
 	{
+		$this->emailTemplate = EmailTemplate::whereSlug($template)->firstOrFail();
 		$this->to = $user->email;
-		$this->subject = 'Email confirmation required';
-		$this->view = 'emails.confirmation';
-		$this->data = compact('user');
+
+		$this->data += array_merge(compact('user'), $data);
 
 		return $this->sendEmail();
 	}
 
 	/*
-	 * Send welcome email to User
+	 * Send email template to a user with given data
 	 *
 	 * @param App\Models\User $user
+	 * @param string
+	 * @param array
 	 * @return void
 	 */
-	public function welcome(User $user)
+	public function mailView(User $user, $view, $subject, array $data = array())
 	{
 		$this->to = $user->email;
-		$this->subject = 'Welcome to '.crminfo('name');
-		$this->view = 'emails.welcome';
-		$this->data = compact('user');
+		$this->subject = $subject;
+		$this->view = $view;
 
-		return $this->sendEmail();
-	}
+		$this->data += array_merge(compact('user'), $data);
 
-	/*
-	 * Send email notification for new account on CRM
-	 *
-	 * @param App\Models\User $user
-	 * @return void
-	 */
-	public function accountCreated(User $user, $plainPassword)
-	{
-		$this->to = $user->email;
-		$this->subject = 'New account created at ' . crminfo('name');
-		$this->view = 'emails.newaccount';
-		$this->data = compact('user');
-		$this->data['password'] = compact('plainPassword');
-
-		return $this->sendEmail();
+		return $this->sendEmail('view');
 	}
 
 	/*
@@ -82,9 +72,20 @@ class UserMailer extends Mailer
 	 *
 	 * @return void
 	 */
-	public function sendEmail()
+	public function sendEmail($type = null)
 	{
-		return $this->deliver(
+
+		if (is_null($type)) {
+			return $this->deliverDB(
+				$this->emailTemplate,
+				$this->fromName, 
+				new EmailAddress($this->fromEmail), 
+				new EmailAddress($this->to),
+				$this->data
+			);
+		}
+
+		return $this->deliverView(
 			$this->view, 
 			$this->subject, 
 			$this->fromName, 

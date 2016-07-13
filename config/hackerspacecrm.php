@@ -1,11 +1,17 @@
 <?php
 
+// INCLUDE
+// crmbasepath, orgname, orgdescription, orgaddress
+
 return [
 
+	// Do not change this
 	'version' => '0.1 alpha',
 
-	// app url
-	'url' => '/',
+	// App complete url (include crmbasepath)
+	// Example: http://localhost/
+	//			http://localhost/crm/
+	'url' => 'http://localhost:8000/',
 
 	'crmname' => 'Hackerspace CRM',
 

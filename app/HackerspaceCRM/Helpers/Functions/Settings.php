@@ -8,7 +8,7 @@ if (!function_exists('CRMSettings')) {
      * @return array
      * @return string
      */
-    function CRMSettings($key)
+    function CRMSettings($key = null)
     {
         static $settings;
 
@@ -17,7 +17,7 @@ if (!function_exists('CRMSettings')) {
             $settings = $settingsAll->getAll()->lists('value', 'key')->toArray();
         }
 
-        return (is_array($key)) ? array_only($settings, $key) : $settings[$key];
+        return is_null($key) ? $settings : ((is_array($key)) ? array_only($settings, $key) : $settings[$key]);
     }
 }
 
