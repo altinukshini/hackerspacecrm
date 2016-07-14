@@ -37,7 +37,7 @@
                             </div>
                             <div class="form-group {{ $errors->has('email_body') ? ' has-error' : ' has-feedback' }}">
                                 <label for="email_body">Email body</label>
-                                <textarea class="textarea wysitextarea" name="email_body" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ old('email_body') ? old('email_body') : $template->email_body }}</textarea>
+                                <textarea class="textarea" name="email_body" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ old('email_body') ? old('email_body') : $template->email_body }}</textarea>
 
                                 @if ($errors->has('email_body'))
                                 <span class="help-block">
