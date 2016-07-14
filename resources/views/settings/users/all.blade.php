@@ -47,8 +47,11 @@
 								<td>{{ $user->username }}</td>
 								<td>{{ $user->email }}</td>
 								<td>
+									@can('user_view')
+										{!! $user->hasProfile() ? '<a href="'.url($user->profilePath()).'"><i class="fa fa-external-link text-blue"></i></a>' :  '' !!}
+									@endcan
 									@can('profile_create')
-										{!! $user->hasProfile() ? '<a href="'.url($user->profilePath()).'"><i class="fa fa-external-link text-blue"></i></a>' : '<a href="'.url("profiles/".$user->username."/create").'"><i class="fa fa-plus text-green"></i></a>' !!}
+										{!! $user->hasProfile() ? '' : '<a href="'.url("profiles/".$user->username."/create").'"><i class="fa fa-plus text-green"></i></a>' !!}
 									@endcan
 								</td>
 								<td>{{ $user->last_login }}</td>

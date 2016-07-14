@@ -138,7 +138,7 @@ class AuthController extends Controller
                 Session::put('locale', $user->locale);
             }
 
-            Flash::success('Welcome to '. crminfo('name'));
+            Flash::success('Welcome to '. crminfo('name'), true);
 
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
@@ -236,7 +236,7 @@ class AuthController extends Controller
 
         Session::flush();
 
-        Flash::success('You have been signed out. See you!');
+        Flash::success('You have been signed out. See you!', true);
 
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }

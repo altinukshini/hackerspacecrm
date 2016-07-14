@@ -18,7 +18,7 @@
 			<div class="box box-widget widget-user-2">
 				<div class="widget-user-header bg-{{ $user->profile->gender == 'male' ? 'blue' : ($user->profile->gender == 'female' ? 'red' : 'purple') }}">
 					<div class="widget-user-image">
-						<img class="img-circle" src="/dist/img/user1-128x128.jpg" alt="User Avatar">
+						<img class="" src="{{ get_gravatar($user->email, 128) }}" alt="User Avatar">
 					</div>
 					@if (hasPermission('profile_update') || Auth::user()->id == $user->id)
 						<a class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#editProfileModal">

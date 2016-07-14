@@ -8,13 +8,13 @@
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.5 -->
-	<link rel="stylesheet" href="{{ asset('/bootstrap/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('/bootstrap/css/bootstrap.css') }}">
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="{{ asset('/dist/css/font-awesome.min.css') }}">
 	<!-- Ionicons -->
 	<link rel="stylesheet" href="{{ asset('/dist/css/ionicons.min.css') }}">
 	<!-- Theme style -->
-	<link rel="stylesheet" href="{{ asset('/dist/css/AdminLTE.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('/dist/css/AdminLTE.css') }}">
 	<!-- iCheck -->
 	<link rel="stylesheet" href="{{ asset('/plugins/iCheck/square/blue.css') }}">
 
@@ -44,12 +44,16 @@
 
 	<!-- iCheck -->
 	<script src="{{ asset('/plugins/iCheck/icheck.min.js') }}"></script>
+	<script src="{{ asset('/dist/js/custom.js') }}"></script>
 	<script>
 		$(function () {
 			$('input').iCheck({
 				checkboxClass: 'icheckbox_square-blue',
 				radioClass: 'iradio_square-blue',
 				increaseArea: '20%' // optional
+			});
+			$(".alert-fade").fadeTo(7000, 1000).fadeOut(600, function(){
+			    $(".alert-fade").alert('close');
 			});
 		});
 	</script>

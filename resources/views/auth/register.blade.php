@@ -8,7 +8,7 @@
 	<div class="login-box-body">
 
 		<p class="login-box-msg">Register to {{ crminfo('name') }}</p>
-		@include('includes.flash')
+		@include('includes.flash-standalone')
 
 		<form role="form" method="POST" action="{{ url('/register') }}">
 			{!! csrf_field() !!}

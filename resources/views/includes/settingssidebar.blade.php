@@ -1,6 +1,6 @@
 @can('setting_view')
 	<!-- Control Sidebar -->
-	<aside class="sidebar control-sidebar control-sidebar-dark">
+	<aside class="sidebar control-sidebar control-sidebar-light">
 		<ul class="sidebar-menu">
 			@include('includes.settingsnavigation')
 		</ul>

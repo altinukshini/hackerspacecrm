@@ -42,13 +42,13 @@
 						@endif
 						@else
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+							<img src="{{ get_gravatar(Auth::user()->email, 160) }}" class="user-image" alt="User Image">
 							<span class="hidden-xs">{{ Auth::user()->full_name }}</span>
 						</a>
 						<ul class="dropdown-menu">
 							<!-- User image -->
 							<li class="user-header">
-								<img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+								<img src="{{ get_gravatar(Auth::user()->email, 160) }}" class="" alt="User Image">
 								<p>
 									{{ Auth::user()->full_name }}
 									<small>Member since Nov. 2012</small>

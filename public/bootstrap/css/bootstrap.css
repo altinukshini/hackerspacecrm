@@ -4900,7 +4900,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: .25em;
+  /*border-radius: .25em;*/
 }
 a.label:hover,
 a.label:focus {
@@ -5121,7 +5121,7 @@ a.thumbnail.active {
   color: #31708f;
   background-color: #d9edf7;
   border-color: #bce8f1;
-  margin: 5px 0px 5px 0px;
+  margin: 10px 0px 10px 0px;
   border-radius: 0 !important;
 }
 .alert-info hr {
@@ -5141,15 +5141,15 @@ a.thumbnail.active {
 .alert-warning .alert-link {
   color: #66512c;
 }
-.alert-danger {
+.alert-danger, .alert-error {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;
 }
-.alert-danger hr {
+.alert-danger hr, .alert-error hr {
   border-top-color: #e4b9c0;
 }
-.alert-danger .alert-link {
+.alert-danger .alert-link, .alert-error .alert-link {
   color: #843534;
 }
 @-webkit-keyframes progress-bar-stripes {
