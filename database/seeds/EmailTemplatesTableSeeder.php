@@ -18,7 +18,7 @@ class EmailTemplatesTableSeeder extends Seeder
 			[
 				'title' => 'New account created',
 				'slug' => 'newaccount',
-				'description' => 'This email will be sent to users that are created via a site administrator under /users page',
+				'description' => 'This email will be sent to users that are created via a site administrator under users page',
 				'email_subject' => 'New account created at '.crminfo('name'),
 				'email_body' => 'Hi {{ $user->full_name }},
 <br />
@@ -40,7 +40,8 @@ or request a Password Reset Link at: <a href=\'{{ $reset_link }}\'>{{ $reset_lin
 <br />
 Happy hacking!<br />
 {{ $crm->crmname }}',
-				'syntax_help' => 'Required variables to be included: $reset_link, $edit_link, $password',
+				'syntax_help' => '<b>Required variables to be included:</b> $reset_link (to send the reset password link), $edit_link (to send the edit account link), $password (to send the password set for user)<br />
+				<b>Other:</b> $user->username, $user->full_name, $user->email, $user->last_login',
 				'locale' => 'en'
 			],
 			[
@@ -59,7 +60,8 @@ Your username is <b>{{ $user->username }}</b>. To confirm your account and log i
 <br />
 Happy hacking!<br />
 {{ $crm->crmname }}',
-				'syntax_help' => 'Required variables to be included: $confirmation_link',
+				'syntax_help' => '<b>Required variables to be included:</b> $confirmation_link (to send the email confirmation link)<br />
+				<b>Other:</b> $user->username, $user->full_name, $user->email, $user->last_login',
 				'locale' => 'en'
 			],
 		];

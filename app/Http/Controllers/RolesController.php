@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateRoleRequest;
-use App\Http\Requests\UpdateRoleRequest;
+use Flash;
+use Validator;
 use App\Models\Role;
 use App\Models\User;
-use Flash;
 use Illuminate\Http\Request;
-use Validator;
+use App\Http\Requests\CreateRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
 
 class RolesController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -39,6 +37,7 @@ class RolesController extends Controller
      * Get data for one role as json
      *
      * @param string
+     *
      * @return App\Models\Role;
      **/
     public function getRole($roleId)

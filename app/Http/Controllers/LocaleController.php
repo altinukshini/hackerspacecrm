@@ -15,7 +15,6 @@ use Doctrine\Instantiator\Exception\InvalidArgumentException;
 
 class LocaleController extends Controller
 {
-
     /*
      * Change application locale and set session locale and change user
      * default locale to the given locale in parameter
@@ -26,7 +25,7 @@ class LocaleController extends Controller
     public function switchLocale($locale)
     {
         $this->guardLocale($locale);
-        
+
         if (array_key_exists($locale, crminfo('supported_locales'))) {
             $this->changeAuthedUserLocale($locale);
             App::setLocale($locale);
@@ -35,14 +34,15 @@ class LocaleController extends Controller
 
         return back();
     }
-    
+
     /*
      * Change user default locale to the given locale in parameter
      *
      * @param locale (string)
      * @return void
      */
-    private function changeAuthedUserLocale($locale){
+    private function changeAuthedUserLocale($locale)
+    {
         if (Auth::check()) {
             $user = User::find(Auth::user()->id);
             $user->setDefaultLocale($locale);
@@ -50,11 +50,14 @@ class LocaleController extends Controller
     }
 
     /**
+     * Check if parameter is not empty
+     *
      * @param mixed $locale
      */
     public function guardLocale($locale)
     {
-        if(empty($locale))
+        if (empty($locale)) {
             throw new InvalidArgumentException('Locale should not be empty');
+        }
     }
 }

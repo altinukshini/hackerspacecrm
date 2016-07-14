@@ -54,9 +54,8 @@ Route::delete('users/{username}', 'UsersController@delete');
 Route::get('settings', function () { return redirect('/'); });
 Route::get('settings/general', 'SettingsController@showGeneralSettingsForm');
 Route::patch('settings/general', 'SettingsController@updateGeneralSettings');
-Route::get('settings/emails', function () {
-	return view('settings.emails');
-});
+Route::get('settings/emails', 'EmailTemplatesController@showEmailTemplatesForm');
+Route::patch('settings/emails/{templateId}', 'EmailTemplatesController@update');
 
 /*
  * Menus routes

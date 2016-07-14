@@ -20,7 +20,7 @@ $('.sidebar-menu li').each(function(){
 });
 
 $(".alert-fade").fadeTo(7000, 1000).fadeOut(600, function(){
-    $(".alert").alert('close');
+    $(".alert-fade").alert('close');
 });
 
 function editMenu(id) {

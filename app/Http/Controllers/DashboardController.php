@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use Illuminate\Http\Request;
-
 class DashboardController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -26,7 +21,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        if (!hasRole('member', true)) return back();
+        if (!hasRole('member', true)) {
+            return back();
+        }
         // if (!hasPermission('sell_company', true)) return back();
 
         return view('dashboard');

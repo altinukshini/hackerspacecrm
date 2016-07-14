@@ -3,22 +3,21 @@
 namespace App\Models;
 
 use App\Models\Permission;
-use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasPermission;
+use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
+    use HasPermission;
 
-	use HasPermission;
-
-	/**
+    /**
      * The table associated with the model.
      *
      * @var string
      */
-	protected $table = 'roles';
+    protected $table = 'roles';
 
-	/**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -32,7 +31,6 @@ class Role extends Model
      */
     public function permissions()
     {
-    	return $this->belongsToMany(Permission::class);
+        return $this->belongsToMany(Permission::class);
     }
-    
 }

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
-use Exception;
 
 class EmailTemplate extends Model
 {
@@ -13,9 +13,9 @@ class EmailTemplate extends Model
      *
      * @var string
      */
-	protected $table = 'email_templates';
+    protected $table = 'email_templates';
 
-	/**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -27,25 +27,29 @@ class EmailTemplate extends Model
         'email_subject',
         'email_body',
         'syntax_help',
-        'locale'
+        'locale',
     ];
 
-
-    public function bladeCompile(array $args = array())
+    /**
+     * Compile the blade template and replace the template variables with their
+     * values that are given in the $data array parameter
+     *
+     * @param array
+     *
+     * @return string;
+     **/
+    public function bladeCompile(array $data = array())
     {
         $generated = Blade::compileString($this->email_body);
 
-        ob_start(); 
+        ob_start();
 
-        extract($args,  EXTR_SKIP);
+        extract($data,  EXTR_SKIP);
 
-        try
-        {
+        try {
             eval('?>'.$generated);
-        }
-        catch (Exception $e)
-        {
-        	// We just don't want to throw an exception. If a variable is missing or something, then just don't show it
+        } catch (Exception $e) {
+            // We just don't want to throw an exception. If a variable is missing or something, then just don't show it
             // ob_get_clean(); throw $e;
         }
 

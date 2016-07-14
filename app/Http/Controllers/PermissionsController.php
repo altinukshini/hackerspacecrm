@@ -35,11 +35,7 @@ class PermissionsController extends Controller
     }
 
     /**
-     * TODO: 
-     * 1) More protection for 'administrator' role
-     * crm should not allow to remove all permissions for
-     * 'administrator' role.
-     *
+     * TODO:
      * 2) Validate request
      *
      * Update Permissions

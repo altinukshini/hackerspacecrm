@@ -3,20 +3,19 @@
 namespace App\Models;
 
 use App\Models\Role;
-use Illuminate\Database\Eloquent\Model;
 use HackerspaceCRM\Menus\Menu;
+use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
-
-	/**
+    /**
      * The table associated with the model.
      *
      * @var string
      */
-	protected $table = 'permissions';
+    protected $table = 'permissions';
 
-	/**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -30,7 +29,7 @@ class Permission extends Model
      */
     public function roles()
     {
-    	return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class);
     }
 
     /**
@@ -42,5 +41,4 @@ class Permission extends Model
     {
         return $this->hasMany(Menu::class);
     }
-
 }

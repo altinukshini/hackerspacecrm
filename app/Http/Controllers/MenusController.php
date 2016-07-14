@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Flash;
+use Illuminate\Http\Request;
+use HackerspaceCRM\Menu\Menu;
 use App\Http\Requests\CreateMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
-use Flash;
-use HackerspaceCRM\Menu\Menu;
 use HackerspaceCRM\Menu\MenuApplicationService;
 use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;
-use Illuminate\Http\Request;
 
 class MenusController extends Controller
 {

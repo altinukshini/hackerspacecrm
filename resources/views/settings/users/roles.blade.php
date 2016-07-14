@@ -94,7 +94,7 @@
 							<h4 class="modal-title">Add new role</h4>
 						</div>
 						<div class="modal-body">
-							<form role="form" action='/roles' METHOD='POST'>
+							<form role="form" action="{{ url('roles') }}" METHOD='POST'>
 								{!! csrf_field() !!}
 								<div class="form-group{{ $errors->has('name') ? ' has-error' : ' has-feedback' }}">
 									<label for="name">Name*</label>

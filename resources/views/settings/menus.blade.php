@@ -144,7 +144,7 @@
 							<h4 class="modal-title">Add new menu</h4>
 						</div>
 						<div class="modal-body">
-							<form role="form" action='/settings/menus' METHOD='POST'>
+							<form role="form" action="{{ url('/settings/menus') }}" METHOD="POST">
 								{!! csrf_field() !!}
 								<div class="row">
 									<div class="col-md-4">

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use App\Http\Requests\CreateProfileRequest;
-use App\Http\Requests\UpdateProfileRequest;
-use App\Models\Profile;
-use App\Models\User;
 use Auth;
 use Flash;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\User;
+use App\Models\Profile;
+use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use App\Http\Requests\CreateProfileRequest;
+use App\Http\Requests\UpdateProfileRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProfilesController extends Controller
 {

@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Profile;
-use App\Models\Permission;
 use App\Traits\HasRole;
+use App\Models\Permission;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-
     use HasRole;
 
     /**
@@ -18,7 +17,7 @@ class User extends Authenticatable
      * @var string
      */
     protected $table = 'users';
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -39,14 +38,12 @@ class User extends Authenticatable
 
     /**
      * Generate email_token for user.
-     *
-     * @return void
      */
     public static function boot()
     {
         parent::boot();
 
-        static::creating(function($user) {
+        static::creating(function ($user) {
             $user->email_token = str_random(30);
         });
     }
@@ -54,39 +51,33 @@ class User extends Authenticatable
     /**
      * Verify user in db, since the user has verified
      * the email.
-     *
-     * @return void
      */
     public function confirmEmail()
     {
         $this->verified = true;
         $this->email_token = null;
-        
+
         $this->save();
     }
 
     /**
-     * Set last login datetime
-     *
-     * @return void
+     * Set last login datetime.
      */
     public function setLastLogin()
     {
         $this->last_login = date('Y-m-d H:i:s');
         $this->save();
-        
+
         $this->save();
     }
 
     /**
-     * Set default locale
-     *
-     * @return void
+     * Set default locale.
      */
     public function setDefaultLocale($locale)
     {
         $this->locale = $locale;
-        
+
         $this->save();
     }
 
@@ -117,13 +108,13 @@ class User extends Authenticatable
      */
     public function profilePath()
     {
-        return $this->hasProfile() ? '/members/' . $this->username : '/';
+        return $this->hasProfile() ? '/members/'.$this->username : '/';
     }
 
     /**
      * Check if user has profile.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasProfile()
     {

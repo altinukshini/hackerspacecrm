@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
-
     /**
      * The table associated with the model.
      *
@@ -27,17 +26,16 @@ class Profile extends Model
         'twitter_username',
         'linkedin_username',
         'skills',
-        'biography'
+        'biography',
     ];
 
-	/**
+    /**
      * Relation between a profile and the user.
      *
      * @return User
      */
     public function user()
     {
-    	return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
-
 }

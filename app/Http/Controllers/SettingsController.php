@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Flash;
 use Illuminate\Http\Request;
-use App\Http\Requests\UpdateGeneralSettingsRequest;
-
 use HackerspaceCRM\Setting\Setting;
+use App\Http\Requests\UpdateGeneralSettingsRequest;
 use HackerspaceCRM\Setting\SettingApplicationService;
 use HackerspaceCRM\Setting\Repository\SettingRepositoryInterface;
 
@@ -41,8 +40,6 @@ class SettingsController extends Controller
      */
     public function updateGeneralSettings(UpdateGeneralSettingsRequest $request)
     {
-
-        if (!hasPermission('setting_update', true)) return back();
 
         $settingApplicationService = new SettingApplicationService();
         $requestArray = $request->all();
