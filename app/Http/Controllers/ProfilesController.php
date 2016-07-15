@@ -81,6 +81,31 @@ class ProfilesController extends Controller
     }
 
     /**
+     * Delete user profile
+     *
+     * @param string $username
+     *
+     * @return Void;
+     **/
+    public function delete($username)
+    {
+        if (!hasPermission('profile_delete', true)) return redirect('/');
+
+        $user = User::with('profile')->whereUsername($username)->first();
+
+        if (is_null($user) || !$user->hasProfile()) {
+            Flash::info('User or profile does not exist');
+            return redirect('/');
+        }
+
+        $user->profile->delete();
+
+        Flash::success('Profile deleted successfully');
+
+        return back();       
+    }
+
+    /**
      * Show create profile form for a user
      *
      * @param string

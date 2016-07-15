@@ -36,6 +36,7 @@ Route::get('members', 'ProfilesController@all');
 Route::get('members/{username}', 'ProfilesController@show');
 Route::patch('profiles/{username}', 'ProfilesController@update');
 Route::post('profiles/{username}', 'ProfilesController@create');
+Route::delete('profiles/{username}', 'ProfilesController@delete');
 Route::get('profiles/{username}/create', 'ProfilesController@showCreateForm');
 // Route::delete('profiles/{username}', 'ProfilesController@delete');
 

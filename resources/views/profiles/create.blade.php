@@ -8,6 +8,10 @@
 
 <!-- Main content -->
 <section class="content">
+	<div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        Creating a profile can not be undone. User/Member profiles are public and can be seen by unauthenticated users.
+    </div>
 	<div class="row">
 		<div class="col-md-8">
 			<div class="box box-default col-md-8">

@@ -53,12 +53,19 @@
 									@can('profile_create')
 										{!! $user->hasProfile() ? '' : '<a href="'.url("profiles/".$user->username."/create").'"><i class="fa fa-plus text-green"></i></a>' !!}
 									@endcan
+									@can('profile_delete')
+										@if($user->hasProfile())
+											{!! Form::open(['method' => 'DELETE', 'url' => url('profiles/'.$user->username), 'style' => 'float:right;']) !!}
+											<button type="submit" title="Delete profile" style="align:right;" class="btn btn-xs btn-default btn-flat"><i class="fa fa-trash text-red"></i></button>
+											{!! Form::close() !!}
+										@endif
+									@endcan
 								</td>
 								<td>{{ $user->last_login }}</td>
 								<td>
 									{!! $user->isVerified() ? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-close text-red"></i>' !!}
 									@if(!$user->isVerified())
-										{!! Form::open(['method' => 'PATCH', 'url' => url('/users/'.$user->username.'/verify'), 'style' => 'float:right;']) !!}
+										{!! Form::open(['method' => 'PATCH', 'url' => url('users/'.$user->username.'/verify'), 'style' => 'float:right;']) !!}
 										<button type="submit" title="Verify" style="align:right;" class="btn btn-xs btn-default btn-flat"><i class="fa fa-check text-green"></i></button>
 										{!! Form::close() !!}
 									@endif
