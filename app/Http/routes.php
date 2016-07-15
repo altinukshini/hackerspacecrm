@@ -44,6 +44,7 @@ Route::post('users', 'UsersController@create');
 Route::get('users/{username}', 'UsersController@getUser'); // for ajax request that populates the form
 Route::get('users/{username}/edit', 'UsersController@showUpdateUserForm');
 Route::patch('users/{username}', 'UsersController@update');
+Route::patch('users/{username}/verify', 'UsersController@verify');
 Route::patch('users/{username}/password', 'UsersController@changePassword');
 Route::delete('users/{username}', 'UsersController@delete');
 

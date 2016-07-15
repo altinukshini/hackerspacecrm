@@ -14,12 +14,13 @@ class UserMailer extends Mailer
 	 * @var
 	 */
 	protected $view;
+	protected $emailTemplate;
 	protected $data = [];
 	protected $subject;
-	protected $to;
 	protected $fromEmail;
 	protected $fromName;
-	
+	protected $toEmail;
+
 	/*
 	 * @param HackerspaceCRM\Mailers\Mailer $mailer
 	 */
@@ -41,7 +42,7 @@ class UserMailer extends Mailer
 	public function mail(User $user, $template, array $data = array())
 	{
 		$this->emailTemplate = EmailTemplate::whereSlug($template)->firstOrFail();
-		$this->to = $user->email;
+		$this->toEmail = $user->email;
 
 		$this->data += array_merge(compact('user'), $data);
 
@@ -58,7 +59,7 @@ class UserMailer extends Mailer
 	 */
 	public function mailView(User $user, $view, $subject, array $data = array())
 	{
-		$this->to = $user->email;
+		$this->toEmail = $user->email;
 		$this->subject = $subject;
 		$this->view = $view;
 
@@ -80,7 +81,7 @@ class UserMailer extends Mailer
 				$this->emailTemplate,
 				$this->fromName, 
 				new EmailAddress($this->fromEmail), 
-				new EmailAddress($this->to),
+				new EmailAddress($this->toEmail),
 				$this->data
 			);
 		}
@@ -90,7 +91,7 @@ class UserMailer extends Mailer
 			$this->subject, 
 			$this->fromName, 
 			new EmailAddress($this->fromEmail), 
-			new EmailAddress($this->to),
+			new EmailAddress($this->toEmail),
 			$this->data
 		);
 	}

@@ -105,6 +105,7 @@ class UsersController extends Controller
             'password' => bcrypt($request->input('password')),
         ]);
         $user->verified = 1;
+        $user->email_token = null;
         $user->save();
 
         $user->assignRoleByName(crminfo('new_user_role'));
@@ -143,12 +144,39 @@ class UsersController extends Controller
             return redirect('/');
         }
 
+        // $user->update($request->all());
         $user->full_name = $request->input('full_name');
         $user->email = $request->input('email');
-
         $user->save();
 
         Flash::success('User info updated successfully');
+
+        return back();
+    }
+
+    /**
+     * Verify user
+     *
+     * @param string $username;
+     *
+     * @return Void;
+     **/
+    public function verify($username)
+    {
+        if (!hasPermission('user_update', true)) return redirect('/');
+
+        $user = User::whereUsername($username)->first();
+
+        if (is_null($user)) {
+            Flash::info('No user with username: '.$username);
+            return redirect('/');
+        }
+
+        $user->verified = 1;
+        $user->email_token = null;
+        $user->save();
+
+        Flash::success('User verified successfully');
 
         return back();
     }

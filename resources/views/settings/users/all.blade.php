@@ -55,13 +55,20 @@
 									@endcan
 								</td>
 								<td>{{ $user->last_login }}</td>
-								<td>{!! $user->verified == 1 ? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-close text-red"></i>' !!}</td>
+								<td>
+									{!! $user->isVerified() ? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-close text-red"></i>' !!}
+									@if(!$user->isVerified())
+										{!! Form::open(['method' => 'PATCH', 'url' => url('/users/'.$user->username.'/verify'), 'style' => 'float:right;']) !!}
+										<button type="submit" title="Verify" style="align:right;" class="btn btn-xs btn-default btn-flat"><i class="fa fa-check text-green"></i></button>
+										{!! Form::close() !!}
+									@endif
+								</td>
 								<td>{{ $user->created_at }}</td>
 								@can('user_update')
 									<td>
 										@can('role_update')
 											@if($user->username != crminfo('admin_username'))
-												<button type="button" class="btn btn-xs btn-warning btn-flat" onclick="editUserRoles('{{ $user->username }}')"><i class="fa fa-eye"></i> roles</button>
+												<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editUserRoles('{{ $user->username }}')"><i class="fa fa-eye"></i> roles</button>
 											@endif
 										@endcan
 										@can('user_update')

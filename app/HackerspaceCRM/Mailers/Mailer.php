@@ -16,18 +16,18 @@ abstract class Mailer
 	 * @param $subject
 	 * @param $fromName
 	 * @param HackerspaceCRM\Mailers\EmailAddress $fromEmail
-	 * @param HackerspaceCRM\Mailers\EmailAddress $to
+	 * @param HackerspaceCRM\Mailers\EmailAddress $toEmail
 	 * @param $data
 	 */
-	public function deliverView($view, $subject, $fromName, EmailAddress $fromEmail, EmailAddress $to, array $data = array())
+	public function deliverView($view, $subject, $fromName, EmailAddress $fromEmail, EmailAddress $toEmail, array $data = array())
 	{
 		$this->validateParameters([$view, $subject, $fromName]);
 
 		return Mail::queue($view, $data, function($message) 
-			use ($fromEmail, $fromName, $subject, $to){
+			use ($fromEmail, $fromName, $subject, $toEmail){
 				$message->from($fromEmail->getEmail(), $fromName)
 					->subject($subject)
-					->to($to->getEmail());
+					->to($toEmail->getEmail());
 		});
 	}
 
@@ -38,18 +38,18 @@ abstract class Mailer
 	 * @param $subject
 	 * @param $fromName
 	 * @param HackerspaceCRM\Mailers\EmailAddress $fromEmail
-	 * @param HackerspaceCRM\Mailers\EmailAddress $to
+	 * @param HackerspaceCRM\Mailers\EmailAddress $toEmail
 	 * @param $data
 	 */
-	public function deliverDB(EmailTemplate $template, $fromName, EmailAddress $fromEmail, EmailAddress $to, array $data = array())
+	public function deliverDB(EmailTemplate $template, $fromName, EmailAddress $fromEmail, EmailAddress $toEmail, array $data = array())
 	{
 		$this->validateParameters($fromName);
 
 		return Mail::queue([], [], function($message) 
-			use ($template, $fromEmail, $fromName, $to, $data){
+			use ($template, $fromEmail, $fromName, $toEmail, $data){
 				$message->from($fromEmail->getEmail(), $fromName)
 					->subject($template->email_subject)
-					->to($to->getEmail())
+					->to($toEmail->getEmail())
 					->setBody($template->bladeCompile($data), 'text/html');
 		});
 	}

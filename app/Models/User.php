@@ -120,4 +120,14 @@ class User extends Authenticatable
     {
         return $this->profile ? true : false;
     }
+
+    /**
+     * Check if user has profile.
+     *
+     * @return bool
+     */
+    public function isVerified()
+    {
+        return $this->verified == 1 ? true : false;
+    }
 }
