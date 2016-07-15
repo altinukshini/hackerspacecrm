@@ -17,10 +17,10 @@ class CreateEmailTemplatesTable extends Migration
 
             $table->string('title');
             $table->string('slug');
-            $table->string('description');
+            $table->mediumText('description');
             $table->string('email_subject');
             $table->mediumText('email_body');
-            $table->string('syntax_help');
+            $table->mediumText('syntax_help');
             $table->string('locale');
 
             $table->timestamps();

@@ -108,7 +108,7 @@ class User extends Authenticatable
      */
     public function profilePath()
     {
-        return $this->hasProfile() ? '/members/'.$this->username : '/';
+        return $this->hasProfile() ? url('members/'.$this->username) : '/';
     }
 
     /**

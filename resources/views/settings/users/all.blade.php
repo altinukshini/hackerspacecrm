@@ -68,15 +68,15 @@
 									<td>
 										@can('role_update')
 											@if($user->username != crminfo('admin_username'))
-												<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editUserRoles('{{ $user->username }}')"><i class="fa fa-eye"></i> roles</button>
+												<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editUserRoles('{{ url('roles/user/'.$user->username) }}')"><i class="fa fa-eye"></i> roles</button>
 											@endif
 										@endcan
 										@can('user_update')
-											<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editUser('{{ $user->username }}')"><i class="fa fa-edit text-blue"></i></button>
+											<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editUser('{{ url('users/'.$user->username) }}')"><i class="fa fa-edit text-blue"></i></button>
 										@endcan
 										@can('user_delete')
 											@if($user->username != crminfo('admin_username'))
-												<button type="button" data-username="{{ $user->username }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmUserDelete"><i class="fa fa-trash text-red"></i></button>
+												<button type="button" data-username="{{ $user->username }}" data-userdeleteurl="{{ url('users/'.$user->username) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmUserDelete"><i class="fa fa-trash text-red"></i></button>
 											@endif
 										@endcan
 									</td>

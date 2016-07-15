@@ -39,6 +39,7 @@ or request a Password Reset Link at: <a href=\'{{ $reset_link }}\'>{{ $reset_lin
 Happy hacking!<br>
 {{ $crm->crmname }}
 <br>
+<br>
 <hr>
 <br>
 <br>
@@ -61,6 +62,7 @@ Your username is <b>{{ $user->username }}</b>. To confirm your account and log i
 <br>
 Happy hacking!<br>
 {{ $crm->crmname }}
+<br>
 <br>
 <hr>
 <br>

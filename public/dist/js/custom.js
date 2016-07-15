@@ -1,9 +1,11 @@
 $("#alluserstable").DataTable();
+
 $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
   checkboxClass: 'icheckbox_minimal-blue',
   radioClass: 'iradio_minimal-blue',
   increaseArea: '15%' // optional
 });
+
 $('input[type="checkbox"].minimal, input[type="radio"].minimal').css('padding-left', '10px');
 
 $('.datepicker').datepicker({
@@ -23,14 +25,14 @@ $(".alert-fade").fadeTo(7000, 1000).fadeOut(600, function(){
     $(".alert-fade").alert('close');
 });
 
-function editMenu(id) {
+function editMenu(url) {
     $('#editMenuForm')[0].reset();
     $.ajax({
-        url: "/settings/menus/" + id,
+        url: url,
         type: "GET",
         dataType: "JSON",
         success: function (data) {
-            $('#editMenuForm').attr('action', '/settings/menus/'+id);
+            $('#editMenuForm').attr('action', url);
             $('#editMenuForm .input-group-addon').html('<i class="fa '+ data.icon +'"></i>');
             $('#editMenuForm [name="icon"]').val(data.icon);
             if (data.parent_id != 0) {
@@ -55,14 +57,14 @@ function editMenu(id) {
     });
 }
 
-function editUser(username) {
+function editUser(url) {
     $('#editUserForm')[0].reset();
     $.ajax({
-        url: "/users/" + username,
+        url: url,
         type: "GET",
         dataType: "JSON",
         success: function (data) {
-            $('#editUserForm').attr('action', '/users/'+data.username);
+            $('#editUserForm').attr('action', url);
             $('#editUserForm [name="full_name"]').val(data.full_name);
             $('#editUserForm [name="email"]').val(data.email);
             // Open modal for edit:
@@ -74,14 +76,14 @@ function editUser(username) {
     });
 }
 
-function editRole(id) {
+function editRole(url) {
     $('#editRoleForm')[0].reset();
     $.ajax({
-        url: "/roles/" + id,
+        url: url,
         type: "GET",
         dataType: "JSON",
         success: function (data) {
-            $('#editRoleForm').attr('action', '/roles/'+id);
+            $('#editRoleForm').attr('action', url);
             $('#editRoleForm [name="label"]').val(data.label);
             // Open modal for edit:
             $('#editRole').modal('show');
@@ -92,19 +94,18 @@ function editRole(id) {
     });
 }
 
-function editUserRoles(username) {
+function editUserRoles(url) {
   
     $("#updateUserRolesForm input").parent('div').attr('aria-checked', 'false').removeClass('checked');
     $("#updateUserRolesForm input").parent('div').removeClass('checked');
-    // $("#updateUserRolesForm input").parent('div')
     $("#updateUserRolesForm input").attr("checked", false);
     $('#updateUserRolesForm')[0].reset();
     $.ajax({
-        url: "/roles/user/" + username,
+        url: url,
         type: "GET",
         dataType: "JSON",
         success: function (data) {
-            $('#updateUserRolesForm').attr('action', '/roles/user/'+username);
+            $('#updateUserRolesForm').attr('action', url);
             for (var key in data) {
                 $('#updateUserRolesForm input[value="'+data[key]+'"] ').parent('div').attr('aria-checked', 'true').removeClass('checked');
                 $('#updateUserRolesForm input[value="'+data[key]+'"] ').parent('div').addClass('checked');
@@ -118,30 +119,28 @@ function editUserRoles(username) {
         }
     });
 }
-// triggered when modal is about to be shown
+
 $('#confirmUserDelete').on('show.bs.modal', function(e) {
-    //get data-id attribute of the clicked element
     username = $(e.relatedTarget).data('username');
+    userdeleteurl = $(e.relatedTarget).data('userdeleteurl');
     $("#confirmUserDelete #username").html( username );
-    $("#delForm").attr('action', '/users/' + username);
+    $("#delForm").attr('action', userdeleteurl);
 });
 
-// triggered when modal is about to be shown
 $('#confirmRoleDelete').on('show.bs.modal', function(e) {
-    //get data-id attribute of the clicked element
     roleid = $(e.relatedTarget).data('roleid');
+    roleurl = $(e.relatedTarget).data('roleurl');
     rolename = $(e.relatedTarget).data('rolename');
     $("#confirmRoleDelete #rolename").html( rolename );
-    $("#delForm").attr('action', '/roles/' + roleid);
+    $("#delForm").attr('action', roleurl);
 });
 
-// triggered when modal is about to be shown
-$('#confirmDelete').on('show.bs.modal', function(e) {
-	//get data-id attribute of the clicked element
-	menuId = $(e.relatedTarget).data('menu_id');
+$('#confirmMenuDelete').on('show.bs.modal', function(e) {
+  menuId = $(e.relatedTarget).data('menu_id');
+	deletemenuurl = $(e.relatedTarget).data('deletemenuurl');
 	menuName = $(e.relatedTarget).data('menu_name');
 	$("#confirmDelete #mName").html( menuName );
-	$("#delForm").attr('action', '/settings/menus/' + menuId);
+	$("#delForm").attr('action', deletemenuurl);
 });
 
 $('.icp-auto').iconpicker();

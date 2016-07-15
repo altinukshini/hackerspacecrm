@@ -1,19 +1,5 @@
 @extends('layouts.app')
 
-@section('scripts')
-<script type="text/javascript">
-	// triggered when modal is about to be shown
-	$('#confirmDelete').on('show.bs.modal', function(e) {
-		//get data-id attribute of the clicked element
-		var menuId = 'hej';
-		console.log('hej');
-		var menuName = $(e.relatedTarget).data('menu_name');
-		$("#confirmDelete #mName").val( menuName );
-		$("#delForm").attr('action', 'put your action here with menuId');//e.g. 'domainname/products/' + menuId
-	});
-</script>
-@stop
-
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -69,9 +55,9 @@
 												<td>{{ $menu->description }}</td>
 												@can('menu_update')
 													<td>
-														<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu({{ $menu->id }})"><i class="fa fa-edit text-blue"></i></button>
+														<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 														@can('menu_delete')
-															<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
+															<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
 														@endcan
 													</td>
 												@endcan
@@ -89,10 +75,10 @@
 												<td>{{ $child->description }}</td>
 												@can('menu_update')
 													<td>
-														<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu({{ $child->id }})"><i class="fa fa-edit text-blue"></i></button>
+														<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$child->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 
 														@can('menu_delete')
-															<button type="button" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
+															<button type="button" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$child->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
 														@endcan
 													</td>
 												@endcan
@@ -113,9 +99,9 @@
 												<td>{{ $menu->description }}</td>
 												@can('menu_update')
 													<td>
-														<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu({{ $menu->id }})"><i class="fa fa-edit text-blue"></i></button>
+														<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 														@can('menu_delete')
-															<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmDelete"><i class="fa fa-trash text-red"></i></button>
+															<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
 														@endcan
 													</td>
 												@endcan
@@ -406,7 +392,7 @@
 			@endif
 		@endcan	
 		@can('menu_delete')
-			<div class="modal fade" tabindex="-1" role="dialog" id="confirmDelete">
+			<div class="modal fade" tabindex="-1" role="dialog" id="confirmMenuDelete">
 					<div class="modal-dialog modal-md">
 						<div class="modal-content">
 							<div class="modal-header">
