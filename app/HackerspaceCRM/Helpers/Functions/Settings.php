@@ -38,6 +38,9 @@ if (!function_exists('crminfo')) {
             case 'url':
                 $output = CRMSettings('url');
                 break;
+            case 'basepath':
+                $output = Config::get('hackerspacecrm.basepath');
+                break;
             case 'admin_name':
                 $output = Config::get('hackerspacecrm.admin_name');
                 break;
@@ -46,6 +49,15 @@ if (!function_exists('crminfo')) {
                 break;
             case 'admin_email':
                 $output = Config::get('hackerspacecrm.admin_email');
+                break;
+            case 'orgname':
+                $output = CRMSettings('orgname');
+                break;
+            case 'orgdescription':
+                $output = CRMSettings('orgdescription');
+                break;
+            case 'address':
+                $output = CRMSettings('address');
                 break;
             case 'locale':
                 $output = CRMSettings('locale');

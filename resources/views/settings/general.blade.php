@@ -22,7 +22,7 @@
 								<div class="row">
 
 									<div class="col-md-4">
-										<label for="crmname">CRM name</label>
+										<label for="crmname">CRM name*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('crmname') ? ' has-error' : ' has-feedback' }}">
@@ -36,7 +36,7 @@
 									</div>
 
 									<div class="col-md-4">
-										<label for="crmdescription">CRM Description</label>
+										<label for="crmdescription">CRM Description*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('crmdescription') ? ' has-error' : ' has-feedback' }}">
@@ -49,8 +49,54 @@
 										</div>
 									</div>
 
+									<br style="clear:both;" /><hr><br />
+
 									<div class="col-md-4">
-										<label for="locale">Default locale</label>
+										<label for="orgname">Organisation name*</label>
+									</div>
+									<div class="col-md-8">
+										<div class="form-group {{ $errors->has('orgname') ? ' has-error' : ' has-feedback' }}">
+											<input type="text" class="form-control" id="orgname" name="orgname" placeholder="Hackerspace CRM" value="{{ old('orgname') ? old('orgname') : $settings['orgname'] }}" required/>
+											@if ($errors->has('orgname'))
+											<span class="help-block">
+												<strong>{{ $errors->first('orgname') }}</strong>
+											</span>
+											@endif
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<label for="orgdescription">Organisation description</label>
+									</div>
+									<div class="col-md-8">
+										<div class="form-group {{ $errors->has('orgdescription') ? ' has-error' : ' has-feedback' }}">
+											<input type="text" class="form-control" id="orgdescription" name="orgdescription" placeholder="Hackerspace CRM" value="{{ old('orgdescription') ? old('orgdescription') : $settings['orgdescription'] }}"/>
+											@if ($errors->has('orgdescription'))
+											<span class="help-block">
+												<strong>{{ $errors->first('orgdescription') }}</strong>
+											</span>
+											@endif
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<label for="address">Hackerspace / Organisation address</label>
+									</div>
+									<div class="col-md-8">
+										<div class="form-group {{ $errors->has('address') ? ' has-error' : ' has-feedback' }}">
+											<textarea class="form-control" id="address" type="text" name="address"/>{{ old('address') ? old('address') : $settings['address'] }}</textarea>
+											@if ($errors->has('address'))
+											<span class="help-block">
+												<strong>{{ $errors->first('address') }}</strong>
+											</span>
+											@endif
+										</div>
+									</div>
+
+									<br style="clear:both;" /><hr><br />
+
+									<div class="col-md-4">
+										<label for="locale">Default locale*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('locale') ? ' has-error' : ' has-feedback' }}">
@@ -82,7 +128,7 @@
 									</div>
 
 									<div class="col-md-4">
-										<label for="new_user_role">New user role</label>
+										<label for="new_user_role">New user role*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('new_user_role') ? ' has-error' : ' has-feedback' }}">
@@ -101,7 +147,7 @@
 									</div>
 
 									<div class="col-md-4">
-										<label for="url">Application base URL</label>
+										<label for="url">Application URL*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('url') ? ' has-error' : ' has-feedback' }}">
@@ -114,7 +160,7 @@
 										</div>
 									</div>
 									<div class="col-md-4">
-										<label for="crmfooter">Footer content</label>
+										<label for="crmfooter">Footer content*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('crmfooter') ? ' has-error' : ' has-feedback' }}">

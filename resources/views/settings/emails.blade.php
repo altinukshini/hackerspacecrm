@@ -10,7 +10,7 @@
     <div class="alert alert-help">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         <b>Do not write php code!!!</b> <br />Please make sure you only use the required variables specified under the textarea.<br /><br />
-        <b>Variables you can use:</b> $crm->crmname, $crm->description, $crm->orgname, $crm->orgdescription, $crm->orgaddress, $crm->url, $crm->locale, $crm->theme, $crm->new_user_role.
+        <b>Variables you can use:</b> $crm->crmname, $crm->description, $crm->orgname, $crm->orgdescription, $crm->address, $crm->url, $crm->locale, $crm->theme, $crm->new_user_role.
         <br><br><b>Syntax examples for displaying a variable:</b> @{{ $crm->crmname }} ; @{{ $edit_link }}
     </div>
     <div class="row">

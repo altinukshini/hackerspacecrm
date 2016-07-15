@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'info@hackerspacecrm.org', 'name' => 'Hackerspace CRM'],
+    'from' => ['address' => env('MAIL_USERNAME'), 'name' => env('MAIL_FROM', 'Hackerspace CRM')],
 
     /*
     |--------------------------------------------------------------------------

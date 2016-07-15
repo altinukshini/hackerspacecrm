@@ -37,7 +37,13 @@ or request a Password Reset Link at: <a href=\'{{ $reset_link }}\'>{{ $reset_lin
 <br>
 <br>
 Happy hacking!<br>
-{{ $crm->crmname }}',
+{{ $crm->crmname }}
+<br>
+<hr>
+<br>
+<br>
+{{ $crm->orgname }}<br>
+{!! $crm->address !!}',
 				'syntax_help' => '<b>Required variables to be included:</b> $reset_link (to send the reset password link), $edit_link (to send the edit account link), $password (to send the password set for user)<br />
 				<b>Other:</b> $user->username, $user->full_name, $user->email, $user->last_login',
 				'locale' => 'en'
@@ -54,7 +60,13 @@ You are receiving this email because you have recently requested to create an ac
 Your username is <b>{{ $user->username }}</b>. To confirm your account and log in, please visit <a href=\'{{ $confirmation_link }}\'>{{ $confirmation_link }}</a>.<br>
 <br>
 Happy hacking!<br>
-{{ $crm->crmname }}',
+{{ $crm->crmname }}
+<br>
+<hr>
+<br>
+<br>
+{{ $crm->orgname }}<br>
+{!! $crm->address !!}',
 				'syntax_help' => '<b>Required variables to be included:</b> $confirmation_link (to send the email confirmation link)<br />
 				<b>Other:</b> $user->username, $user->full_name, $user->email, $user->last_login',
 				'locale' => 'en'

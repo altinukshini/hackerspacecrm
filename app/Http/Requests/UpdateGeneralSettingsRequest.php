@@ -28,6 +28,9 @@ class UpdateGeneralSettingsRequest extends Request
         return [
             'crmname' => 'required|string',
             'crmdescription' => 'sometimes|string',
+            'orgname' => 'required|string',
+            'orgdescription' => 'sometimes|string',
+            'address' => 'sometimes|string',
             'locale' => 'required|string|in:'.implode(",", array_keys(crminfo('supported_locales'))),
             'enable_registration' => 'sometimes|integer|min:0|max:1',
             'new_user_role' => 'required|string|exists:roles,name',

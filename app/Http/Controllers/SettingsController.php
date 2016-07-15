@@ -51,7 +51,9 @@ class SettingsController extends Controller
         foreach ($requestArray as $key => $value) {
             if ($key != '_method' && $key != '_token' ) {
                 $setting = $this->settingRepository->byKey($key);
-                $settingApplicationService->update($setting, ['value' => $value]);
+                if (!is_null($setting)) {
+                    $settingApplicationService->update($setting, ['value' => $value]);
+                }
             }
         }
 
