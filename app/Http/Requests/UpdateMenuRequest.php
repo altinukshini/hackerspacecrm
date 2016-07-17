@@ -51,7 +51,7 @@ class UpdateMenuRequest extends Request
      */
     public function forbiddenResponse()
     {
-        Flash::error('You do not have the right permission to perform this action');
+        Flash::error(trans('hackerspacecrm.messages.nopermission'));
         return back();
     }
 

@@ -79,7 +79,7 @@ class MenusController extends Controller
 
         $menu = $menuApplicationService->create($requestArray);
 
-        Flash::success('Menu was created successfully');
+        Flash::success(trans('hackerspacecrm.messages.models.create.success', ['modelname' => trans('hackerspacecrm.models.menu')]));
 
         return back();
     }
@@ -102,7 +102,7 @@ class MenusController extends Controller
 
         $menuApplicationService->update($menu, $requestArray);
 
-        Flash::success('Menu updated successfully');
+        Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.menu')]));
 
         return back();
     }
@@ -122,7 +122,7 @@ class MenusController extends Controller
 
         $menuApplicationService->delete($menuId);
 
-        Flash::success('Menu was successfully deleted!');
+        Flash::success(trans('hackerspacecrm.messages.models.delete.success', ['modelname' => trans('hackerspacecrm.models.menu')]));
 
         return back();
     }

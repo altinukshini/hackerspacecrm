@@ -57,7 +57,7 @@ class SettingsController extends Controller
             }
         }
 
-        Flash::success('Settings updated successfully');
+        Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.settings')]));
 
         return back();
     }

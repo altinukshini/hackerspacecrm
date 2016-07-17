@@ -15,7 +15,7 @@ if (!function_exists('hasPermission')) {
 
         if (!Auth::check() || !Auth::user()->hasPermission($permission)) {
             if ($flash)
-                Flash::error('You do not have permission to perform this action');
+                Flash::error(trans('hackerspacecrm.messages.nopermission'));
             return false;
         }
         
@@ -34,7 +34,7 @@ if (!function_exists('hasRole')) {
     {
         if (!Auth::check() || !Auth::user()->hasRole($role)) {
             if ($flash)
-                Flash::error('You do not have permission to perform this action');
+                Flash::error(trans('hackerspacecrm.messages.nopermission'));
             
             return false;
         }

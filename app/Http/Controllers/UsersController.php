@@ -59,7 +59,7 @@ class UsersController extends Controller
         $user = User::whereUsername($username)->first();
 
         if (is_null($user)) {
-            Flash::info('Requested user does not exist!');
+            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
             return redirect('/');
         }
 
@@ -112,8 +112,8 @@ class UsersController extends Controller
 
         if ($request->input('notify') == 'yes') {
             $data['password'] = $request->input('password');
-            $data['edit_link'] = url('/users/'.$user->username.'/edit');
-            $data['reset_link'] = url('/password/reset');
+            $data['edit_link'] = url('users/'.$user->username.'/edit');
+            $data['reset_link'] = url('password/reset');
             
             $this->mailer->mail($user, 'newaccount', $data);
         }
@@ -122,7 +122,7 @@ class UsersController extends Controller
             return $user;
         }
 
-        Flash::success('User created successfully');
+        Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.user')]));
 
         return back();
     }
@@ -140,7 +140,7 @@ class UsersController extends Controller
         $user = User::whereUsername($username)->first();
 
         if (is_null($user)) {
-            Flash::info('No user with username: '.$username);
+            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
             return redirect('/');
         }
 
@@ -149,7 +149,7 @@ class UsersController extends Controller
         $user->email = $request->input('email');
         $user->save();
 
-        Flash::success('User info updated successfully');
+        Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.user')]));
 
         return back();
     }
@@ -168,7 +168,7 @@ class UsersController extends Controller
         $user = User::whereUsername($username)->first();
 
         if (is_null($user)) {
-            Flash::info('No user with username: '.$username);
+            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
             return redirect('/');
         }
 
@@ -176,7 +176,7 @@ class UsersController extends Controller
         $user->email_token = null;
         $user->save();
 
-        Flash::success('User verified successfully');
+        Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.user')]));
 
         return back();
     }
@@ -195,18 +195,18 @@ class UsersController extends Controller
         $user = User::whereUsername($username)->first();
 
         if(is_null($user)) {
-            Flash::error('Username could not be found!');
+            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
             return back();
         }
 
         if ($username == crminfo('admin_username')) {
-            Flash::error('You can not delete the CRM Administrator user!');
+            Flash::error(trans('hackerspacecrm.messages.notallowed'));
             return back();
         }
 
         $user->delete();
 
-        Flash::success('User was successfully deleted!');
+        Flash::success(trans('hackerspacecrm.messages.models.delete.success', ['modelname' => trans('hackerspacecrm.models.user')]));
 
         return back(); 
     }
@@ -224,7 +224,7 @@ class UsersController extends Controller
         $user = User::whereUsername($username)->first();
 
         if (is_null($user)) {
-            Flash::info('No user with username: '.$username);
+            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
             return redirect('/');
         }
 
@@ -232,7 +232,7 @@ class UsersController extends Controller
 
         $user->save();
 
-        Flash::success('User password changed successfully');
+        Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.user')]));
 
         return back();
     }

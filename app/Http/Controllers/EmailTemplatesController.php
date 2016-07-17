@@ -50,13 +50,13 @@ class EmailTemplatesController extends Controller
         $emailTemplate = EmailTemplate::find($templateId);
 
         if (is_null($emailTemplate)) {
-        	Flash::error('EmailTemplate does not exist');
+        	Flash::error(trans('hackerspacecrm.messages.models.notexist', ['modelname' => trans('hackerspacecrm.models.emailtemplate')]));
         	return back();
         }
 
         $emailTemplate->update($request->all());
 
-        Flash::success('Email template updated successfully!');
+        Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.emailtemplate')]));
 
         return back();
     }

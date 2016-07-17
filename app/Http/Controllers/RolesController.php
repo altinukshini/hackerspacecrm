@@ -59,7 +59,7 @@ class RolesController extends Controller
     {
         Role::create($request->all());
 
-        Flash::success('Role created succesfully');
+        Flash::success(trans('hackerspacecrm.messages.models.create.success', ['modelname' => trans('hackerspacecrm.models.role')]));
 
         return back();
     }
@@ -77,14 +77,14 @@ class RolesController extends Controller
         $role = Role::find($roleId);
 
         if (is_null($role)) {
-            Flash::info('No role with id: '.$roleId);
+            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.role')]));
             return redirect('/');
         }
 
         $role->label = $request->input('label');
         $role->save();
 
-        Flash::success('Role updated successfully!');
+        Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.role')]));
         return back();
     }
 
@@ -102,18 +102,18 @@ class RolesController extends Controller
         $role = Role::find($roleId);
 
         if (is_null($role)) {
-            Flash::warning('No role with id '.$roleId.' exists.');
+            Flash::warning(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.role')]));
             return back();
         }
 
         if ($role->name == 'administrator') {
-            Flash::warning('You can not delete the administrator role');
+            Flash::warning(trans('hackerspacecrm.messages.notallowed'));
             return back();
         }
 
         $role->delete();
 
-        Flash::success('Role was deleted successfully');
+        Flash::success(trans('hackerspacecrm.messages.models.delete.success', ['modelname' => trans('hackerspacecrm.models.role')]));
 
         return back();
 
@@ -135,7 +135,7 @@ class RolesController extends Controller
         $user = User::whereUsername($username)->first();
 
         if (is_null($user)) {
-            Flash::info('There is no user with username: '.$username);
+            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
             return back();
         }
 
@@ -158,13 +158,13 @@ class RolesController extends Controller
 
         // Check if user exists
         if (is_null($user)) {
-            Flash::info('There is no user with username: '.$username);
+            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
             return back();
         }
 
         // Check if trying to change CRM Administrator's roles
         if ($user->username == crminfo('admin_username')){
-            Flash::info('You can not edit CRM Administrator roles');
+            Flash::info(trans('hackerspacecrm.messages.notallowed'));
             return back();
         }
 
@@ -189,7 +189,7 @@ class RolesController extends Controller
             $user->syncRoles(array_keys($roles));
         }
 
-        Flash::success('User roles updated successfully!');
+        Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.roles')]));
 
         return back();
         

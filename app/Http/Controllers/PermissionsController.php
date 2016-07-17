@@ -58,7 +58,7 @@ class PermissionsController extends Controller
                     $role->revokeAllPermissions();
             }
 
-            Flash::success('Permissions updated succesfully');
+            Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.permissions')]));
 
             return back();
         }
@@ -88,7 +88,7 @@ class PermissionsController extends Controller
             }
         }
 
-        Flash::success('Permissions updated succesfully');
+        Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.permissions')]));
 
         return back();
     }

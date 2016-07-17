@@ -23,7 +23,7 @@ class MustHaveRole
             return $next($request);
         }
 
-        Flash::error('You do not have permission to perform this action!');
+        Flash::error(trans('hackerspacecrm.messages.nopermission'));
         return redirect('/');
 
     }

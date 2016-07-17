@@ -138,7 +138,7 @@ class AuthController extends Controller
                 Session::put('locale', $user->locale);
             }
 
-            Flash::success('Welcome to '. crminfo('name'), true);
+            Flash::success(trans('hackerspacecrm.messages.welcome', ['applicationname' => crminfo('name')]), true);
 
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
@@ -195,7 +195,7 @@ class AuthController extends Controller
      */
     protected function sendFailedLoginResponse(Request $request)
     {
-        Flash::warning('We could not sign you in.');
+        Flash::warning(trans('auth.failed'));
         
         return redirect()->back()
             ->withInput($request->only('login', 'remember'))
@@ -236,8 +236,6 @@ class AuthController extends Controller
 
         Session::flush();
 
-        Flash::success('You have been signed out. See you!', true);
-
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
 
@@ -265,7 +263,7 @@ class AuthController extends Controller
         $data['confirmation_link'] = url('login/confirm/'.$user->email_token);
         $this->mailer->mail($user, 'confirmation', $data);
 
-        Flash::info('Please check your email address to confirm and activate your account.');
+        Flash::info(trans('hackerspacecrm.messages.confirmemail'));
 
         return back();
     }
@@ -295,17 +293,17 @@ class AuthController extends Controller
      */
     public function confirmEmail($email_token)
     {
-        try {
-            $user = User::where('email_token', $email_token)->firstOrFail();
-            $user->confirmEmail();
-            $user->assignRoleByName(crminfo('new_user_role'));
-        } catch (ModelNotFoundException $e) {
-            Flash::warning('User with provided token was not found in the database');
+        $user = User::where('email_token', $email_token)->first();
 
+        if (is_null($user)) {
+            Flash::warning(trans('hackerspacecrm.messages.tokennotfound'));
             return redirect('/');
         }
 
-        Flash::success('Your account has been verified. You may now log in.');
+        $user->confirmEmail();
+        $user->assignRoleByName(crminfo('new_user_role'));
+
+        Flash::success(trans('hackerspacecrm.messages.accountverified'));
 
         return redirect('/login');
     }
