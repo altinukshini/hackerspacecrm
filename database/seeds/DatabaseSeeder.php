@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::statement('SET foreign_key_checks = 0');
 
-        $this->call(EmailTemplatesTableSeeder::class);
+        // $this->call(EmailTemplatesTableSeeder::class);
         $this->call(MenusTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
         $this->call(PermissionsTableSeeder::class);

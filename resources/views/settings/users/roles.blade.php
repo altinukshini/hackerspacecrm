@@ -16,9 +16,9 @@
 				</div>
 				<div class="box-body">
 					@can('role_update')
-					<div class="alert alert-warning">
+					<div class="alert alert-info">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-						We do not recommend deleting the default CRM roles, doing so may affect the CRM's behaviour. Please consider adding new ones instead.
+						{!! trans('hackerspacecrm.help.settings.roles') !!}
 					</div>
 					@endcan
 					

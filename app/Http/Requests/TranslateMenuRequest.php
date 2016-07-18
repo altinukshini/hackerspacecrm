@@ -6,7 +6,7 @@ use Flash;
 use App\Http\Requests\Request;
 use Illuminate\Contracts\Validation\Validator;
 
-class UpdateMenuRequest extends Request
+class TranslateMenuRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,15 +25,12 @@ class UpdateMenuRequest extends Request
      */
     public function rules()
     {
+        // Get slug of the entered menu
+        $menuRepository = app()->make('HackerspaceCRM\Menu\Repository\MenuRepositoryInterface');
+        $slug = $menuRepository->byId($this->route('menuId'))->slug;
+
         return [
-            'icon' => 'required|string',
-            'parent_slug' => 'sometimes|string|no_specials_lower_u|exists:menus,slug',
-            'menu_order' => 'required|integer|min:0',
-            'title' => 'required|string|max:100',
-            // 'url' => '', not required, can be empty
-            // 'description' => '', not required, can be empty
-            'permission_id' => 'required|integer|exists:permissions,id',
-            'menu_group' => 'required|string|in:'.implode(",", crminfo('menu_groups')),
+            'locale' => 'required|string|in:'.implode(",", getAvailableAppLocaleArrayKeys()).'|unique:menus,locale,NULL,id,slug,'.$slug
         ];
     }
 
@@ -42,7 +39,7 @@ class UpdateMenuRequest extends Request
     */
     protected function formatErrors(Validator $validator)
     {
-        $validator->errors()->add('error_code', '6');
+        $validator->errors()->add('error_code', '7');
         return parent::formatErrors($validator);
     }
 
@@ -51,8 +48,7 @@ class UpdateMenuRequest extends Request
      */
     public function forbiddenResponse()
     {
-        Flash::error(trans('hackerspacecrm.messages.nopermission'));
+        // Flash::error(trans('hackerspacecrm.messages.nopermission'));
         return back();
     }
-
 }

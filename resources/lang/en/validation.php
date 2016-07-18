@@ -77,7 +77,7 @@ return [
     ],
     'string'               => 'The :attribute must be a string.',
     'timezone'             => 'The :attribute must be a valid zone.',
-    'unique'               => 'The :attribute has already been taken.',
+    'unique'               => 'The :attribute already exists.',
     'url'                  => 'The :attribute format is invalid.',
     'no_spaces'            => 'The :attribute must not contain spaces.',
     'no_specials_lower_u'          => 'The :attribute must not contain special characters or capital letters. Only underscore allowed.',

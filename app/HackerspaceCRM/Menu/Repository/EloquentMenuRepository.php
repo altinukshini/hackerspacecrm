@@ -30,6 +30,34 @@ class EloquentMenuRepository implements MenuRepositoryInterface
     }
 
     /**
+     * Get menu by slug.
+     *
+     * @param $menuSlug
+     */
+    public function bySlug($menuSlug)
+    {
+        return Menu::with('permission')->whereSlug($menuSlug)->first();
+    }
+
+    /**
+     * Replicate menu (translation).
+     *
+     * @param $menuId
+     */
+    public function replicate($menuId)
+    {
+        $menu = $this->byId($menuId);
+
+        if(!is_null($menu)) {
+            $clone = $menu->replicate();
+            $clone->save();
+            return $clone;
+        }
+
+        return false;
+    }
+
+    /**
      * By group get parent menus with children 
      * ordered by menu_order asc 
      *
@@ -40,7 +68,11 @@ class EloquentMenuRepository implements MenuRepositoryInterface
     public function byGroup($group = '*')
     {
         return Menu::with('children')->with('permission')->where('menu_group', $group)
-        ->where('parent_id', '0')
+        ->where('locale', getCurrentSessionAppLocale())
+        ->where(function ($query){
+            $query->whereNull('parent_slug')
+                  ->orWhere('parent_slug', '');
+        })
         ->orderBy('menu_order', 'asc')
         ->get();
     }
@@ -57,14 +89,16 @@ class EloquentMenuRepository implements MenuRepositoryInterface
         $menu = new Menu();
 
         $menu->icon = $attributes['icon'];
+        $menu->locale = $attributes['locale'];
+        $menu->slug = $attributes['slug'];
         $menu->menu_order = $attributes['menu_order'];
         $menu->title = $attributes['title'];
         $menu->url = $attributes['url'];
         $menu->permission_id = $attributes['permission_id'];
         if (array_key_exists('menu_group', $attributes))
             $menu->menu_group = $attributes['menu_group'];
-        if (array_key_exists('parent_id', $attributes))
-            $menu->parent_id = $attributes['parent_id'];
+        if (array_key_exists('parent_slug', $attributes))
+            $menu->parent_slug = $attributes['parent_slug'];
         if (array_key_exists('description', $attributes))
             $menu->description = $attributes['description'];
 
@@ -100,7 +134,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface
     public function updateChildren(Collection $children)
     {
         foreach ($children as $child) {
-            $this->update($child, ['parent_id' => 0]);
+            $this->update($child, ['parent_slug' => null]);
         }
     }
 

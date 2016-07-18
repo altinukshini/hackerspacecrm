@@ -28,7 +28,7 @@ class EmailTemplatesController extends Controller
      **/
     public function showEmailTemplatesForm()
     {
-        $emailTemplates = EmailTemplate::all();
+        $emailTemplates = EmailTemplate::whereLocale(getCurrentSessionAppLocale())->get();
 
         if (request()->wantsJson()) {
         	return $emailTemplates;

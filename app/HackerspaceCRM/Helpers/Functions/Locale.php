@@ -1,5 +1,22 @@
 <?php
 
+if (!function_exists('getAvailableAppLocaleArrayKeys')) {
+
+    /**
+     * Returns an array of all available locales.
+     *
+     * @return array
+     */
+    function getAvailableAppLocaleArrayKeys()
+    {
+        foreach (crminfo('supported_locales') as $key => $value) {
+            $locales[] = $key;
+        }
+
+        return $locales;
+    }
+}
+
 if (!function_exists('getAvailableAppLocaleArray')) {
 
     /**

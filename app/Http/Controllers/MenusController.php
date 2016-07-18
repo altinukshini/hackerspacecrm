@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Flash;
 use Illuminate\Http\Request;
 use HackerspaceCRM\Menu\Menu;
-use App\Http\Requests\CreateMenuRequest;
-use App\Http\Requests\UpdateMenuRequest;
 use HackerspaceCRM\Menu\MenuApplicationService;
 use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;
+use App\Http\Requests\CreateMenuRequest;
+use App\Http\Requests\TranslateMenuRequest;
+use App\Http\Requests\UpdateMenuRequest;
 
 class MenusController extends Controller
 {
@@ -108,6 +109,29 @@ class MenusController extends Controller
     }
 
     /**
+     * Translate an existing menu
+     *
+     * @param App\Http\Requests\TranslateMenuRequest
+     * @param menuId
+     */
+    public function translate(TranslateMenuRequest $request, $menuId)
+    {
+        // see if user has permission to update menu
+        if (!hasPermission('menu_update', true)) return back();
+
+        $menuApplicationService = new MenuApplicationService();
+        $menu = $this->menuRepository->replicate($menuId);
+
+        $data['locale'] = $request->input('locale');
+
+        $menuApplicationService->update($menu, $data);
+
+        Flash::success(trans('hackerspacecrm.messages.models.translate.success', ['modelname' => trans('hackerspacecrm.models.menu')]));
+
+        return back();
+    }
+
+    /**
      * Delete an existing menu by id
      *
      * @param $menuId
@@ -137,9 +161,9 @@ class MenusController extends Controller
      **/
     public function normalizeNewMenuRequest(Request $request)
     {
-        if ( $request->has('parent_id') && $request->input('parent_id') != 0) {
+        if ( $request->has('parent_slug') && $request->input('parent_slug') != '') {
             
-            $parent = $this->menuRepository->byId($request->input('parent_id'));
+            $parent = $this->menuRepository->bySlug($request->input('parent_slug'));
             $requestArray = $request->all();
 
             return $this->normalizeRelations($parent, $requestArray);
@@ -162,7 +186,7 @@ class MenusController extends Controller
     public function normalizeParentId(Menu $parent, array $requestArray)
     {
         if ($parent->hasParent()) {
-            $requestArray['parent_id'] = $parent->parent_id;
+            $requestArray['parent_slug'] = $parent->parent_slug;
 
             return $requestArray;
         }

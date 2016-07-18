@@ -23,7 +23,8 @@ class Menu extends Model
      * @var array
      */
     protected $fillable = [
-        'parent_id',
+        'slug',
+        'parent_slug',
         'permission_id',
         'menu_group',
         'menu_order',
@@ -31,6 +32,7 @@ class Menu extends Model
         'url',
         'description',
         'icon',
+        'locale',
     ];
 
     /**
@@ -47,7 +49,7 @@ class Menu extends Model
      */
     public function parent()
     {
-        return $this->belongsTo(self::class, 'parent_id');
+        return $this->belongsTo(self::class, 'parent_slug', 'slug');
     }
 
     /**
@@ -57,7 +59,7 @@ class Menu extends Model
      */
     public function children()
     {
-        return $this->hasMany(self::class, 'parent_id')->orderBy('menu_order', 'asc');
+        return $this->hasMany(self::class, 'parent_slug', 'slug')->orderBy('menu_order', 'asc');
     }
 
     /**

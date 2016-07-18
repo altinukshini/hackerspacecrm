@@ -27,11 +27,11 @@
 						<table class="table table-responsive no-padding table-hover">
 							<tbody>
 								<tr>
-									<th>ID</th>
 									<th>icon</th>
+									<th>slug</th>
 									<th>Title</th>
 									<th>URL</th>
-									<th>parent id</th>
+									<th>parent</th>
 									<th>permission</th>
 									<th>group</th>
 									<th>order</th>
@@ -42,43 +42,47 @@
 								</tr>
 								@foreach( $submenus as $menu )
 									@if($menu->children->count())
-										@if($menu->parent_id == 0)
+										@if(empty($menu->parent_slug))
 											<tr style="background-color:#ebebeb;">
-												<td>{{ $menu->id }}</td>
 												<td><i class="fa {{ $menu->icon }}"></i></td>
+												<td>{{ $menu->slug }}</td>
 												<td>{{ $menu->title }}</td>
 												<td>{{ $menu->url }}</td>
-												<td>{{ $menu->parent_id == 0 ? '' : $menu->parent_id }}</td>
+												<td>{{ empty($menu->parent_slug) ? '' : $menu->parent_slug }}</td>
 												<td>{{ $menu->permission->label }}</td>
 												<td>{{ $menu->menu_group }}</td>
 												<td>{{ $menu->menu_order }}</td>
 												<td>{{ $menu->description }}</td>
 												@can('menu_update')
 													<td>
-														<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
+														<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+
+														<button type="button" title="Edit" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 														@can('menu_delete')
-															<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
+															<button type="button" title="Delete" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
 														@endcan
 													</td>
 												@endcan
 											</tr>
 											@foreach($menu->children as $child)
 											<tr>
-												<td>{{ $child->id }}</td>
 												<td><i class="fa {{ $child->icon }}"></i></td>
+												<td>{{ $child->slug }}</td>
 												<td>{{ $child->title }}</td>
 												<td>{{ $child->url }}</td>
-												<td>{{ $child->parent_id == 0 ? '' : $child->parent_id }}</td>
+												<td>{{ empty($child->parent_slug) ? '' : $child->parent_slug }}</td>
 												<td>{{ $child->permission->label }}</td>
 												<td>{{ $child->menu_group }}</td>
 												<td>{{ $child->menu_order }}</td>
 												<td>{{ $child->description }}</td>
 												@can('menu_update')
 													<td>
-														<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$child->id) }}')"><i class="fa fa-edit text-blue"></i></button>
+														<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$child->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+
+														<button type="button" title="Edit"  class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$child->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 
 														@can('menu_delete')
-															<button type="button" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$child->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
+															<button type="button" title="Delete" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$child->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
 														@endcan
 													</td>
 												@endcan
@@ -86,22 +90,24 @@
 											@endforeach
 										@endif
 									@else
-										@if($menu->parent_id == 0)
+										@if(empty($menu->parent_slug))
 											<tr style="background-color:#ebebeb;">
-												<td>{{ $menu->id }}</td>
 												<td><i class="fa {{ $menu->icon }}"></i></td>
+												<td>{{ $menu->slug }}</td>
 												<td>{{ $menu->title }}</td>
 												<td>{{ $menu->url }}</td>
-												<td>{{ $menu->parent_id == 0 ? '' : $menu->parent_id }}</td>
+												<td>{{ empty($menu->parent_slug) ? '' : $menu->parent_slug }}</td>
 												<td>{{ $menu->permission->label }}</td>
 												<td>{{ $menu->menu_group }}</td>
 												<td>{{ $menu->menu_order }}</td>
 												<td>{{ $menu->description }}</td>
 												@can('menu_update')
 													<td>
-														<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
+														<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+
+														<button type="button" title="Edit" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 														@can('menu_delete')
-															<button type="button" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
+															<button type="button" title="Delete" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
 														@endcan
 													</td>
 												@endcan
@@ -147,13 +153,24 @@
 											@endif
 										</div>
 										<br>
-										<div class="form-group{{ $errors->has('parent_id') ? ' has-error' : ' has-feedback' }}">
-											<label for="parent_id">Parent ID</label>
-											<input type="number" class="form-control" min="0" name="parent_id" value="{{ old('parent_id') }}">
-											<p>Leave empty for master menu, or add the ID of a parent menu to add this menu as child.</p>
-											@if ($errors->has('parent_id'))
+										<input type="hidden" class="form-control" name="locale" value="{{ getCurrentSessionAppLocale() }}" required/>
+										<div class="form-group{{ $errors->has('slug') ? ' has-error' : ' has-feedback' }}">
+											<label for="slug">Slug*</label>
+											<input type="text" class="form-control" name="slug" value="{{ old('slug') }}" required/>
+											<p>Exc: users, reports, expenses (all lowercase)</p>
+											@if ($errors->has('slug'))
 											<span class="help-block">
-												<strong>{{ $errors->first('parent_id') }}</strong>
+												<strong>{{ $errors->first('slug') }}</strong>
+											</span>
+											@endif
+										</div>
+										<div class="form-group{{ $errors->has('parent_slug') ? ' has-error' : ' has-feedback' }}">
+											<label for="parent_slug">Parent slug</label>
+											<input type="text" class="form-control" name="parent_slug" value="{{ old('parent_slug') }}">
+											<p>Leave empty for master menu, or add the ID of a parent menu to add this menu as child.</p>
+											@if ($errors->has('parent_slug'))
+											<span class="help-block">
+												<strong>{{ $errors->first('parent_slug') }}</strong>
 											</span>
 											@endif
 										</div>
@@ -283,13 +300,13 @@
 											@endif
 										</div>
 										<br>
-										<div class="form-group{{ $errors->has('parent_id') ? ' has-error' : ' has-feedback' }}">
-											<label for="parent_id">Parent ID</label>
-											<input type="number" class="form-control" name="parent_id" min="0" value="{{ old('parent_id') }}">
-											<p>Leave empty for master menu, or add the ID of a parent menu to add this menu as child.</p>
-											@if ($errors->has('parent_id'))
+										<div class="form-group{{ $errors->has('parent_slug') ? ' has-error' : ' has-feedback' }}">
+											<label for="parent_slug">Parent slug</label>
+											<input type="text" class="form-control" name="parent_slug" min="0" value="{{ old('parent_slug') }}">
+											<p>Leave empty for master menu, or add the slug of a parent menu to add this menu as child.</p>
+											@if ($errors->has('parent_slug'))
 											<span class="help-block">
-												<strong>{{ $errors->first('parent_id') }}</strong>
+												<strong>{{ $errors->first('parent_slug') }}</strong>
 											</span>
 											@endif
 										</div>
@@ -388,6 +405,59 @@
 			@if ($errors->has('error_code') AND $errors->first('error_code') == 6)
 			<script type="text/javascript">
 				$('#editmenu').modal('show');
+			</script>
+			@endif
+		@endcan
+		@can('menu_update')
+			<div class="modal fade" tabindex="-1" role="dialog" id="translatemenu">
+				<div class="modal-dialog modal-md">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+							<h4 class="modal-title">Create translation</h4>
+						</div>
+						<div class="modal-body">
+							<form role="form" id="translateMenuForm" method="POST" action="">
+								{!! csrf_field() !!}
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group {{ $errors->has('locale') ? ' has-error' : ' has-feedback' }}">
+										    <label for="locale">Select locale</label>
+										    <select class="form-control" name="locale" required>
+										        <option disabled selected>Select locale</option>
+										        @foreach (getAvailableAppLocaleArray() as $localekey => $localevalue)
+										            @if($localekey != getCurrentSessionAppLocale())
+										                <option value="{{ $localekey }}" {{ old('locale') == $localekey ? "selected" : "" }}>{{ $localekey . ' - ' .$localevalue }}</option>
+										            @endif
+										        @endforeach
+										    </select>
+
+										    @if ($errors->has('locale'))
+										    <span class="help-block">
+										        <strong>{{ $errors->first('locale') }}</strong>
+										    </span>
+										    @endif
+										</div>
+									</div>
+
+									<div class="col-md-12">
+										<div class="form-group">
+											<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+			</div>
+			<!-- If edit menu request has error, open editmenu modal -->
+			@if ($errors->has('error_code') AND $errors->first('error_code') == 7)
+			<script type="text/javascript">
+				$('#translatemenu').modal('show');
 			</script>
 			@endif
 		@endcan	

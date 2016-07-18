@@ -27,7 +27,9 @@ class CreateMenuRequest extends Request
     {
         return [
             'icon' => 'required|string',
-            'parent_id' => 'sometimes|integer|min:0|exists:menus,id',
+            'locale' => 'required|string|in:'.implode(",", getAvailableAppLocaleArrayKeys()),
+            'slug' => 'required|string|no_specials_lower_u',
+            'parent_slug' => 'sometimes|string|no_specials_lower_u|exists:menus,slug',
             'menu_order' => 'required|integer|min:0',
             'title' => 'required|string|max:100',
             // 'url' => '', not required, can be empty

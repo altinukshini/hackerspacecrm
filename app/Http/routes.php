@@ -67,6 +67,7 @@ Route::get('settings/menus/{menuId}', 'MenusController@getMenu'); // for ajax re
 Route::post('settings/menus','MenusController@create');
 Route::patch('settings/menus/{menuId}', 'MenusController@update');
 Route::delete('settings/menus/{menuId}', 'MenusController@delete');
+Route::post('settings/menus/{menuId}/translate', 'MenusController@translate');
 
 Route::get('roles', 'RolesController@show');
 Route::post('roles', 'RolesController@create');
@@ -83,3 +84,11 @@ Route::patch('permissions', 'PermissionsController@update');
 // \DB::listen(function($query) {
 //     var_dump($query);
 // });
+
+
+Route::get('test', function () {
+
+    $menus = HackerspaceCRM\Menu\Menu::all();
+
+    return $menus->load('parent');
+});

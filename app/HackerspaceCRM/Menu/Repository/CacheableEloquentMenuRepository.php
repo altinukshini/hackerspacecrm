@@ -47,6 +47,28 @@ class CacheableEloquentMenuRepository implements MenuRepositoryInterface
     }
 
     /**
+     * Get menu by slug cached.
+     *
+     * @param $menuSlug
+     */
+    public function bySlug($menuSlug)
+    {
+        return $this->cache->tags('menus')->rememberForever('menus.bySlug.'.$menuSlug, function () use ($menuSlug) {
+            return $this->menuRepository->bySlug($menuSlug);
+        });
+    }
+
+    /**
+     * Replicate menu (translation).
+     *
+     * @param $menuId
+     */
+    public function replicate($menuId)
+    {        
+        return $this->menuRepository->replicate($menuId);
+    }
+
+    /**
      * By group get parent menus with children 
      * ordered by menu_order asc.
      *
@@ -56,7 +78,7 @@ class CacheableEloquentMenuRepository implements MenuRepositoryInterface
      */
     public function byGroup($group = '*')
     {
-        return $this->cache->tags('menus')->rememberForever('menus.byGroup.'.$group, function () use ($group) {
+        return $this->cache->tags('menus')->rememberForever('menus.byGroup.'.getCurrentSessionAppLocale().'.'.$group, function () use ($group) {
             return $this->menuRepository->byGroup($group);
         });
     }
