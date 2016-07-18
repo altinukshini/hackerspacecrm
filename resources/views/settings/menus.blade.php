@@ -167,7 +167,7 @@
 										<div class="form-group{{ $errors->has('parent_slug') ? ' has-error' : ' has-feedback' }}">
 											<label for="parent_slug">Parent slug</label>
 											<input type="text" class="form-control" name="parent_slug" value="{{ old('parent_slug') }}">
-											<p>Leave empty for master menu, or add the ID of a parent menu to add this menu as child.</p>
+											<p>Leave empty for master menu, or add the slug of a parent menu to add this menu as child.</p>
 											@if ($errors->has('parent_slug'))
 											<span class="help-block">
 												<strong>{{ $errors->first('parent_slug') }}</strong>
