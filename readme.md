@@ -120,7 +120,7 @@ Checking connectivity... done.
 From the project directory, run the following command. You may need to download `composer.phar` first from http://getcomposer.org
 
 ```bash
-$ composer update
+$ composer install
 ```
 
 <a name="configure-environment" />
