@@ -51,10 +51,22 @@ Hardware for developing the Checkin System and Door Access control System (in la
 
 I’ve already done something for this, but will have to adapt and refactor the code so that it’ll work with Hackerspace CRM: https://github.com/altinukshini/HACCSY
 
+#Installation
 
 ## Server requirements
 
 - Memcached (php5-memcached and memcached)
+
+## Installation steps
+
+- Clone the repo
+- Copy .env.example to .env and fill up the db and email variables
+- Run artisan key generate
+- Edit config/hackerspacecrm.php
+- Run composer update/install
+- Run db migrations
+- Run db seeds
+- Run artisan serve
 
 # Laravel PHP Framework
 
