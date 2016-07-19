@@ -6,10 +6,18 @@ Hackerspace CRM is a CRM (Community Relationship Management) software that helps
 
 * [Description](#description)
 * [Features](#features)
+* [Contributing](#contributing)
 * [Technologies used](#technologies)
 * [Installation](#installation)
   * [Server requirements](#requirements)
-  * [Installation steps](#installationsteps)
+  * [Cloning the repository](#cloning-the-repository)
+  * [Installing composer dependencies](#installing-composer-dependencies)
+  * [Configure environment variables](#configure-environment)
+  * [Generate application key](#generate-application-key)
+  * [Configure application](#configure-application)
+  * [Run db migrations](#run-migrations)
+  * [Run db seeds](#run-seeds)
+  * [Start server](#start-server)
 * [Laravel PHP framework](#laravel)
 
 <a name="description" />
@@ -51,6 +59,16 @@ The following need to be more detailed (will document them more soon)
   * Alarm Pins
   * Door access Control and Checkin System (API for Raspberry pi/Arduino based solution)
 
+
+<a name="contributing" />
+## Contributing
+
+I would very much appreciate and love any contribution! I encourage you to create a new personal branch after you fork this repository. This branch should be used for content and changes that are specific to your event. However, anything you are willing to push back should be updated in your develop branch, since there is still no stable release (master branch) of this application yet.
+
+Please feel free to check the issues page. I'd love to see any contributions in issues listed there:
+
+* [Issues](https://github.com/altinukshini/hackerspacecrm/issues)
+
 <a name="technologies" />
 ## Technologies used (planed to be used)
 
@@ -74,24 +92,112 @@ I’ve already done something for this, but will have to adapt and refactor the 
 ##Installation
 
 <a name="requirements" />
-## Server requirements
+### Server requirements
 
-- Memcached (php5-memcached and memcached)
+* Memcached (php5-memcached and memcached)
 
-<a name="installationsteps" />
-## Installation steps
+<a name="cloning-the-repository" />
+### Cloning the Repository
 
-- Clone the repo
-- Run composer update/install
-- Copy .env.example to .env and fill up the db and email variables
-- Run artisan key generate
-- Edit config/hackerspacecrm.php
-- Run db migrations
-- Run db seeds
-- Run artisan serve
+Clone this project into your working directory.
+
+Example:
+
+```
+$ git clone https://github.com/altinukshini/hackerspacecrm.git
+Cloning into 'hackerspacecrm'...
+remote: Counting objects: 2741, done.
+remote: Compressing objects: 100% (161/161), done.
+remote: Total 2741 (delta 85), reused 0 (delta 0), pack-reused 2579
+Receiving objects: 100% (2741/2741), 6.94 MiB | 1.26 MiB/s, done.
+Resolving deltas: 100% (1423/1423), done.
+Checking connectivity... done.
+```
+
+<a name="installing-composer-dependencies" />
+### Installing Composer Dependencies
+
+From the project directory, run the following command. You may need to download `composer.phar` first from http://getcomposer.org
+
+```bash
+$ composer update
+```
+
+<a name="configure-environment" />
+### Configure Environment
+
+You will need to make a copy of the example environment configuration schema and enter your own details into.
+
+Example:
+
+```bash
+$ cp .env.example .env
+```
+
+Now fill up the DB_ and MAIL_ variables with your details.
+
+Example:
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=hackerspacecrm
+DB_USERNAME=username
+DB_PASSWORD=password
+
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=username@gmail.com
+MAIL_PASSWORD=password
+MAIL_ENCRYPTION=tls
+MAIL_FROM='Hackerspace CRM'
+```
+
+<a name="generate-application-key" />
+### Generate application key
+
+From the project directory, run the following command.
+
+```bash
+$ php artisan key:generate
+```
+
+<a name="configure-application" />
+### Configure application
+
+You will need to edit the config/hackerspacecrm.php config file and enter your own details into. Please pay attention to the variable comments and follow the instructions in that file.
+
+<a name="run-migrations" />
+### Run Migrations
+
+To run migrations, make sure you are in the root directory for the project and run the following:
+
+```bash
+$ php artisan migrate
+```
+
+<a name="run-seeds" />
+### Run Seeds
+
+To run database seeds, make sure you are in the root directory for the project and run the following:
+
+```bash
+$ php artisan db:seed
+```
+
+<a name="start-server" />
+### Start server
+
+To start the server, make sure you are in the root directory for the project and run the following:
+
+```bash
+$ php artisan serve
+```
 
 <a name="laravel" />
-# Laravel PHP Framework
+## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
 [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
