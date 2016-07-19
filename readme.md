@@ -1,4 +1,4 @@
-# Hackerspace CRM
+# [![Hackerspace CRM Banner](hscrm-banner.png)](https://github.com/altinukshini/hackerspacecrm)
 
 Hackerspace CRM (Community Relationship Management) is a web application that helps to run and manage Hackerspaces/Makerspaces.
 
@@ -167,7 +167,7 @@ $ php artisan key:generate
 <a name="configure-application" />
 ### Configure application
 
-You will need to edit the config/hackerspacecrm.php config file and enter your own details into. Please pay attention to the variable comments and follow the instructions in that file.
+You will need to edit the **config/hackerspacecrm.php** config file and enter your own details into. Please pay attention to the variable comments and follow the instructions in that file.
 
 <a name="run-migrations" />
 ### Run Migrations
