@@ -1,5 +1,20 @@
 # Hackerspace CRM
 
+Hackerspace CRM is a CRM (Community Relationship Management) software that helps to run and manage Hackerspaces/Makerspaces.
+
+## README Contents
+
+* [Description](#description)
+* [Features](#features)
+* [Technologies used](#technologies)
+* [Installation](#installation)
+  * [Server requirements](#requirements)
+  * [Installation steps](#installationsteps)
+* [Laravel PHP framework](#laravel)
+
+<a name="description" />
+## Description
+
 My friends and I run Prishtina Hackerspace (a hackerspace in Kosovo), and since the beginning of it we always struggled finding the best solution to manage members, payments, keys, etc. I'm not trying to reinvent the wheel, we tried many different software but I think we need a better solutions for this. I think that many hackerspaces face the same problem when dealing with 30+ members. I know we all have different structures, but we could maybe boil down to something common and useful for all of us.
 
 There are many open source CRM software out there like CiviCRM and such (paid ones as well) that actually do have more functionality in them but are hard to use because of their complexity.
@@ -10,29 +25,33 @@ The idea is to have most of the application parameters configurable via the admi
 So far, I’ve thought of couple of features, most of which I liked in Seltzer CRM, and some that I thought might be useful based on my experience with Prishtina Hackerspace and some local hackerspaces in Balkans.
 But, in order for this CRM to be as good as it can (and obviously better than the existing solutions), I need your help to let me know what do you struggle with, and what would you need to have in such application? How do you process this kind of stuff, what services you use and what would be the easiest way to complete your administrative tasks via this CRM.
 
+<a name="features" />
+## Features
+
 So far this is what I came up with (call them modules or simply functionalities):
 The following need to be more detailed (will document them more soon)
-- Membership
-  - Members
-  - Membership Plans
-  - Mentors
+* Membership
+  * Members
+  * Membership Plans
+  * Mentors
 
-- Reports
-  - Membership reports
-  - Expenses reports
-  - Space Frequentation (part of door access control and checkin system)
+* Reports
+  * Membership reports
+  * Expenses reports
+  * Space Frequentation (part of door access control and checkin system)
 
-- Finances
-  - Transactions (income and expenses)
-  - Billing (charge members / run billing)
-  - Online Payment (Pay membership dues with Stripe/Paypal)
+* Finances
+  * Transactions (income and expenses)
+  * Billing (charge members / run billing)
+  * Online Payment (Pay membership dues with Stripe/Paypal)
 
-- Access Control
-  - Keys
-  - RFID Cards
-  - Alarm Pins
-  - Door access Control and Checkin System (API for Raspberry pi/Arduino based solution)
+* Access Control
+  * Keys
+  * RFID Cards
+  * Alarm Pins
+  * Door access Control and Checkin System (API for Raspberry pi/Arduino based solution)
 
+<a name="technologies" />
 ## Technologies used (planed to be used)
 
 Software:
@@ -51,23 +70,27 @@ Hardware for developing the Checkin System and Door Access control System (in la
 
 I’ve already done something for this, but will have to adapt and refactor the code so that it’ll work with Hackerspace CRM: https://github.com/altinukshini/HACCSY
 
-#Installation
+<a name="installation" />
+##Installation
 
+<a name="requirements" />
 ## Server requirements
 
 - Memcached (php5-memcached and memcached)
 
+<a name="installationsteps" />
 ## Installation steps
 
 - Clone the repo
+- Run composer update/install
 - Copy .env.example to .env and fill up the db and email variables
 - Run artisan key generate
 - Edit config/hackerspacecrm.php
-- Run composer update/install
 - Run db migrations
 - Run db seeds
 - Run artisan serve
 
+<a name="laravel" />
 # Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
