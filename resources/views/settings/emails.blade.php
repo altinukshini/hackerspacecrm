@@ -23,7 +23,7 @@
                     <div class="box box-default">
                         <div class="box-header with-border">
                             <h3 class="box-title">{{ $template->title }} ({{ $template->slug }})</h3>
-                            @if(isMultilingual())
+                            @if(isCRMMultilingual())
                                 <a class="btn btn-xs btn-primary pull-right" data-translateemailtemplateurl="{{ url('settings/emails/'.$template->id.'/translate') }}" data-toggle="modal" data-target="#translateemailtemplate">Translate</a>
                             @endif
                         </div>
@@ -67,7 +67,7 @@
         </div>
     @endif
     @can('setting_update')
-        @if(isMultilingual())
+        @if(isCRMMultilingual())
             <div class="modal fade" tabindex="-1" role="dialog" id="translateemailtemplate">
                 <div class="modal-dialog modal-md">
                     <div class="modal-content">

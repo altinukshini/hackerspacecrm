@@ -55,7 +55,7 @@
 												<td>{{ $menu->description }}</td>
 												@can('menu_update')
 													<td>
-														@if(isMultilingual())
+														@if(isCRMMultilingual())
 															<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
 														@endif
 
@@ -79,7 +79,7 @@
 												<td>{{ $child->description }}</td>
 												@can('menu_update')
 													<td>
-														@if(isMultilingual())
+														@if(isCRMMultilingual())
 															<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$child->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
 														@endif
 
@@ -107,7 +107,7 @@
 												<td>{{ $menu->description }}</td>
 												@can('menu_update')
 													<td>
-														@if(isMultilingual())
+														@if(isCRMMultilingual())
 															<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
 														@endif
 
@@ -171,9 +171,14 @@
 											@endif
 										</div>
 										<div class="form-group{{ $errors->has('parent_slug') ? ' has-error' : ' has-feedback' }}">
-											<label for="parent_slug">Parent slug</label>
-											<input type="text" class="form-control" name="parent_slug" value="{{ old('parent_slug') }}">
-											<p>Leave empty for master menu, or add the slug of a parent menu to add this menu as child.</p>
+											<label for="parent_slug">Parent menu</label>
+											<select class="form-control" name="parent_slug">
+												<option value="" selected>(None)</option>
+												@foreach (getParentMenus() as $parent)
+													<option value="{{ $parent->slug }}" {{ old('parent_slug') == $parent->slug ? "selected" : "" }}>{{ $parent->title . ' ('.$parent->slug.')' }}</option>
+												@endforeach
+											</select>
+											<p>Select none for this menu to be a master menu</p>
 											@if ($errors->has('parent_slug'))
 											<span class="help-block">
 												<strong>{{ $errors->first('parent_slug') }}</strong>
@@ -307,9 +312,14 @@
 										</div>
 										<br>
 										<div class="form-group{{ $errors->has('parent_slug') ? ' has-error' : ' has-feedback' }}">
-											<label for="parent_slug">Parent slug</label>
-											<input type="text" class="form-control" name="parent_slug" min="0" value="{{ old('parent_slug') }}">
-											<p>Leave empty for master menu, or add the slug of a parent menu to add this menu as child.</p>
+											<label for="parent_slug">Parent menu</label>
+											<select class="form-control" name="parent_slug">
+												<option value="" selected>(None)</option>
+												@foreach (getParentMenus() as $parent)
+													<option value="{{ $parent->slug }}" {{ old('parent_slug') == $parent->slug ? "selected" : "" }}>{{ $parent->title . ' ('.$parent->slug.')' }}</option>
+												@endforeach
+											</select>
+											<p>Select none for this menu to be a master menu</p>
 											@if ($errors->has('parent_slug'))
 											<span class="help-block">
 												<strong>{{ $errors->first('parent_slug') }}</strong>
@@ -415,7 +425,7 @@
 			@endif
 		@endcan
 		@can('menu_update')
-			@if(isMultilingual())
+			@if(isCRMMultilingual())
 				<div class="modal fade" tabindex="-1" role="dialog" id="translatemenu">
 					<div class="modal-dialog modal-md">
 						<div class="modal-content">

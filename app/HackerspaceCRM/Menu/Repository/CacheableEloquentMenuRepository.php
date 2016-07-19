@@ -84,6 +84,19 @@ class CacheableEloquentMenuRepository implements MenuRepositoryInterface
     }
 
     /**
+     * Get parent menus without children 
+     * ordered by menu_order asc 
+     *
+     * @return Collection
+     */
+    public function getParents()
+    {
+        return $this->cache->tags('menus')->rememberForever('menus.getParents.'.getCurrentSessionAppLocale(), function () {
+            return $this->menuRepository->getParents();
+        });
+    }
+
+    /**
      * Create new menu.
      *
      * @param array attributes

@@ -17,3 +17,17 @@ if (!function_exists('setMenuActive')) {
         return '';
     }
 }
+
+if (!function_exists('getParentMenuSlugOptions')) {
+
+    /**
+     * Return slugs of Parent menus (not their children)
+     *
+     * @return array
+     */
+    function getParentMenus()
+    {
+        $slugs = App::make('HackerspaceCRM\Menu\Repository\MenuRepositoryInterface');
+        return $slugs->getParents();
+    }
+}

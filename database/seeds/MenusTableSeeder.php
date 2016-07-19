@@ -247,7 +247,7 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-server',
 			],
 			[
-				'slug' => 'settings-general',
+				'slug' => 'settings_general',
 				'parent_slug' => null,
 				'permission_id' => 3,
 				'menu_group' => 'settings',
@@ -258,7 +258,7 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-gear',
 			],
 			[
-				'slug' => 'setting-emails',
+				'slug' => 'settings_emails',
 				'parent_slug' => null,
 				'permission_id' => 3,
 				'menu_group' => 'settings',

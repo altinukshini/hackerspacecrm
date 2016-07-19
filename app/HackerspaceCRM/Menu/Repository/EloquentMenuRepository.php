@@ -65,10 +65,27 @@ class EloquentMenuRepository implements MenuRepositoryInterface
      *
      * @return Collection
      */
-    public function byGroup($group = '*')
+    public function byGroup($group = ['*'])
     {
         return Menu::with('children')->with('permission')->where('menu_group', $group)
         ->where('locale', getCurrentSessionAppLocale())
+        ->where(function ($query){
+            $query->whereNull('parent_slug')
+                  ->orWhere('parent_slug', '');
+        })
+        ->orderBy('menu_order', 'asc')
+        ->get();
+    }
+
+    /**
+     * Get parent menus without children 
+     * ordered by menu_order asc 
+     *
+     * @return Collection
+     */
+    public function getParents()
+    {
+        return Menu::where('locale', getCurrentSessionAppLocale())
         ->where(function ($query){
             $query->whereNull('parent_slug')
                   ->orWhere('parent_slug', '');

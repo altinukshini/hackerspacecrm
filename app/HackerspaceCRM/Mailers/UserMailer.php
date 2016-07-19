@@ -79,7 +79,7 @@ class UserMailer extends Mailer
 		}
 
 		// If application is not multilingual, return the default locale email template		
-		if (!isMultilingual()) {
+		if (!isCRMMultilingual()) {
 			return $defaultTemplate;
 		}
 

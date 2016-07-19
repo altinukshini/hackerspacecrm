@@ -54,7 +54,7 @@ return [
 			'emails'	=>	'<b>Do not write php code!!!</b> <br />Please make sure you only use the required variables specified under the textarea.<br /><br /><b>Variables you can use:</b> $crm->crmname, $crm->description, $crm->orgname, $crm->orgdescription, $crm->address, $crm->url, $crm->locale, $crm->theme, $crm->new_user_role.<br><br><b>Syntax examples for displaying a variable:</b> {{ $crm->crmname }}, {{ $edit_link }}',
 			'roles'		=>	'We do not recommend deleting the default CRM roles, doing so may affect the CRM\'s behaviour. Please consider adding new ones instead.',
 		],
-		'translation' => 'Please not that this action will create a copy of this :object to the selected locale (if it doesn\'t already exist). After performing this action, you will have to switch to that locale in order to see the :object and translate its contet.',
+		'translation' => 'Please note that this action will create a copy of this :object to the selected locale (if it doesn\'t already exist). After performing this action, you will have to switch to that locale in order to see the :object and translate its contet.',
 
 	],
 	'labels'	=> [

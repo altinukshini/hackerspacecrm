@@ -58,14 +58,14 @@ if (!function_exists('getDefaultAppLocale')) {
     }
 }
 
-if (!function_exists('isMultilingual')) {
+if (!function_exists('isCRMMultilingual')) {
     /**
      * Returns true or false if application config
      * file has more than 1 supported languages.
      *
      * @return boolean
      */
-    function isMultilingual()
+    function isCRMMultilingual()
     {
         return sizeof(crminfo('supported_locales')) > 1 ? true : false;
     }
