@@ -58,6 +58,7 @@ Route::get('settings/general', 'SettingsController@showGeneralSettingsForm');
 Route::patch('settings/general', 'SettingsController@updateGeneralSettings');
 Route::get('settings/emails', 'EmailTemplatesController@showEmailTemplatesForm');
 Route::patch('settings/emails/{templateId}', 'EmailTemplatesController@update');
+Route::post('settings/emails/{templateId}/translate', 'EmailTemplatesController@translate');
 
 /*
  * Menus routes
@@ -84,11 +85,3 @@ Route::patch('permissions', 'PermissionsController@update');
 // \DB::listen(function($query) {
 //     var_dump($query);
 // });
-
-
-Route::get('test', function () {
-
-    $menus = HackerspaceCRM\Menu\Menu::all();
-
-    return $menus->load('parent');
-});

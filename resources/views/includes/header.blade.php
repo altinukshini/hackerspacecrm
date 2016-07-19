@@ -16,7 +16,7 @@
 				<ul class="nav navbar-nav">
 
 					<!-- Application locale switcher -->
-					@if(count(getAvailableAppLocaleArray()) > 1)
+					@if(isMultilingual())
 						<li class="dropdown messages-menu pull-left">
 							<a href="#" class="dropdown-toggle pull-left" data-toggle="dropdown">
 								{{ getCurrentSessionAppLocale() }}

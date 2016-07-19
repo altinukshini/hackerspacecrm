@@ -4,9 +4,10 @@ namespace App\Http\Requests;
 
 use Flash;
 use App\Http\Requests\Request;
+use App\Models\EmailTemplate;
 use Illuminate\Contracts\Validation\Validator;
 
-class TranslateMenuRequest extends Request
+class TranslateEmailTemplateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +16,7 @@ class TranslateMenuRequest extends Request
      */
     public function authorize()
     {
-        return hasPermission('menu_update');
+        return hasPermission('setting_update');
     }
 
     /**
@@ -26,11 +27,11 @@ class TranslateMenuRequest extends Request
     public function rules()
     {
         // Get slug of the entered menu
-        $menuRepository = app()->make('HackerspaceCRM\Menu\Repository\MenuRepositoryInterface');
-        $slug = $menuRepository->byId($this->route('menuId'))->slug;
+        $template = EmailTemplate::find($this->route('templateId'));
+        $slug = $template->slug;
 
         return [
-            'locale' => 'required|string|in:'.implode(",", getAvailableAppLocaleArrayKeys()).'|unique:menus,locale,NULL,id,slug,'.$slug
+            'locale' => 'required|string|in:'.implode(",", getAvailableAppLocaleArrayKeys()).'|unique:email_templates,locale,NULL,id,slug,'.$slug
         ];
     }
 

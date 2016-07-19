@@ -23,7 +23,9 @@
                     <div class="box box-default">
                         <div class="box-header with-border">
                             <h3 class="box-title">{{ $template->title }} ({{ $template->slug }})</h3>
-                            <a class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#translateemailtempalte">Translate</a>
+                            @if(isMultilingual())
+                                <a class="btn btn-xs btn-primary pull-right" data-translateemailtemplateurl="{{ url('settings/emails/'.$template->id.'/translate') }}" data-toggle="modal" data-target="#translateemailtemplate">Translate</a>
+                            @endif
                         </div>
                         <form role="form" action="{{ url('settings/emails/'.$template->id) }}" method="POST">
                             {!! csrf_field() !!}
@@ -64,88 +66,65 @@
             @endforeach
         </div>
     @endif
-
     @can('setting_update')
-        <div class="modal fade" tabindex="-1" role="dialog" id="translateemailtempalte">
-            <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title">Create translation</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <form role="form" action="" method="POST">
+        @if(isMultilingual())
+            <div class="modal fade" tabindex="-1" role="dialog" id="translateemailtemplate">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title">Create translation</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-help">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                {{ trans('hackerspacecrm.help.translation', ['object'=>trans('hackerspacecrm.models.emailtemplate')]) }}
+                            </div>
+                            <form role="form" id="translateEmailTemplateForm" method="POST" action="">
                                 {!! csrf_field() !!}
-                                {!! method_field('PATCH') !!}
-                                <div class="box-body">
-                                    <div class="form-group {{ $errors->has('locale') ? ' has-error' : ' has-feedback' }}">
-                                        <label for="locale">Locale</label>
-                                        <select class="form-control" name="locale" required>
-                                            <option disabled selected>Select locale</option>
-                                            @foreach (getAvailableAppLocaleArray() as $localekey => $localevalue)
-                                                @if($localekey != getCurrentSessionAppLocale())
-                                                    <option value="{{ $localekey }}" {{ old('locale') == $localekey ? "selected" : "" }}>{{ $localekey . ' - ' .$localevalue }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group {{ $errors->has('locale') ? ' has-error' : ' has-feedback' }}">
+                                            <label for="locale">Select locale</label>
+                                            <select class="form-control" name="locale" required>
+                                                <option disabled selected>Select locale</option>
+                                                @foreach (getAvailableAppLocaleArray() as $localekey => $localevalue)
+                                                    @if($localekey != getCurrentSessionAppLocale())
+                                                        <option value="{{ $localekey }}" {{ old('locale') == $localekey ? "selected" : "" }}>{{ $localekey . ' - ' .$localevalue }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
 
-                                        @if ($errors->has('locale'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('locale') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group {{ $errors->has('description') ? ' has-error' : ' has-feedback' }}">
-                                        <label for="description">Template description</label>
-                                        <input type="text" class="form-control" id="description" name="description" value="" required/>
-                                        @if ($errors->has('description'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('description') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group {{ $errors->has('email_subject') ? ' has-error' : ' has-feedback' }}">
-                                        <label for="email_subject">Email subject</label>
-                                        <input type="text" class="form-control" id="email_subject" name="email_subject" value="" required/>
-                                        @if ($errors->has('email_subject'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('email_subject') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group {{ $errors->has('email_body') ? ' has-error' : ' has-feedback' }}">
-                                        <label for="email_body">Email body</label>
-                                        <textarea class="textarea" name="email_body" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-
-                                        @if ($errors->has('email_body'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('email_body') }}</strong>
-                                        </span>
-                                        @endif
-                                        <div class="alert alert-help">
-                                            
+                                            @if ($errors->has('locale'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('locale') }}</strong>
+                                            </span>
+                                            @endif
                                         </div>
                                     </div>
-                                </div>
-                                <!-- /.box-body -->
-                                <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary">Update</button>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Create</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
                     </div>
+                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-content -->
             </div>
-        </div>
-        @if ($errors->has('error_code') AND $errors->first('error_code') == 7)
+            <!-- If edit menu request has error, open editmenu modal -->
+            @if ($errors->has('error_code') AND $errors->first('error_code') == 7)
             <script type="text/javascript">
-                $('#translateemailtempalte').modal('show');
+                $('#translateemailtemplate').modal('show');
             </script>
+            @endif
         @endif
-    @endif
+    @endcan 
 </section>
 
 @stop

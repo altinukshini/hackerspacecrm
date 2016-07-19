@@ -3,7 +3,7 @@
 if (!function_exists('getAvailableAppLocaleArrayKeys')) {
 
     /**
-     * Returns an array of all available locales.
+     * Returns an array of all available locale keys.
      *
      * @return array
      */
@@ -55,5 +55,18 @@ if (!function_exists('getDefaultAppLocale')) {
     function getDefaultAppLocale()
     {
         return crminfo('locale');
+    }
+}
+
+if (!function_exists('isMultilingual')) {
+    /**
+     * Returns true or false if application config
+     * file has more than 1 supported languages.
+     *
+     * @return boolean
+     */
+    function isMultilingual()
+    {
+        return sizeof(crminfo('supported_locales')) > 1 ? true : false;
     }
 }

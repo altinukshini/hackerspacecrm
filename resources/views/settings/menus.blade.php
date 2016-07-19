@@ -55,7 +55,9 @@
 												<td>{{ $menu->description }}</td>
 												@can('menu_update')
 													<td>
-														<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+														@if(isMultilingual())
+															<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+														@endif
 
 														<button type="button" title="Edit" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 														@can('menu_delete')
@@ -77,7 +79,9 @@
 												<td>{{ $child->description }}</td>
 												@can('menu_update')
 													<td>
-														<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$child->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+														@if(isMultilingual())
+															<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$child->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+														@endif
 
 														<button type="button" title="Edit"  class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$child->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 
@@ -103,7 +107,9 @@
 												<td>{{ $menu->description }}</td>
 												@can('menu_update')
 													<td>
-														<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+														@if(isMultilingual())
+															<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+														@endif
 
 														<button type="button" title="Edit" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 														@can('menu_delete')
@@ -409,56 +415,62 @@
 			@endif
 		@endcan
 		@can('menu_update')
-			<div class="modal fade" tabindex="-1" role="dialog" id="translatemenu">
-				<div class="modal-dialog modal-md">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-							<h4 class="modal-title">Create translation</h4>
-						</div>
-						<div class="modal-body">
-							<form role="form" id="translateMenuForm" method="POST" action="">
-								{!! csrf_field() !!}
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group {{ $errors->has('locale') ? ' has-error' : ' has-feedback' }}">
-										    <label for="locale">Select locale</label>
-										    <select class="form-control" name="locale" required>
-										        <option disabled selected>Select locale</option>
-										        @foreach (getAvailableAppLocaleArray() as $localekey => $localevalue)
-										            @if($localekey != getCurrentSessionAppLocale())
-										                <option value="{{ $localekey }}" {{ old('locale') == $localekey ? "selected" : "" }}>{{ $localekey . ' - ' .$localevalue }}</option>
-										            @endif
-										        @endforeach
-										    </select>
-
-										    @if ($errors->has('locale'))
-										    <span class="help-block">
-										        <strong>{{ $errors->first('locale') }}</strong>
-										    </span>
-										    @endif
-										</div>
-									</div>
-
-									<div class="col-md-12">
-										<div class="form-group">
-											<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-										</div>
-									</div>
+			@if(isMultilingual())
+				<div class="modal fade" tabindex="-1" role="dialog" id="translatemenu">
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<h4 class="modal-title">Create translation</h4>
+							</div>
+							<div class="modal-body">
+								<div class="alert alert-help">
+								    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+								    {{ trans('hackerspacecrm.help.translation', ['object'=>trans('hackerspacecrm.models.menu')]) }}
 								</div>
-							</form>
+								<form role="form" id="translateMenuForm" method="POST" action="">
+									{!! csrf_field() !!}
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group {{ $errors->has('locale') ? ' has-error' : ' has-feedback' }}">
+											    <label for="locale">Select locale</label>
+											    <select class="form-control" name="locale" required>
+											        <option disabled selected>Select locale</option>
+											        @foreach (getAvailableAppLocaleArray() as $localekey => $localevalue)
+											            @if($localekey != getCurrentSessionAppLocale())
+											                <option value="{{ $localekey }}" {{ old('locale') == $localekey ? "selected" : "" }}>{{ $localekey . ' - ' .$localevalue }}</option>
+											            @endif
+											        @endforeach
+											    </select>
+
+											    @if ($errors->has('locale'))
+											    <span class="help-block">
+											        <strong>{{ $errors->first('locale') }}</strong>
+											    </span>
+											    @endif
+											</div>
+										</div>
+
+										<div class="col-md-12">
+											<div class="form-group">
+												<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Create</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
 						</div>
+						<!-- /.modal-content -->
 					</div>
-					<!-- /.modal-content -->
 				</div>
-			</div>
-			<!-- If edit menu request has error, open editmenu modal -->
-			@if ($errors->has('error_code') AND $errors->first('error_code') == 7)
-			<script type="text/javascript">
-				$('#translatemenu').modal('show');
-			</script>
+				<!-- If edit menu request has error, open editmenu modal -->
+				@if ($errors->has('error_code') AND $errors->first('error_code') == 7)
+				<script type="text/javascript">
+					$('#translatemenu').modal('show');
+				</script>
+				@endif
 			@endif
 		@endcan	
 		@can('menu_delete')
@@ -487,9 +499,5 @@
 		@endcan
 	</div>
 </section><!-- /.content -->
-
-
-
-
 
 @stop

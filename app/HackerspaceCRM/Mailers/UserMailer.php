@@ -41,7 +41,7 @@ class UserMailer extends Mailer
 	 */
 	public function mail(User $user, $template, array $data = array())
 	{
-		$this->emailTemplate = EmailTemplate::whereSlug($template)->firstOrFail();
+		$this->emailTemplate = $this->detectEmailTemplateLocale($user, $template);
 		$this->toEmail = $user->email;
 
 		$this->data += array_merge(compact('user'), $data);
@@ -66,6 +66,40 @@ class UserMailer extends Mailer
 		$this->data += array_merge(compact('user'), $data);
 
 		return $this->sendEmail('view');
+	}
+
+	private function detectEmailTemplateLocale(User $user, $template)
+	{
+		// Get default email template in default application locale
+		$defaultTemplate = EmailTemplate::whereSlug($template)->where('locale', getDefaultAppLocale())->first();
+
+		// If by any case it is empty, check if there is one in en (default installation locale)
+		if(is_null($defaultTemplate)) {
+			$defaultTemplate = EmailTemplate::whereSlug($template)->where('locale', 'en')->firstOrFail();
+		}
+
+		// If application is not multilingual, return the default locale email template		
+		if (!isMultilingual()) {
+			return $defaultTemplate;
+		}
+
+		// Get user locale preference
+		$userLocale = $user->locale;
+
+		// If user has no locale preference, return the default locale email template 
+		if(is_null($userLocale) || $userLocale == '') {
+			return $defaultTemplate;
+		}
+
+		// Otherwise check if there is a locale with the user preference
+		$userTemplate = EmailTemplate::whereSlug($template)->where('locale', $userLocale)->first();
+
+
+		if(is_null($userTemplate))
+			return $defaultTemplate;
+
+		return $userTemplate;
+		
 	}
 
 	/*

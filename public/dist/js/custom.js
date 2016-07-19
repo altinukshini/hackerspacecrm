@@ -190,3 +190,10 @@ $('#confirmRoleDelete').on('show.bs.modal', function(e) {
     $("#delForm").attr('action', roleurl);
 });
 
+
+/////////////////////////////////// EmailTemplates
+$('#translateemailtemplate').on('show.bs.modal', function(e) {
+    $('#translateEmailTemplateForm')[0].reset();
+    translateemailtemplateurl = $(e.relatedTarget).data('translateemailtemplateurl');
+    $("#translateEmailTemplateForm").attr('action', translateemailtemplateurl);
+});
