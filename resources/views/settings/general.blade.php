@@ -3,7 +3,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-	<h1>Settings</h1>
+	<h1>{{ trans('hackerspacecrm.pages.titles.settings') }}</h1>
 </section>
 
 <section class="content">
@@ -11,7 +11,7 @@
 		<div class="col-md-6">
 			<div class="box box-default col-md-6">
 				<div class="box-header with-border">
-					<h3 class="box-title">General CRM Settings</h3>
+					<h3 class="box-title">{{ trans('hackerspacecrm.pages.subtitles.generalsettings') }}</h3>
 				</div>
 				<div class="row">
 					<div class="col-md-12 pull-left">
@@ -22,7 +22,7 @@
 								<div class="row">
 
 									<div class="col-md-4">
-										<label for="crmname">CRM name*</label>
+										<label for="crmname">{{ trans('hackerspacecrm.forms.labels.crmname') }}*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('crmname') ? ' has-error' : ' has-feedback' }}">
@@ -36,11 +36,11 @@
 									</div>
 
 									<div class="col-md-4">
-										<label for="crmdescription">CRM Description*</label>
+										<label for="crmdescription">{{ trans('hackerspacecrm.forms.labels.crmdescription') }}*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('crmdescription') ? ' has-error' : ' has-feedback' }}">
-											<input type="text" class="form-control" id="crmdescription" name="crmdescription" placeholder="Some description" value="{{ old('crmdescription') ? old('crmdescription') : $settings['crmdescription'] }}" required>
+											<input type="text" class="form-control" id="crmdescription" name="crmdescription" placeholder="{{ trans('hackerspacecrm.forms.placeholders.example_u') }}" value="{{ old('crmdescription') ? old('crmdescription') : $settings['crmdescription'] }}" required>
 											@if ($errors->has('crmdescription'))
 											<span class="help-block">
 												<strong>{{ $errors->first('crmdescription') }}</strong>
@@ -52,7 +52,7 @@
 									<br style="clear:both;" /><hr><br />
 
 									<div class="col-md-4">
-										<label for="orgname">Organisation name*</label>
+										<label for="orgname">{{ trans('hackerspacecrm.forms.labels.orgname') }}*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('orgname') ? ' has-error' : ' has-feedback' }}">
@@ -66,7 +66,7 @@
 									</div>
 
 									<div class="col-md-4">
-										<label for="orgdescription">Organisation description</label>
+										<label for="orgdescription">{{ trans('hackerspacecrm.forms.labels.orgdescription') }}</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('orgdescription') ? ' has-error' : ' has-feedback' }}">
@@ -80,7 +80,7 @@
 									</div>
 
 									<div class="col-md-4">
-										<label for="address">Hackerspace / Organisation address</label>
+										<label for="address">{{ trans('hackerspacecrm.forms.labels.hsorgaddress') }}</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('address') ? ' has-error' : ' has-feedback' }}">
@@ -96,7 +96,7 @@
 									<br style="clear:both;" /><hr><br />
 
 									<div class="col-md-4">
-										<label for="locale">Default locale*</label>
+										<label for="locale">{{ trans('hackerspacecrm.forms.labels.defaultlocale') }}*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('locale') ? ' has-error' : ' has-feedback' }}">
@@ -114,11 +114,11 @@
 									</div>
 
 									<div class="col-md-4">
-										<label for="enable_registration">Registration</label><br />
+										<label for="enable_registration">{{ trans('hackerspacecrm.forms.labels.registration') }}</label><br />
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('enable_registration') ? ' has-error' : ' has-feedback' }}">
-											<input type="checkbox" class="minimal" id="enable_registration" name="enable_registration" {{ old('enable_registration') ? old('enable_registration') : ($settings['enable_registration'] == 1 ? 'checked' : "") }} value="1"> Anyone can register
+											<input type="checkbox" class="minimal" id="enable_registration" name="enable_registration" {{ old('enable_registration') ? old('enable_registration') : ($settings['enable_registration'] == 1 ? 'checked' : "") }} value="1"> {{ trans('hackerspacecrm.forms.checkboxes.anyonecanregister') }}
 											@if ($errors->has('enable_registration'))
 											<span class="help-block">
 												<strong>{{ $errors->first('enable_registration') }}</strong>
@@ -128,12 +128,12 @@
 									</div>
 
 									<div class="col-md-4">
-										<label for="new_user_role">New user role*</label>
+										<label for="new_user_role">{{ trans('hackerspacecrm.forms.labels.newuserrole') }}*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('new_user_role') ? ' has-error' : ' has-feedback' }}">
 											<select class="form-control" id="new_user_role" name="new_user_role" required>
-												<option disabled selected>Select role</option>
+												<option disabled selected>{{ trans('hackerspacecrm.forms.dropdowns.selectrole') }}</option>
 												@foreach (crmRoles() as $role)
 													<option value="{{ $role->name }}" {{ old('new_user_role') == $role->name ? "selected" : ($settings['new_user_role'] == $role->name ? "selected" : "") }}>{{ $role->name . ' - ' .$role->label }}</option>
 												@endforeach
@@ -147,11 +147,11 @@
 									</div>
 
 									<div class="col-md-4">
-										<label for="url">Application URL*</label>
+										<label for="url">{{ trans('hackerspacecrm.forms.labels.appurl') }}*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('url') ? ' has-error' : ' has-feedback' }}">
-											<input class="form-control" id="url" placeholder="/crm" type="text" name="url"  value="{{ old('url') ? old('url') : $settings['url'] }}" required/>
+											<input class="form-control" id="url" placeholder="http://www.example.com/" type="text" name="url"  value="{{ old('url') ? old('url') : $settings['url'] }}" required/>
 											@if ($errors->has('url'))
 											<span class="help-block">
 												<strong>{{ $errors->first('url') }}</strong>
@@ -160,7 +160,7 @@
 										</div>
 									</div>
 									<div class="col-md-4">
-										<label for="crmfooter">Footer content*</label>
+										<label for="crmfooter">{{ trans('hackerspacecrm.forms.labels.footercontent') }}*</label>
 									</div>
 									<div class="col-md-8">
 										<div class="form-group {{ $errors->has('crmfooter') ? ' has-error' : ' has-feedback' }}">
@@ -177,7 +177,7 @@
 							</div>
 							<!-- /.box-body -->
 							<div class="box-footer">
-								<button type="submit" class="btn btn-primary">Update</button>
+								<button type="submit" class="btn btn-primary">{{ trans('hackerspacecrm.forms.buttons.update') }}</button>
 							</div>
 						</form>
 					</div>

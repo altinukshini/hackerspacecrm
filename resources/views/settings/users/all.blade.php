@@ -309,9 +309,9 @@
 							<p>{{ trans('hackerspacecrm.forms.help.areyousure') }} <b><span id="username"></span></b>?</p>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ trans('hackerspacecrm.forms.buttons.close') }}</button>
 							{!! Form::open(['method' => 'DELETE', 'id'=>'delForm']) !!}
-							<button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash"></i> Delete</button>
+							<button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash"></i> {{ trans('hackerspacecrm.forms.buttons.delete') }}</button>
 							{!! Form::close() !!}
 						</div>
 					</div>

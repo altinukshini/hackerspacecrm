@@ -44,7 +44,7 @@
 					</div>
 				</div><!-- /.col -->
 				<div class="col-xs-4">
-					<button type="submit" class="btn btn-primary btn-block btn-flat"><i class="fa fa-btn fa-sign-in"></i> Login</button>
+					<button type="submit" class="btn btn-primary btn-block btn-flat"><i class="fa fa-btn fa-sign-in"></i> {{ trans('hackerspacecrm.forms.labels.login') }}</button>
 				</div><!-- /.col -->
 			</div>
 		</form>
