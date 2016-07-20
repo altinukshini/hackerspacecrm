@@ -1,7 +1,11 @@
 # [![Hackerspace CRM Banner](hscrm-banner.png)](https://github.com/altinukshini/hackerspacecrm)
 [logo src](http://ura.al/)
 
-Hackerspace CRM (Community Relationship Management) is a web application that helps to run and manage Hackerspaces/Makerspaces.
+[![Laravel 5.2](https://img.shields.io/badge/Laravel-5.2-orange.svg?style=flat-square)](http://laravel.com)
+[![Source](http://img.shields.io/badge/hackerspacecrm-core-blue.svg?style=flat-square)](https://github.com/altinukshini/hackerspacecrm)
+[![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
+
+Hackerspace CRM (Community Relationship Management) is a web application built with Laravel that helps communities around the world to run and manage their Hackerspaces/Makerspaces.
 
 ## README Contents
 
