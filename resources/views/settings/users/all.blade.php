@@ -5,19 +5,19 @@
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-	<h1>Settings</h1>
+	<h1>{{ trans('hackerspacecrm.pages.titles.settings') }}</h1>
 </section>
 
 <section class="content">
 	<!-- Default box -->
 	<div class="box">
 		<div class="box-header with-border">
-			<h3 class="box-title">All users</h3>
+			<h3 class="box-title">{{ trans('hackerspacecrm.pages.subtitles.allusers') }}</h3>
 		</div>
 		<div class="box-body">
 			@can('user_create')
 				<a class="btn btn-success btn-md" data-toggle="modal" data-target="#addnewuser">
-					<i class="fa fa-plus"></i> Add new
+					<i class="fa fa-plus"></i> {{ trans('hackerspacecrm.forms.buttons.addnew') }}
 				</a>
 			@endcan
 			<br style="clear:both;">
@@ -26,16 +26,16 @@
 				<table id="alluserstable" class="table table-responsive table-bordered table-hover table-striped">
 					<thead>
 						<tr>
-							<th>ID</th>
-							<th>Full name</th>
-							<th>username</th>
-							<th>email</th>
-							<th>profile</th>
-							<th>last login</th>
-							<th>verified</th>
-							<th>created at</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.id') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.fullname') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.username') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.email') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.profile') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.lastlogin') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.verified') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.createdat') }}</th>
 							@can('user_update')
-								<th>action</th>
+								<th>{{ trans('hackerspacecrm.forms.tables.columns.action') }}</th>
 							@endcan
 						</tr>
 					</thead>
@@ -51,12 +51,12 @@
 										{!! $user->hasProfile() ? '<a href="'.url($user->profilePath()).'"><i class="fa fa-external-link text-blue"></i></a>' :  '' !!}
 									@endcan
 									@can('profile_create')
-										{!! $user->hasProfile() ? '' : '<a title="Create profile" class="btn btn-xs btn-default btn-flat" href="'.url("profiles/".$user->username."/create").'"><i class="fa fa-plus text-green"></i></a>' !!}
+										{!! $user->hasProfile() ? '' : '<a title="'.trans("hackerspacecrm.forms.titles.createprofile").'" class="btn btn-xs btn-default btn-flat" href="'.url("profiles/".$user->username."/create").'"><i class="fa fa-plus text-green"></i></a>' !!}
 									@endcan
 									@can('profile_delete')
 										@if($user->hasProfile())
 											{!! Form::open(['method' => 'DELETE', 'url' => url('profiles/'.$user->username), 'style' => 'float:right;']) !!}
-											<button type="submit" title="Delete profile" style="align:right;" class="btn btn-xs btn-default btn-flat"><i class="fa fa-trash text-red"></i></button>
+											<button type="submit" title="{{ trans('hackerspacecrm.forms.titles.deleteprofile') }}" style="align:right;" class="btn btn-xs btn-default btn-flat"><i class="fa fa-trash text-red"></i></button>
 											{!! Form::close() !!}
 										@endif
 									@endcan
@@ -66,7 +66,7 @@
 									{!! $user->isVerified() ? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-close text-red"></i>' !!}
 									@if(!$user->isVerified())
 										{!! Form::open(['method' => 'PATCH', 'url' => url('users/'.$user->username.'/verify'), 'style' => 'float:right;']) !!}
-										<button type="submit" title="Verify" style="align:right;" class="btn btn-xs btn-default btn-flat"><i class="fa fa-check text-green"></i></button>
+										<button type="submit" title="{{ trans('hackerspacecrm.forms.titles.verifyuser') }}" style="align:right;" class="btn btn-xs btn-default btn-flat"><i class="fa fa-check text-green"></i></button>
 										{!! Form::close() !!}
 									@endif
 								</td>
@@ -75,15 +75,15 @@
 									<td>
 										@can('role_update')
 											@if($user->username != crminfo('admin_username'))
-												<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editUserRoles('{{ url('roles/user/'.$user->username) }}')"><i class="fa fa-eye"></i> roles</button>
+												<button type="button" title="{{ trans('hackerspacecrm.forms.titles.editroles') }}" class="btn btn-xs btn-default btn-flat" onclick="editUserRoles('{{ url('roles/user/'.$user->username) }}')"><i class="fa fa-eye"></i> {{ trans('hackerspacecrm.forms.labels.roles_l') }}</button>
 											@endif
 										@endcan
 										@can('user_update')
-											<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editUser('{{ url('users/'.$user->username) }}')"><i class="fa fa-edit text-blue"></i></button>
+											<button type="button" title="{{ trans('hackerspacecrm.forms.titles.edit') }}" class="btn btn-xs btn-default btn-flat" onclick="editUser('{{ url('users/'.$user->username) }}')"><i class="fa fa-edit text-blue"></i></button>
 										@endcan
 										@can('user_delete')
 											@if($user->username != crminfo('admin_username'))
-												<button type="button" data-username="{{ $user->username }}" data-userdeleteurl="{{ url('users/'.$user->username) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmUserDelete"><i class="fa fa-trash text-red"></i></button>
+												<button type="button" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" data-username="{{ $user->username }}" data-userdeleteurl="{{ url('users/'.$user->username) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmUserDelete"><i class="fa fa-trash text-red"></i></button>
 											@endif
 										@endcan
 									</td>
@@ -93,16 +93,16 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<th>ID</th>
-							<th>Full name</th>
-							<th>username</th>
-							<th>email</th>
-							<th>profile</th>
-							<th>last login</th>
-							<th>verified</th>
-							<th>created at</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.id') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.fullname') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.username') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.email') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.profile') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.lastlogin') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.verified') }}</th>
+							<th>{{ trans('hackerspacecrm.forms.tables.columns.createdat') }}</th>
 							@can('user_update')
-								<th>action</th>
+								<th>{{ trans('hackerspacecrm.forms.tables.columns.action') }}</th>
 							@endcan
 						</tr>
 					</tfoot>
@@ -117,7 +117,7 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span></button>
-						<h4 class="modal-title">Create new user</h4>
+						<h4 class="modal-title">{{ trans('hackerspacecrm.pages.subtitles.createnewuser') }}</h4>
 					</div>
 					<div class="modal-body">
 						<div class="row">
@@ -126,8 +126,8 @@
 								<div class="col-md-6">
 										
 									<div class="form-group{{ $errors->has('full_name') ? ' has-error' : ' has-feedback' }}">
-										<label for="full_name">Full Name*</label>
-										<input type="text" class="form-control" placeholder="Name Surname" name="full_name" value="{{ old('full_name') ? old('full_name') : '' }}" required>
+										<label for="full_name">{{ trans('hackerspacecrm.forms.labels.fullname') }}*</label>
+										<input type="text" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.namesurname') }}" name="full_name" value="{{ old('full_name') ? old('full_name') : '' }}" required>
 										@if ($errors->has('full_name'))
 										<span class="help-block">
 											<strong>{{ $errors->first('full_name') }}</strong>
@@ -135,8 +135,8 @@
 										@endif
 									</div>
 									<div class="form-group{{ $errors->has('username') ? ' has-error' : ' has-feedback' }}">
-										<label for="username">Username*</label>
-										<input type="text" class="form-control" placeholder="Name Surname" name="username" value="{{ old('username') ? old('username') : '' }}" required>
+										<label for="username">{{ trans('hackerspacecrm.forms.labels.username') }}*</label>
+										<input type="text" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.username') }}" name="username" value="{{ old('username') ? old('username') : '' }}" required>
 										@if ($errors->has('username'))
 										<span class="help-block">
 											<strong>{{ $errors->first('username') }}</strong>
@@ -144,7 +144,7 @@
 										@endif
 									</div>
 									<div class="form-group{{ $errors->has('email') ? ' has-error' : ' has-feedback' }}">
-										<label for="email">Email*</label>
+										<label for="email">{{ trans('hackerspacecrm.forms.labels.email') }}*</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 											<input type="email" class="form-control" placeholder="user@email.com" name="email" value="{{ old('email') ? old('email') : '' }}" required>
@@ -161,7 +161,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group{{ $errors->has('password') ? ' has-error' : ' has-feedback' }}">
-										<label for="password">Password*</label>
+										<label for="password">{{ trans('hackerspacecrm.forms.labels.password') }}*</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-lock"></i></span>
 											<input type="password" class="form-control genpasswd" name="password" data-size="11" data-character-set="a-z,A-Z"  value="{{ old('password') }}" required>
@@ -173,7 +173,7 @@
 										@endif
 									</div>
 									<div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : ' has-feedback' }}">
-										<label for="password_confirmation">Confirm password*</label>
+										<label for="password_confirmation">{{ trans('hackerspacecrm.forms.labels.confirmpassword') }}*</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-lock"></i></span>
 											<input type="password" class="form-control genpasswd" name="password_confirmation" data-size="11" data-character-set="a-z,A-Z"  value="{{ old('password_confirmation') }}" required>
@@ -185,15 +185,15 @@
 										@endif
 									</div>
 									<div class="form-group">
-										<button type="button" class="btn btn-default btn-sm btn-genpasswd">Generate password</button>
+										<button type="button" class="btn btn-default btn-sm btn-genpasswd">{{ trans('hackerspacecrm.forms.buttons.generatepasswd') }}</button>
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="form-group">
-										<input type="checkbox" class="minimal margin-r-5" name="notify" value="yes"/>&nbsp;Notify new user for their new account.<br />
+										<input type="checkbox" class="minimal margin-r-5" name="notify" value="yes"/>&nbsp;{{ trans('hackerspacecrm.forms.checkboxes.notifyusernewacc') }}<br />
 									</div>
 									<div class="form-group">
-										<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
+										<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> {{ trans('hackerspacecrm.forms.buttons.create') }}</button>
 									</div>
 								</div>
 							</form>
@@ -216,7 +216,7 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span></button>
-						<h4 class="modal-title">Edit account</h4>
+						<h4 class="modal-title">{{ trans('hackerspacecrm.pages.subtitles.edituser') }}</h4>
 					</div>
 					<div class="modal-body">
 						<div class="row">
@@ -225,8 +225,8 @@
 									{!! method_field('PATCH') !!}
 									{!! csrf_field() !!}
 									<div class="form-group{{ $errors->has('full_name') ? ' has-error' : ' has-feedback' }}">
-										<label for="full_name">Full Name*</label>
-										<input type="text" class="form-control" placeholder="Name Surname" name="full_name" value="{{ old('full_name') ? old('full_name') : '' }}" required>
+										<label for="full_name">{{ trans('hackerspacecrm.forms.labels.fullname') }}*</label>
+										<input type="text" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.namesurname') }}" name="full_name" value="{{ old('full_name') ? old('full_name') : '' }}" required>
 										@if ($errors->has('full_name'))
 										<span class="help-block">
 											<strong>{{ $errors->first('full_name') }}</strong>
@@ -234,7 +234,7 @@
 										@endif
 									</div>
 									<div class="form-group{{ $errors->has('email') ? ' has-error' : ' has-feedback' }}">
-										<label for="email">Email*</label>
+										<label for="email">{{ trans('hackerspacecrm.forms.labels.email') }}*</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 											<input type="email" class="form-control" placeholder="user@email.com" name="email" value="{{ old('email') ? old('email') : '' }}" required>
@@ -246,7 +246,7 @@
 										@endif
 									</div>
 									<div class="form-group">
-										<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+										<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> {{ trans('hackerspacecrm.forms.buttons.save') }}</button>
 									</div>
 								</form>
 							</div>
@@ -256,7 +256,7 @@
 									{!! method_field('PATCH') !!}
 									{!! csrf_field() !!}
 									<div class="form-group{{ $errors->has('password') ? ' has-error' : ' has-feedback' }}">
-										<label for="password">New password*</label>
+										<label for="password">{{ trans('hackerspacecrm.forms.labels.newpassword') }}*</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-lock"></i></span>
 											<input type="password" class="form-control" name="password" value="{{ old('password') }}" required>
@@ -268,7 +268,7 @@
 										@endif
 									</div>
 									<div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : ' has-feedback' }}">
-										<label for="password_confirmation">Confirm new password*</label>
+										<label for="password_confirmation">{{ trans('hackerspacecrm.forms.labels.confirmnewpassword') }}*</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-lock"></i></span>
 											<input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" required>
@@ -280,7 +280,7 @@
 										@endif
 									</div>
 									<div class="form-group">
-										<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Change</button>
+										<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> {{ trans('hackerspacecrm.forms.buttons.change') }}</button>
 									</div>
 								</form>
 							</div>
@@ -303,10 +303,10 @@
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
 							</button>
-							<h4 class="modal-title">Confirm user deletion</h4>
+							<h4 class="modal-title">{{ trans('hackerspacecrm.pages.subtitles.confirmuserdeletion') }}</h4>
 						</div>
 						<div class="modal-body">
-							<p>Are you sure you want to delete <b><span id="username"></span></b>?</p>
+							<p>{{ trans('hackerspacecrm.forms.help.areyousure') }} <b><span id="username"></span></b>?</p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -326,14 +326,14 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span></button>
-						<h4 class="modal-title">Edit roles</h4>
+						<h4 class="modal-title">{{ trans('hackerspacecrm.pages.subtitles.editroles') }}</h4>
 					</div>
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-md-12">
 								<form role="form" id="updateUserRolesForm" method="POST" action="">
 									{!! csrf_field() !!}
-									<label for="roles">Roles</label><br />
+									<label for="roles">{{ trans('hackerspacecrm.forms.labels.roles_u') }}</label><br />
 										@foreach(crmRoles() as $role)
 											<div class="form-group">
 												<input type="checkbox" class="minimal margin-r-5" name="roles[{{ $role->id }}]" value="{{ $role->name }}" />&nbsp;&nbsp;{{ $role->label . ' (' . $role->name . ')' }}<br />
@@ -341,7 +341,7 @@
 										@endforeach
 									<br style="clear:both;">
 									<div class="form-group">
-										<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+										<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> {{ trans('hackerspacecrm.forms.buttons.save') }}</button>
 									</div>
 								</form>
 							</div>

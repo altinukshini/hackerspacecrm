@@ -3,19 +3,19 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-	<h1>Settings</h1>
+	<h1>{{ trans('hackerspacecrm.pages.titles.settings') }}</h1>
 </section>
 
 <section class="content">
 	<!-- Default box -->
 	<div class="box">
 		<div class="box-header with-border">
-			<h3 class="box-title">Menus</h3>
+			<h3 class="box-title">{{ trans('hackerspacecrm.pages.subtitles.menus') }}</h3>
 		</div>
 		<div class="box-body">
 			@can('menu_create')
 				<a class="btn btn-success btn-md" data-toggle="modal" data-target="#addnewmenu">
-					<i class="fa fa-plus"></i> Add new
+					<i class="fa fa-plus"></i> {{ trans('hackerspacecrm.forms.buttons.addnew') }}
 				</a>
 			@endcan
 			@can('menu_view')
@@ -23,21 +23,29 @@
 				<div class="box-body">
 					@foreach ($menus as $menugroup => $submenus)
 						<br style="clear:both;">
-						<h3><?php echo ucfirst($menugroup); ?> menus</h3>
+						<h3>
+							@if($menugroup == 'public')
+								{{ trans('hackerspacecrm.pages.subtitles.publicmenus') }}
+							@elseif($menugroup == 'main')
+								{{ trans('hackerspacecrm.pages.subtitles.mainmenus') }}
+							@elseif($menugroup == 'settings')
+								{{ trans('hackerspacecrm.pages.subtitles.settingsmenus') }}
+							@endif
+						</h3>
 						<table class="table table-responsive no-padding table-hover">
 							<tbody>
 								<tr>
-									<th>icon</th>
-									<th>slug</th>
-									<th>Title</th>
-									<th>URL</th>
-									<th>parent</th>
-									<th>permission</th>
-									<th>group</th>
-									<th>order</th>
-									<th>description</th>
+									<th>{{ trans('hackerspacecrm.forms.tables.columns.icon') }}</th>
+									<th>{{ trans('hackerspacecrm.forms.tables.columns.slug') }}</th>
+									<th>{{ trans('hackerspacecrm.forms.tables.columns.title') }}</th>
+									<th>{{ trans('hackerspacecrm.forms.tables.columns.location') }}</th>
+									<th>{{ trans('hackerspacecrm.forms.tables.columns.parent') }}</th>
+									<th>{{ trans('hackerspacecrm.forms.tables.columns.permission') }}</th>
+									<th>{{ trans('hackerspacecrm.forms.tables.columns.group') }}</th>
+									<th>{{ trans('hackerspacecrm.forms.tables.columns.order') }}</th>
+									<th>{{ trans('hackerspacecrm.forms.tables.columns.description') }}</th>
 									@can('menu_update')
-										<th>action</th>
+										<th>{{ trans('hackerspacecrm.forms.tables.columns.action') }}</th>
 									@endcan
 								</tr>
 								@foreach( $submenus as $menu )
@@ -56,12 +64,12 @@
 												@can('menu_update')
 													<td>
 														@if(isCRMMultilingual())
-															<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+															<button type="button" title="{{ trans('hackerspacecrm.forms.titles.translate') }}" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
 														@endif
 
-														<button type="button" title="Edit" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
+														<button type="button" title="{{ trans('hackerspacecrm.forms.titles.edit') }}" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 														@can('menu_delete')
-															<button type="button" title="Delete" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
+															<button type="button" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" data-menuname="{{ $menu->title }}" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
 														@endcan
 													</td>
 												@endcan
@@ -80,13 +88,13 @@
 												@can('menu_update')
 													<td>
 														@if(isCRMMultilingual())
-															<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$child->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+															<button type="button" title="{{ trans('hackerspacecrm.forms.titles.translate') }}" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$child->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
 														@endif
 
-														<button type="button" title="Edit"  class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$child->id) }}')"><i class="fa fa-edit text-blue"></i></button>
+														<button type="button" title="{{ trans('hackerspacecrm.forms.titles.edit') }}"  class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$child->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 
 														@can('menu_delete')
-															<button type="button" title="Delete" data-menu_id="{{ $child->id }}" data-menu_name="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$child->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
+															<button type="button" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" data-menuname="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$child->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
 														@endcan
 													</td>
 												@endcan
@@ -108,12 +116,12 @@
 												@can('menu_update')
 													<td>
 														@if(isCRMMultilingual())
-															<button type="button" title="Translate" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+															<button type="button" title="{{ trans('hackerspacecrm.forms.titles.translate') }}" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
 														@endif
 
-														<button type="button" title="Edit" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
+														<button type="button" title="{{ trans('hackerspacecrm.forms.titles.edit') }}" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 														@can('menu_delete')
-															<button type="button" title="Delete" data-menu_id="{{ $menu->id }}" data-menu_name="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
+															<button type="button" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" data-menuname="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
 														@endcan
 													</td>
 												@endcan
@@ -126,7 +134,6 @@
 					@endforeach
 				</div>
 			@endcan
-
 		</div><!-- /.box-body -->
 	</div><!-- /.box -->
 
@@ -139,7 +146,7 @@
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">×</span>
 							</button>
-							<h4 class="modal-title">Add new menu</h4>
+							<h4 class="modal-title">{{ trans('hackerspacecrm.pages.subtitles.createnewmenu') }}</h4>
 						</div>
 						<div class="modal-body">
 							<form role="form" action="{{ url('/settings/menus') }}" METHOD="POST">
@@ -147,7 +154,7 @@
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group{{ $errors->has('icon') ? ' has-error' : ' has-feedback' }}">
-											<label for="icon">Font awesome icon*</label>
+											<label for="icon">{{ trans('hackerspacecrm.forms.labels.fontawesomeicon') }}*</label>
 											<div class="input-group">
 												<input name="icon" class="form-control icp icp-auto iconpicker-input iconpicker-element" value="fa-circle-o" type="text" required>
 												<span class="input-group-addon"></span>
@@ -161,7 +168,7 @@
 										<br>
 										<input type="hidden" class="form-control" name="locale" value="{{ getCurrentSessionAppLocale() }}" required/>
 										<div class="form-group{{ $errors->has('slug') ? ' has-error' : ' has-feedback' }}">
-											<label for="slug">Slug*</label>
+											<label for="slug">{{ trans('hackerspacecrm.forms.labels.slug') }}*</label>
 											<input type="text" class="form-control" name="slug" value="{{ old('slug') }}" required/>
 											<p>Exc: users, reports, expenses (all lowercase)</p>
 											@if ($errors->has('slug'))
@@ -171,14 +178,14 @@
 											@endif
 										</div>
 										<div class="form-group{{ $errors->has('parent_slug') ? ' has-error' : ' has-feedback' }}">
-											<label for="parent_slug">Parent menu</label>
+											<label for="parent_slug">{{ trans('hackerspacecrm.forms.labels.parentmenu') }}</label>
 											<select class="form-control" name="parent_slug">
-												<option value="" selected>(None)</option>
+												<option value="" selected>{{ trans('hackerspacecrm.forms.dropdowns.none') }}</option>
 												@foreach (getParentMenus() as $parent)
 													<option value="{{ $parent->slug }}" {{ old('parent_slug') == $parent->slug ? "selected" : "" }}>{{ $parent->title . ' ('.$parent->slug.')' }}</option>
 												@endforeach
 											</select>
-											<p>Select none for this menu to be a master menu</p>
+											<p>{{ trans('hackerspacecrm.forms.help.selectnonemenu') }}</p>
 											@if ($errors->has('parent_slug'))
 											<span class="help-block">
 												<strong>{{ $errors->first('parent_slug') }}</strong>
@@ -186,9 +193,9 @@
 											@endif
 										</div>
 										<div class="form-group{{ $errors->has('menu_order') ? ' has-error' : ' has-feedback' }}">
-											<label for="menu_order">Order*</label>
+											<label for="menu_order">{{ trans('hackerspacecrm.forms.labels.order') }}*</label>
 											<input type="number" class="form-control" placeholder="0" min="0" name="menu_order" value="{{ old('menu_order') ? old('menu_order') : 0 }}" required>
-											<p>0 highest</p>
+											<p>{{ trans('hackerspacecrm.forms.help.highestordermenu') }}</p>
 											@if ($errors->has('menu_order'))
 											<span class="help-block">
 												<strong>{{ $errors->first('menu_order') }}</strong>
@@ -200,8 +207,8 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group{{ $errors->has('title') ? ' has-error' : ' has-feedback' }}">
-													<label for="title">Name*</label>
-													<input type="text" class="form-control" placeholder="Title" name="title" value="{{ old('title') }}" required>
+													<label for="title">{{ trans('hackerspacecrm.forms.labels.name') }}*</label>
+													<input type="text" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.example_u') }}" name="title" value="{{ old('title') }}" required>
 													@if ($errors->has('title'))
 													<span class="help-block">
 														<strong>{{ $errors->first('title') }}</strong>
@@ -209,8 +216,8 @@
 													@endif
 												</div>
 												<div class="form-group{{ $errors->has('url') ? ' has-error' : ' has-feedback' }}">
-													<label for="url">URL</label>
-													<input type="text" class="form-control" placeholder="hello/world" name="url" value="{{ old('url') }}">
+													<label for="url">{{ trans('hackerspacecrm.forms.labels.location') }}</label>
+													<input type="text" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.example_location') }}" name="url" value="{{ old('url') }}">
 													@if ($errors->has('url'))
 													<span class="help-block">
 														<strong>{{ $errors->first('url') }}</strong>
@@ -218,8 +225,8 @@
 													@endif
 												</div>
 												<div class="form-group{{ $errors->has('description') ? ' has-error' : ' has-feedback' }}">
-													<label for="description">Description</label>
-													<input type="text" class="form-control" placeholder="This is just a description" name="description" value="{{ old('description') }}">
+													<label for="description">{{ trans('hackerspacecrm.forms.labels.description') }}</label>
+													<input type="text" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.description') }}" name="description" value="{{ old('description') }}">
 
 													@if ($errors->has('description'))
 													<span class="help-block">
@@ -230,14 +237,14 @@
 											</div>
 											<div class="col-md-7">
 												<div class="form-group{{ $errors->has('permission_id') ? ' has-error' : ' has-feedback' }}">
-													<label for="permission_id">Permission*</label>
+													<label for="permission_id">{{ trans('hackerspacecrm.forms.labels.permission') }}*</label>
 													<select class="form-control" name="permission_id" required>
-														<option disabled selected>Select permission</option>
+														<option disabled selected>{{ trans('hackerspacecrm.forms.dropdowns.selectpermission') }}</option>
 														@foreach (crmPermissions() as $permission)
 															<option value="{{ $permission->id }}" {{ old('permission_id') == $permission->id ? "selected" : "" }}>{{ $permission->name . ' - ' .$permission->label }}</option>
 														@endforeach
 													</select>
-													<p>Permission which can access this menu. <br />Select "public" for non aithenticated users to see it.</p>
+													<p>{{ trans('hackerspacecrm.forms.help.selectpermissionmenu') }}</p>
 													@if ($errors->has('permission_id'))
 													<span class="help-block">
 														<strong>{{ $errors->first('permission_id') }}</strong>
@@ -247,9 +254,9 @@
 											</div>
 											<div class="col-md-5">
 												<div class="form-group{{ $errors->has('menu_group') ? ' has-error' : ' has-feedback' }}">
-													<label for="menu_group">Group*</label>
+													<label for="menu_group">{{ trans('hackerspacecrm.forms.labels.menugroup') }}*</label>
 													<select class="form-control" name="menu_group" required>
-														<option disabled selected>Select group</option>
+														<option disabled selected>{{ trans('hackerspacecrm.forms.dropdowns.selectgroup') }}</option>
 														@foreach (crminfo('menu_groups') as $menugroup)
 															<option value="{{ $menugroup }}" {{ old('menu_group') == $menugroup ? "selected" : "" }}>{{ ucfirst($menugroup) }}</option>
 														@endforeach
@@ -265,7 +272,7 @@
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
+											<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> {{ trans('hackerspacecrm.forms.buttons.create') }}</button>
 										</div>
 									</div>
 								</div>
@@ -290,7 +297,7 @@
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">×</span>
 							</button>
-							<h4 class="modal-title">Edit menu</h4>
+							<h4 class="modal-title">{{ trans('hackerspacecrm.pages.subtitles.editmenu') }}</h4>
 						</div>
 						<div class="modal-body">
 							<form role="form" id="editMenuForm" method="POST" action="">
@@ -299,7 +306,7 @@
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group{{ $errors->has('icon') ? ' has-error' : ' has-feedback' }}">
-											<label for="icon">Font awesome icon*</label>
+											<label for="icon">{{ trans('hackerspacecrm.forms.labels.fontawesomeicon') }}*</label>
 											<div class="input-group">
 												<input name="icon" class="form-control icp icp-auto iconpicker-input iconpicker-element" value="fa-circle-o" type="text" required>
 												<span class="input-group-addon"></span>
@@ -312,14 +319,14 @@
 										</div>
 										<br>
 										<div class="form-group{{ $errors->has('parent_slug') ? ' has-error' : ' has-feedback' }}">
-											<label for="parent_slug">Parent menu</label>
+											<label for="parent_slug">{{ trans('hackerspacecrm.forms.labels.parentmenu') }}</label>
 											<select class="form-control" name="parent_slug">
-												<option value="" selected>(None)</option>
+												<option value="" selected>{{ trans('hackerspacecrm.forms.dropdowns.none') }}</option>
 												@foreach (getParentMenus() as $parent)
 													<option value="{{ $parent->slug }}" {{ old('parent_slug') == $parent->slug ? "selected" : "" }}>{{ $parent->title . ' ('.$parent->slug.')' }}</option>
 												@endforeach
 											</select>
-											<p>Select none for this menu to be a master menu</p>
+											<p>{{ trans('hackerspacecrm.forms.help.selectnonemenu') }}</p>
 											@if ($errors->has('parent_slug'))
 											<span class="help-block">
 												<strong>{{ $errors->first('parent_slug') }}</strong>
@@ -327,9 +334,9 @@
 											@endif
 										</div>
 										<div class="form-group{{ $errors->has('menu_order') ? ' has-error' : ' has-feedback' }}">
-											<label for="menu_order">Order*</label>
+											<label for="menu_order">{{ trans('hackerspacecrm.forms.labels.order') }}*</label>
 											<input type="number" class="form-control" placeholder="0" min="0" name="menu_order" value="{{ old('menu_order') }}" required>
-											<p>0 highest</p>
+											<p>{{ trans('hackerspacecrm.forms.help.highestordermenu') }}</p>
 											@if ($errors->has('menu_order'))
 											<span class="help-block">
 												<strong>{{ $errors->first('menu_order') }}</strong>
@@ -341,8 +348,8 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group{{ $errors->has('title') ? ' has-error' : ' has-feedback' }}">
-													<label for="title">Name*</label>
-													<input type="text" class="form-control" placeholder="Title" name="title" value="{{ old('title') }}" required>
+													<label for="title">{{ trans('hackerspacecrm.forms.labels.name') }}*</label>
+													<input type="text" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.example_u') }}" name="title" value="{{ old('title') }}" required>
 													@if ($errors->has('title'))
 													<span class="help-block">
 														<strong>{{ $errors->first('title') }}</strong>
@@ -350,8 +357,8 @@
 													@endif
 												</div>
 												<div class="form-group{{ $errors->has('url') ? ' has-error' : ' has-feedback' }}">
-													<label for="url">URL</label>
-													<input type="text" class="form-control" placeholder="hello/world" name="url" value="{{ old('url') }}">
+													<label for="url">{{ trans('hackerspacecrm.forms.labels.location') }}</label>
+													<input type="text" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.example_location') }}" name="url" value="{{ old('url') }}">
 													@if ($errors->has('url'))
 													<span class="help-block">
 														<strong>{{ $errors->first('url') }}</strong>
@@ -359,8 +366,8 @@
 													@endif
 												</div>
 												<div class="form-group{{ $errors->has('description') ? ' has-error' : ' has-feedback' }}">
-													<label for="description">Description</label>
-													<input type="text" class="form-control" placeholder="This is just a description" name="description" value="{{ old('description') }}">
+													<label for="description">{{ trans('hackerspacecrm.forms.labels.description') }}</label>
+													<input type="text" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.description') }}" name="description" value="{{ old('description') }}">
 
 													@if ($errors->has('description'))
 													<span class="help-block">
@@ -371,14 +378,14 @@
 											</div>
 											<div class="col-md-7">
 												<div class="form-group{{ $errors->has('permission_id') ? ' has-error' : ' has-feedback' }}">
-													<label for="permission_id">Permission*</label>
+													<label for="permission_id">{{ trans('hackerspacecrm.forms.labels.permission') }}*</label>
 													<select class="form-control" name="permission_id" required>
-														<option disabled selected>Select permission</option>
+														<option disabled selected>{{ trans('hackerspacecrm.forms.dropdowns.selectpermission') }}</option>
 														@foreach (crmPermissions() as $permission)
 															<option value="{{ $permission->id }}" {{ old('permission_id') == $permission->id ? "selected" : "" }}>{{ $permission->name . ' - ' .$permission->label }}</option>
 														@endforeach
 													</select>
-													<p>Permission which can access this menu. <br />Select "public" for non aithenticated users to see it.</p>
+													<p>{{ trans('hackerspacecrm.forms.help.selectpermissionmenu') }}</p>
 													@if ($errors->has('permission_id'))
 													<span class="help-block">
 														<strong>{{ $errors->first('permission_id') }}</strong>
@@ -388,7 +395,7 @@
 											</div>
 											<div class="col-md-5">
 												<div class="form-group{{ $errors->has('menu_group') ? ' has-error' : ' has-feedback' }}">
-													<label for="menu_group">Group*</label>
+													<label for="menu_group">{{ trans('hackerspacecrm.forms.labels.menugroup') }}*</label>
 													<select class="form-control" name="menu_group" required>
 														<!-- <option disabled selected>Select group</option> -->
 														@foreach (crminfo('menu_groups') as $menugroup)
@@ -407,7 +414,7 @@
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
-											<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+											<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> {{ trans('hackerspacecrm.forms.buttons.save') }}</button>
 										</div>
 									</div>
 								</div>
@@ -433,7 +440,7 @@
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<h4 class="modal-title">Create translation</h4>
+								<h4 class="modal-title">{{ trans('hackerspacecrm.pages.subtitles.createtranslation') }}</h4>
 							</div>
 							<div class="modal-body">
 								<div class="alert alert-help">
@@ -445,9 +452,9 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group {{ $errors->has('locale') ? ' has-error' : ' has-feedback' }}">
-											    <label for="locale">Select locale</label>
+											    <label for="locale">{{ trans('hackerspacecrm.forms.labels.selectlocale') }}</label>
 											    <select class="form-control" name="locale" required>
-											        <option disabled selected>Select locale</option>
+											        <option disabled selected>{{ trans('hackerspacecrm.forms.dropdowns.selectlocale') }}</option>
 											        @foreach (getAvailableAppLocaleArray() as $localekey => $localevalue)
 											            @if($localekey != getCurrentSessionAppLocale())
 											                <option value="{{ $localekey }}" {{ old('locale') == $localekey ? "selected" : "" }}>{{ $localekey . ' - ' .$localevalue }}</option>
@@ -465,7 +472,7 @@
 
 										<div class="col-md-12">
 											<div class="form-group">
-												<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Create</button>
+												<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> {{ trans('hackerspacecrm.forms.buttons.create') }}</button>
 											</div>
 										</div>
 									</div>
@@ -490,16 +497,16 @@
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
 								</button>
-								<h4 class="modal-title">Confirm menu deletion</h4>
+								<h4 class="modal-title">{{ trans('hackerspacecrm.pages.subtitles.confirmmenudeletion') }}</h4>
 							</div>
 							<div class="modal-body">
-								<p>Are you sure you want to delete <b><span id="mName"></span></b>?</p>
-								<p><b>Note: </b>All children of this menu will not be deleted but will become parents.</p>
+								<p>{{ trans('hackerspacecrm.forms.help.areyousure') }} <b><span id="menuname"></span></b>?</p>
+								<p><b>{{ trans('hackerspacecrm.forms.labels.note') }}: </b>{{ trans('hackerspacecrm.forms.help.notemenudeletion') }}</p>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-								{!! Form::open(['method' => 'DELETE', 'id'=>'delForm']) !!}
-								<button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash"></i> Delete</button>
+								<button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ trans('hackerspacecrm.forms.buttons.close') }}</button>
+								{!! Form::open(['method' => 'DELETE', 'id'=>'deleteMenuForm']) !!}
+								<button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash"></i> {{ trans('hackerspacecrm.forms.buttons.delete') }}</button>
 								{!! Form::close() !!}
 							</div>
 						</div>

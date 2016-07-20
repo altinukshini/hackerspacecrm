@@ -3,7 +3,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-	<h1>Edit Account</h1>
+	<h1>{{ trans('hackerspacecrm.pages.titles.editaccount') }}</h1>
 </section>
 
 <section class="content">
@@ -22,8 +22,8 @@
 								{!! method_field('PATCH') !!}
 								{!! csrf_field() !!}
 								<div class="form-group{{ $errors->has('full_name') ? ' has-error' : ' has-feedback' }}">
-									<label for="full_name">Full Name*</label>
-									<input type="text" class="form-control" placeholder="Name Surname" name="full_name" value="{{ old('full_name') ? old('full_name') : $user->full_name }}" required>
+									<label for="full_name">{{ trans('hackerspacecrm.forms.labels.fullname') }}*</label>
+									<input type="text" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.namesurname') }}" name="full_name" value="{{ old('full_name') ? old('full_name') : $user->full_name }}" required>
 									@if ($errors->has('full_name'))
 									<span class="help-block">
 										<strong>{{ $errors->first('full_name') }}</strong>
@@ -31,7 +31,7 @@
 									@endif
 								</div>
 								<div class="form-group{{ $errors->has('email') ? ' has-error' : ' has-feedback' }}">
-									<label for="email">Email*</label>
+									<label for="email">{{ trans('hackerspacecrm.forms.labels.email') }}*</label>
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 										<input type="email" class="form-control" placeholder="user@email.com" name="email" value="{{ old('email') ? old('email') : $user->email }}" required>
@@ -43,7 +43,7 @@
 									@endif
 								</div>
 								<div class="form-group">
-									<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+									<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> {{ trans('hackerspacecrm.forms.buttons.save') }}</button>
 								</div>
 							</form>
 						</div>
@@ -53,7 +53,7 @@
 								{!! method_field('PATCH') !!}
 								{!! csrf_field() !!}
 								<div class="form-group{{ $errors->has('password') ? ' has-error' : ' has-feedback' }}">
-									<label for="password">New password*</label>
+									<label for="password">{{ trans('hackerspacecrm.forms.labels.newpassword') }}*</label>
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-lock"></i></span>
 										<input type="password" class="form-control" name="password" value="" required>
@@ -65,7 +65,7 @@
 									@endif
 								</div>
 								<div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : ' has-feedback' }}">
-									<label for="password_confirmation">Confirm new password*</label>
+									<label for="password_confirmation">{{ trans('hackerspacecrm.forms.labels.confirmnewpassword') }}*</label>
 									<div class="input-group">
 										<span class="input-group-addon"><i class="fa fa-lock"></i></span>
 										<input type="password" class="form-control" name="password_confirmation" value="" required>
@@ -77,7 +77,7 @@
 									@endif
 								</div>
 								<div class="form-group">
-									<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Change</button>
+									<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> {{ trans('hackerspacecrm.forms.buttons.change') }}</button>
 								</div>
 							</form>
 						</div>

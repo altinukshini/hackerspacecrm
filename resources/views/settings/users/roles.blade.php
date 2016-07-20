@@ -3,7 +3,7 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-	<h1>Settings</h1>
+	<h1>{{ trans('hackerspacecrm.pages.titles.settings') }}</h1>
 </section>
 
 <section class="content">
@@ -12,7 +12,7 @@
 			<!-- Default box -->
 			<div class="box">
 				<div class="box-header with-border">
-					<h3 class="box-title">User roles</h3>
+					<h3 class="box-title">{{ trans('hackerspacecrm.pages.subtitles.userroles') }}</h3>
 				</div>
 				<div class="box-body">
 					@can('role_update')
@@ -24,17 +24,17 @@
 					
 					@can('role_create')
 						<a class="btn btn-success btn-md" data-toggle="modal" data-target="#addnewrole" style="clear:both;margin-bottom:10px;">
-							<i class="fa fa-plus"></i> Add new
+							<i class="fa fa-plus"></i> {{ trans('hackerspacecrm.forms.buttons.addnew') }}
 						</a>
 					@endcan
 					
 					<table class="table table-responsive no-padding table-hover">
 						<tbody>
 							<tr>
-								<th>ID</th>
-								<th>Name</th>
-								<th>Label</th>
-								<th>Action</th>
+								<th>{{ trans('hackerspacecrm.forms.tables.columns.id') }}</th>
+								<th>{{ trans('hackerspacecrm.forms.tables.columns.name') }}</th>
+								<th>{{ trans('hackerspacecrm.forms.tables.columns.label') }}</th>
+								<th>{{ trans('hackerspacecrm.forms.tables.columns.action') }}</th>
 							</tr>
 							@foreach($roles as $role)
 								<tr>
@@ -44,10 +44,10 @@
 									<td>
 										@if($role->name != 'administrator')
 											@can('role_update')
-												<button type="button" class="btn btn-xs btn-default btn-flat" onclick="editRole('{{ url('roles/'.$role->id) }}')"><i class="fa fa-edit text-blue"></i></button>
+												<button type="button" title="{{ trans('hackerspacecrm.forms.titles.edit') }}" class="btn btn-xs btn-default btn-flat" onclick="editRole('{{ url('roles/'.$role->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 											@endcan
 											@can('role_delete')
-												<button type="button" data-rolename="{{ $role->name }}" data-roleid="{{ $role->id }}" data-roleurl="{{ url('roles/'.$role->id) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmRoleDelete"><i class="fa fa-trash text-red"></i></button>
+												<button type="button" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" data-rolename="{{ $role->name }}" data-roleid="{{ $role->id }}" data-roleurl="{{ url('roles/'.$role->id) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmRoleDelete"><i class="fa fa-trash text-red"></i></button>
 											@endcan
 										@endif
 									</td>
@@ -67,16 +67,16 @@
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
 							</button>
-							<h4 class="modal-title">Confirm role deletion</h4>
+							<h4 class="modal-title">{{ trans('hackerspacecrm.pages.subtitles.confirmroledeletion') }}</h4>
 						</div>
 						<div class="modal-body">
-							<p>Are you sure you want to delete role "<b><span id="rolename"></span></b>"?</p>
-							<p><b>Note: </b>Deleting a role will remove all its relations with Permissions and CRM Users</p>
+							<p>{{ trans('hackerspacecrm.forms.help.areyousure') }} <b><span id="rolename"></span></b>?</p>
+							<p><b>{{ trans('hackerspacecrm.forms.labels.note') }}: </b>{{ trans('hackerspacecrm.forms.help.deletingrole') }}</p>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-default pull-left" data-dismiss="modal">{{ trans('hackerspacecrm.forms.buttons.close') }}</button>
 							{!! Form::open(['method' => 'DELETE', 'id'=>'delForm']) !!}
-							<button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash"></i> Delete</button>
+							<button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash"></i> {{ trans('hackerspacecrm.forms.buttons.delete') }}</button>
 							{!! Form::close() !!}
 						</div>
 					</div>
@@ -91,15 +91,15 @@
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
 							</button>
-							<h4 class="modal-title">Add new role</h4>
+							<h4 class="modal-title">{{ trans('hackerspacecrm.pages.subtitles.creantenewrole') }}</h4>
 						</div>
 						<div class="modal-body">
 							<form role="form" action="{{ url('roles') }}" METHOD='POST'>
 								{!! csrf_field() !!}
 								<div class="form-group{{ $errors->has('name') ? ' has-error' : ' has-feedback' }}">
-									<label for="name">Name*</label>
-									<input class="form-control" type="text" name="name" placeholder="newname"  value="{{ old('name') }}" required>
-									<p>The name should not contain spaces, special characters or capital letters. Only underscore "_" allowed.</p>
+									<label for="name">{{ trans('hackerspacecrm.forms.labels.name') }}*</label>
+									<input class="form-control" type="text" name="name" placeholder="{{ trans('hackerspacecrm.forms.placeholders.example_l') }}"  value="{{ old('name') }}" required>
+									<p>{{ trans('hackerspacecrm.forms.help.nospecialchar') }}</p>
 
 									@if ($errors->has('name'))
 									<span class="help-block">
@@ -108,8 +108,8 @@
 									@endif
 								</div>
 								<div class="form-group{{ $errors->has('label') ? ' has-error' : ' has-feedback' }}">
-									<label for="label">Label*</label>
-									<input class="form-control" type="text" name="label" placeholder="Example" value="{{ old('label') }}" required>
+									<label for="label">{{ trans('hackerspacecrm.forms.labels.label') }}*</label>
+									<input class="form-control" type="text" name="label" placeholder="{{ trans('hackerspacecrm.forms.placeholders.example_u') }}" value="{{ old('label') }}" required>
 									
 									@if ($errors->has('label'))
 									<span class="help-block">
@@ -118,7 +118,7 @@
 									@endif
 								</div>
 								<div class="form-group">
-									<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
+									<button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> {{ trans('hackerspacecrm.forms.buttons.create') }}</button>
 								</div>
 							</form>
 						</div>
@@ -140,15 +140,15 @@
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
 							</button>
-							<h4 class="modal-title">Edit role</h4>
+							<h4 class="modal-title">{{ trans('hackerspacecrm.pages.subtitles.editrole') }}</h4>
 						</div>
 						<div class="modal-body">
 							<form id="editRoleForm" role="form" action="" METHOD='POST'>
 								{!! method_field('PATCH') !!}
 								{!! csrf_field() !!}
 								<div class="form-group{{ $errors->has('label') ? ' has-error' : ' has-feedback' }}">
-									<label for="label">Label*</label>
-									<input class="form-control" type="text" name="label" placeholder="Example" value="{{ old('label') }}" required>
+									<label for="label">{{ trans('hackerspacecrm.forms.labels.label') }}*</label>
+									<input class="form-control" type="text" name="label" placeholder="{{ trans('hackerspacecrm.forms.placeholders.example_u') }}" value="{{ old('label') }}" required>
 									
 									@if ($errors->has('label'))
 									<span class="help-block">
@@ -157,7 +157,7 @@
 									@endif
 								</div>
 								<div class="form-group">
-									<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+									<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> {{ trans('hackerspacecrm.forms.buttons.save') }}</button>
 								</div>
 							</form>
 						</div>

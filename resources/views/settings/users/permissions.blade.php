@@ -3,14 +3,14 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-	<h1>Settings</h1>
+	<h1>{{ trans('hackerspacecrm.pages.titles.settings') }}</h1>
 </section>
 
 <section class="content">
 	<!-- Default box -->
 	<div class="box">
 		<div class="box-header with-border">
-			<h3 class="box-title">Permissions</h3>
+			<h3 class="box-title">{{ trans('hackerspacecrm.pages.subtitles.permissions') }}</h3>
 		</div>
 		<div class="box-body">
 			<br style="clear:both;">
@@ -42,7 +42,7 @@
 					</table>
 					<br style="clear:both;">
 					<div class="form-group">
-						<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+						<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> {{ trans('hackerspacecrm.forms.buttons.save') }}</button>
 					</div>
 				</form>
 			@endcan

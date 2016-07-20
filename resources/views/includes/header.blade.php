@@ -38,9 +38,9 @@
 						
 						<!-- Authentication Links -->
 						@if (Auth::guest())
-						<li><a href="{{ url('/login') }}">Login</a></li>
+						<li><a href="{{ url('/login') }}">{{ trans('hackerspacecrm.forms.labels.login') }}</a></li>
 						@if(crminfo('enable_registration') == 1)
-						<li><a href="{{ url('/register') }}">Register</a></li>
+						<li><a href="{{ url('/register') }}">{{ trans('hackerspacecrm.forms.labels.register') }}</a></li>
 						@endif
 						@else
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -61,16 +61,16 @@
 							<li class="user-footer">
 								<div class="pull-left">
 									@if (!Auth::user()->hasProfile() AND Auth::user()->hasRole(['member', 'administrator']))
-										<a href="{{ url('users/'.Auth::user()->username.'/edit') }}" class="btn btn-default btn-flat">Edit Account</a><br /><br />
-										<a href="{{ url('profiles/'. Auth::user()->username .'/create') }}" class="btn btn-success btn-flat">Create profile</a>
+										<a href="{{ url('users/'.Auth::user()->username.'/edit') }}" class="btn btn-default btn-flat">{{ trans('hackerspacecrm.forms.labels.editaccount') }}</a><br /><br />
+										<a href="{{ url('profiles/'. Auth::user()->username .'/create') }}" class="btn btn-success btn-flat">{{ trans('hackerspacecrm.forms.labels.createprofile') }}</a>
 									@elseif (Auth::user()->hasProfile())
-										<a href="{{ url(Auth::user()->profilePath()) }}" class="btn btn-default btn-flat">Profile</a>
+										<a href="{{ url(Auth::user()->profilePath()) }}" class="btn btn-default btn-flat">{{ trans('hackerspacecrm.forms.labels.profile') }}</a>
 									@else
 										<a href="{{ url('users/'.Auth::user()->username.'/edit') }}" class="btn btn-default btn-flat">Edit Account</a>
 									@endif
 								</div>
 								<div class="pull-right">
-									<a href="{{ url('/logout') }}" class="btn btn-default btn-flat"><i class="fa fa-power-off text-red"></i> Sign out</a>
+									<a href="{{ url('/logout') }}" class="btn btn-default btn-flat"><i class="fa fa-power-off text-red"></i> {{ trans('hackerspacecrm.forms.labels.logout') }}</a>
 								</div>
 							</li>
 						</ul>

@@ -96,16 +96,15 @@ function editMenu(url) {
             $('#editmenu').modal('show');
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert('Error getting data!');
+            console.log('Error getting data!');
         }
     });
 }
 $('#confirmMenuDelete').on('show.bs.modal', function(e) {
-  menuId = $(e.relatedTarget).data('menu_id');
   deletemenuurl = $(e.relatedTarget).data('deletemenuurl');
-  menuName = $(e.relatedTarget).data('menu_name');
-  $("#confirmDelete #mName").html( menuName );
-  $("#delForm").attr('action', deletemenuurl);
+  menuname = $(e.relatedTarget).data('menuname');
+  $("#confirmMenuDelete #menuname").html( menuname );
+  $("#deleteMenuForm").attr('action', deletemenuurl);
 });
 $('#translatemenu').on('show.bs.modal', function(e) {
     $('#translateMenuForm')[0].reset();
@@ -128,7 +127,7 @@ function editUser(url) {
             $('#editUser').modal('show');
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert('Error getting data!');
+            console.log('Error getting data!');
         }
     });
 }
@@ -153,7 +152,7 @@ function editUserRoles(url) {
             $('#editUserRoles').modal('show');
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert('Error getting data!');
+            console.log('Error getting data!');
         }
     });
 }
@@ -178,7 +177,7 @@ function editRole(url) {
             $('#editRole').modal('show');
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert('Error getting data!');
+            console.log('Error getting data!');
         }
     });
 }

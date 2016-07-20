@@ -7,7 +7,7 @@
 	</div><!-- /.login-logo -->
 	<div class="login-box-body">
 
-		<p class="login-box-msg">Reset password</p>
+		<p class="login-box-msg">{{ trans('hackerspacecrm.pages.titles.resetpassword') }}</p>
 		@if (session('status'))
 		<div class="alert alert-success">
 			{{ session('status') }}
@@ -19,7 +19,7 @@
 
 
 			<div class="form-group{{ $errors->has('email') ? ' has-error' : ' has-feedback' }}">
-				<input type="email" class="form-control" placeholder="E-Mail Address" name="email" value="{{ old('email') }}">
+				<input type="email" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.email') }}" name="email" value="{{ old('email') }}">
 				<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 				@if ($errors->has('email'))
 				<span class="help-block">
@@ -30,7 +30,7 @@
 
 			<div class="row">
 				<div class="col-xs-12">
-					<button type="submit" class="btn btn-primary btn-block btn-flat"><i class="fa fa-btn fa-envelope"></i> Send Password Reset Link</button>
+					<button type="submit" class="btn btn-primary btn-block btn-flat"><i class="fa fa-btn fa-envelope"></i> {{ trans('hackerspacecrm.forms.labels.sendresetlink') }}</button>
 				</div><!-- /.col -->
 			</div>
 		</form>

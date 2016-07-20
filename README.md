@@ -64,7 +64,7 @@ The following need to be more detailed (will document them more soon)
 <a name="contributing" />
 ## Contributing
 
-I would very much appreciate and love any contribution! I encourage you to create a new personal branch after you fork this repository. This branch should be used for content and changes that are specific to your event. However, anything you are willing to push back should be updated in your develop branch, since there is still no stable release (master branch) of this application yet.
+I would very much appreciate and love any contribution! I encourage you to create a new personal branch after you fork this repository. This branch should be used for content and changes that are specific to your use. However, anything you are willing to push back should be updated in your develop branch, since there is still no stable release (master branch) of this application yet.
 
 Please feel free to check the issues page. I'd love to see any contributions in issues listed there:
 

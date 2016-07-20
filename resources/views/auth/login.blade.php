@@ -7,14 +7,14 @@
 	</div><!-- /.login-logo -->
 	<div class="login-box-body">
 
-		<p class="login-box-msg">Sign in to enter the CRM</p>
+		<p class="login-box-msg">{{ trans('hackerspacecrm.pages.titles.signin', ['name' => crminfo('name')]) }}</p>
 		@include('includes.flash-standalone')
 
 		<form role="form" method="POST" action="{{ url('/login') }}">
 			{!! csrf_field() !!}
 
 			<div class="form-group{{ $errors->has('login') ? ' has-error' : ' has-feedback' }}">
-				<input type="text" class="form-control" placeholder="E-Mail or Username" name="login" value="{{ old('login') }}">
+				<input type="text" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.emailorusername') }}" name="login" value="{{ old('login') }}">
 				<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 				
 				@if ($errors->has('login'))
@@ -25,7 +25,7 @@
 			</div>
 
 			<div class="form-group{{ $errors->has('password') ? ' has-error' : ' has-feedback' }}">
-				<input type="password" class="form-control" placeholder="Password" name="password">
+				<input type="password" class="form-control" placeholder="{{ trans('hackerspacecrm.forms.placeholders.password') }}" name="password">
 				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
 				@if ($errors->has('password'))
@@ -39,7 +39,7 @@
 				<div class="col-xs-8">
 					<div class="checkbox icheck">
 						<label>
-							<input type="checkbox" name="remember"> Remember Me
+							<input type="checkbox" name="remember"> {{ trans('hackerspacecrm.forms.checkboxes.rememberme') }}
 						</label>
 					</div>
 				</div><!-- /.col -->
@@ -49,10 +49,9 @@
 			</div>
 		</form>
 		@if ( crminfo('enable_registration') == 1)
-		<a href="{{ url('/register') }}">Register</a><br>
+		<a href="{{ url('/register') }}">{{ trans('hackerspacecrm.forms.labels.register') }}</a><br>
 		@endif
-		<a href="{{ url('/password/reset') }}">Forgot Your Password?</a><br>
-		<!-- <a href="register.html" class="text-center">Register a new membership</a> -->
+		<a href="{{ url('/password/reset') }}">{{ trans('hackerspacecrm.forms.labels.forgotpassword') }}</a><br>
 
 	</div><!-- /.login-box-body -->
 </div><!-- /.login-box -->

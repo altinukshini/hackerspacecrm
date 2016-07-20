@@ -3,11 +3,11 @@
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>Settings</h1>
+    <h1>{{ trans('hackerspacecrm.pages.titles.settings') }}</h1>
 </section>
 
 <section class="content">
-    @if(empty($emailTemplates))
+    @if(count($emailTemplates) == 0)
         <div class="alert alert-help">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             {{ trans('hackerspacecrm.messages.notranslation') }}
@@ -24,7 +24,7 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">{{ $template->title }} ({{ $template->slug }})</h3>
                             @if(isCRMMultilingual())
-                                <a class="btn btn-xs btn-primary pull-right" data-translateemailtemplateurl="{{ url('settings/emails/'.$template->id.'/translate') }}" data-toggle="modal" data-target="#translateemailtemplate">Translate</a>
+                                <a class="btn btn-xs btn-primary pull-right" data-translateemailtemplateurl="{{ url('settings/emails/'.$template->id.'/translate') }}" data-toggle="modal" data-target="#translateemailtemplate">{{ trans('hackerspacecrm.forms.buttons.translate') }}</a>
                             @endif
                         </div>
                         <form role="form" action="{{ url('settings/emails/'.$template->id) }}" method="POST">
@@ -34,7 +34,7 @@
                                 <p>{{ $template->description }}</p>
                                 <br>
                                 <div class="form-group {{ $errors->has('email_subject') ? ' has-error' : ' has-feedback' }}">
-                                    <label for="email_subject">Email subject</label>
+                                    <label for="email_subject">{{ trans('hackerspacecrm.forms.labels.emailsubject') }}*</label>
                                     <input type="text" class="form-control" id="email_subject" name="email_subject" value="{{ old('email_subject') ? old('email_subject') : $template->email_subject }}" required/>
                                     @if ($errors->has('email_subject'))
                                     <span class="help-block">
@@ -43,7 +43,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group {{ $errors->has('email_body') ? ' has-error' : ' has-feedback' }}">
-                                    <label for="email_body">Email body</label>
+                                    <label for="email_body">{{ trans('hackerspacecrm.forms.labels.emailbody') }}</label>
                                     <textarea class="textarea" name="email_body" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ old('email_body') ? old('email_body') : $template->email_body }}</textarea>
 
                                     @if ($errors->has('email_body'))
@@ -58,7 +58,7 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn btn-primary">{{ trans('hackerspacecrm.forms.buttons.update') }}</button>
                             </div>
                         </form>
                     </div>
@@ -75,7 +75,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
-                            <h4 class="modal-title">Create translation</h4>
+                            <h4 class="modal-title">{{ trans('hackerspacecrm.pages.subtitles.createtranslation') }}</h4>
                         </div>
                         <div class="modal-body">
                             <div class="alert alert-help">
@@ -87,9 +87,9 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group {{ $errors->has('locale') ? ' has-error' : ' has-feedback' }}">
-                                            <label for="locale">Select locale</label>
+                                            <label for="locale">{{ trans('hackerspacecrm.forms.labels.selectlocale') }}</label>
                                             <select class="form-control" name="locale" required>
-                                                <option disabled selected>Select locale</option>
+                                                <option disabled selected>{{ trans('hackerspacecrm.forms.dropdowns.selectlocale') }}</option>
                                                 @foreach (getAvailableAppLocaleArray() as $localekey => $localevalue)
                                                     @if($localekey != getCurrentSessionAppLocale())
                                                         <option value="{{ $localekey }}" {{ old('locale') == $localekey ? "selected" : "" }}>{{ $localekey . ' - ' .$localevalue }}</option>
@@ -107,7 +107,7 @@
 
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Create</button>
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> {{ trans('hackerspacecrm.forms.buttons.create') }}</button>
                                         </div>
                                     </div>
                                 </div>
