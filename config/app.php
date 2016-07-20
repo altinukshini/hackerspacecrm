@@ -174,6 +174,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Folklore\Image\ImageServiceProvider::class,
 
+        App\Providers\CustomValidationRulesServiceProvider::class,
         HackerspaceCRM\Helpers\HelpersServiceProvider::class,
         HackerspaceCRM\Flasher\FlashServiceProvider::class,
         HackerspaceCRM\Menu\Repository\MenuRepositoryServiceProvider::class,

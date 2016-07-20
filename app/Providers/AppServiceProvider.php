@@ -21,18 +21,6 @@ class AppServiceProvider extends ServiceProvider
             $kernel->pushMiddleware('App\Http\Middleware\FlushViews');
         }
 
-        Validator::extend('no_spaces', function($attr, $value){
-            return preg_match('/^\S*$/u', $value);
-        });
-
-        Validator::extend('no_specials_lower_u', function($attr, $value){
-            return preg_match('/^[a-z0-9_]+$/', $value);
-        });
-
-        Validator::extend('username', function($attr, $value){
-            return preg_match('/^[A-Za-z0-9]+$/', $value);
-        });
-
         Blade::directive('cache', function ($expression) {
             return "<?php if (! app('App\Models\BladeDirective')->setUp{$expression}) { ?>";
         });
