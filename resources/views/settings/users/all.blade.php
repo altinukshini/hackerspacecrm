@@ -51,7 +51,7 @@
 										{!! $user->hasProfile() ? '<a href="'.url($user->profilePath()).'"><i class="fa fa-external-link text-blue"></i></a>' :  '' !!}
 									@endcan
 									@can('profile_create')
-										{!! $user->hasProfile() ? '' : '<a href="'.url("profiles/".$user->username."/create").'"><i class="fa fa-plus text-green"></i></a>' !!}
+										{!! $user->hasProfile() ? '' : '<a title="Create profile" class="btn btn-xs btn-default btn-flat" href="'.url("profiles/".$user->username."/create").'"><i class="fa fa-plus text-green"></i></a>' !!}
 									@endcan
 									@can('profile_delete')
 										@if($user->hasProfile())

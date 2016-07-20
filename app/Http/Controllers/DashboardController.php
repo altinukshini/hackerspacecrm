@@ -21,11 +21,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        if (!hasRole('member', true)) {
-            return back();
-        }
-        // if (!hasPermission('sell_company', true)) return back();
-
         return view('dashboard');
     }
 }

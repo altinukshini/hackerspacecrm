@@ -1,4 +1,5 @@
 # [![Hackerspace CRM Banner](hscrm-banner.png)](https://github.com/altinukshini/hackerspacecrm)
+[logo src](http://ura.al/)
 
 Hackerspace CRM (Community Relationship Management) is a web application that helps to run and manage Hackerspaces/Makerspaces.
 
@@ -23,7 +24,7 @@ Hackerspace CRM (Community Relationship Management) is a web application that he
 <a name="description" />
 ## Description
 
-My friends and I run Prishtina Hackerspace (a hackerspace in Kosovo), and since the beginning of it we always struggled finding the best solution to manage members, payments, keys, etc. I'm not trying to reinvent the wheel, we tried many different applications but I think we need a better solutions for this. I think that many hackerspaces face the same problem when dealing with 30+ members. I know all hackerspaces have different structures, but we could maybe boil down to something common and useful for all of us.
+My friends and I run [Prishtina Hackerspace](http://www.prishtinahackerspace.org) (a hackerspace in Kosovo), and since the beginning of it we always struggled finding the best solution to manage members, payments, keys, etc. I'm not trying to reinvent the wheel, we tried many different applications but I think we need a better solutions for this. I think that many hackerspaces face the same problem when dealing with 30+ members. I know all hackerspaces have different structures, but we could maybe boil down to something common and useful for all of us.
 
 There are many open source CRM software out there like CiviCRM and such (paid ones as well) that actually do have more functionality in them but are hard to use because of their complexity.
 
@@ -33,7 +34,7 @@ The idea is to have most of the application parameters configurable via the admi
 <a name="features" />
 ## Features
 
-So far, I’ve thought of couple of features, most of which I liked in Seltzer CRM, and some that I thought might be useful based on my experience with Prishtina Hackerspace and some local hackerspaces in Balkans.
+So far, I’ve thought of couple of features, most of which I liked in [Seltzer CRM](https://github.com/elplatt/seltzer), and some that I thought might be useful based on my experience with Prishtina Hackerspace and some local hackerspaces in Balkans.
 But, in order for this CRM to be as good as it can (and obviously better than the existing solutions), I need your help to let me know what do you struggle with, and what would you need to have in such application? How do you process this kind of stuff, what services you use and what would be the easiest way to complete your hackerspace administrative tasks via this CRM.
 
 So far this is what I came up with (call them modules or simply features):
