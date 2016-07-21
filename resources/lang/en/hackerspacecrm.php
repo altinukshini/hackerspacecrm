@@ -34,6 +34,8 @@ return [
         'notranslation' => 'No translation available for this locale!',
     ],
     'models' => [
+        'member' => 'Member',
+        'members' => 'Members',
         'permission' => 'Permission',
         'permissions' => 'Permissions',
         'role' => 'Role',
@@ -66,6 +68,7 @@ return [
             'createprofile' => 'Create profile',
             'editaccount' => 'Edit account',
             'settings' => 'Settings',
+            'memberprofile' => 'Member profile',
         ],
         'subtitles' => [
             'allusers' => 'All users',
@@ -87,6 +90,7 @@ return [
             'mainmenus' => 'Main menus',
             'settingsmenus' => 'Settings menus',
             'generalsettings' => 'General CRM Settings',
+            'about' => 'About',
         ],
         'descriptions' => [],
     ],
@@ -149,6 +153,7 @@ return [
             'newuserrole' => 'New user role',
             'appurl' => 'Application URL',
             'footercontent' => 'Footer content',
+            'account', 'Account',
         ],
         'help' => [
             'skills' => 'Separate each skill with a comma. Exc: skill1,skill2,skill3',

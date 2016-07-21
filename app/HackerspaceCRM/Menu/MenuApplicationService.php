@@ -2,9 +2,8 @@
 
 namespace HackerspaceCRM\Menu;
 
-use Illuminate\Support\Facades\App;
-
 use HackerspaceCRM\Menu\Menu;
+use Illuminate\Support\Facades\App;
 use HackerspaceCRM\Menu\Repository\MenuRepositoryInterface;
 
 class MenuApplicationService

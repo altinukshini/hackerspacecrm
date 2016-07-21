@@ -34,6 +34,8 @@ return [
         'notranslation' => 'Nuk ka përkthim për këtë gjuhësi!',
     ],
     'models' => [
+        'member' => 'Anëtar',
+        'members' => 'Anëtarët',
         'permission' => 'Autorizim',
         'permissions' => 'Autorizime',
         'role' => 'Rol',
@@ -66,6 +68,7 @@ return [
             'createprofile' => 'Krijo profilin',
             'editaccount' => 'Redakto llogarinë',
             'settings' => 'Parametrat',
+            'memberprofile' => 'Profili i anëtarit',
         ],
         'subtitles' => [
             'allusers' => 'Të gjithë përdoruesit',
@@ -87,6 +90,7 @@ return [
             'mainmenus' => 'Menytë kryesore',
             'settingsmenus' => 'Menytë e parametrave',
             'generalsettings' => 'Parametrat gjeneral të CRM',
+            'about' => 'Për',
         ],
         'descriptions' => [],
     ],
@@ -149,6 +153,7 @@ return [
             'newuserrole' => 'Roli i përdoruesit të ri',
             'appurl' => 'URL e aplikacionit',
             'footercontent' => 'Përmbajtja e fundit të faqes',
+            'account' => 'Llogaria',
         ],
         'help' => [
             'skills' => 'Ndajë secilën aftësi me presje. Shembull: aftësia1,aftësia2,aftësia3',
