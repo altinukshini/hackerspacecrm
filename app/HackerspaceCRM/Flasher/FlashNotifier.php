@@ -13,6 +13,11 @@ class FlashNotifier
      */
     private $session;
 
+    /**
+     * FlashNotifier constructor.
+     *
+     * @param \Illuminate\Session\Store $session
+     */
     public function __construct(Store $session)
     {
         $this->session = $session;

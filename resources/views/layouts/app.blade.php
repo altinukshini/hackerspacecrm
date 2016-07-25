@@ -34,6 +34,8 @@
 	<link rel="stylesheet" href="{{ asset('/dist/css/fontawesome-iconpicker.min.css') }}">
 	<!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('/plugins/datatables/dataTables.bootstrap.css') }}">
+	<!-- Custom css -->
+	<link rel="stylesheet" href="{{ asset('/dist/css/custom.css') }}">
 
 	<!-- Styles -->
 	{{-- <link href="{{ elixir('/css/app.css') }}" rel="stylesheet"> --}}
@@ -90,7 +92,12 @@
 	<!-- iCheck -->
 	<script src="{{ asset('/plugins/iCheck/icheck.min.js') }}"></script>
 
-	@yield('headerscripts')
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+
+
+    @yield('headerscripts')
 
 </head>
 

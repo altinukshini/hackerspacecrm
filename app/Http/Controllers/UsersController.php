@@ -35,7 +35,8 @@ class UsersController extends Controller
      **/
     public function all()
     {
-        if (!hasPermission('user_view', true)) return redirect('/');
+        if (!hasPermission('user_view', true))
+            return redirect('/');
 
         $users = User::all();
 
@@ -54,12 +55,14 @@ class UsersController extends Controller
     public function showUpdateUserForm($username)
     {
         // see if user has permission to update user
-        if (!(Auth::user()->username == $username || hasPermission('user_update', true))) return redirect('/');
+        if (!(Auth::user()->username == $username || hasPermission('user_update', true)))
+            return redirect('/');
 
         $user = User::whereUsername($username)->first();
 
         if (is_null($user)) {
             Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
+
             return redirect('/');
         }
 
@@ -73,13 +76,15 @@ class UsersController extends Controller
     /**
      * Get data for one user as json
      *
-     * @param string
+     * @param $username string
+     *
      * @return App\Models\User;
      **/
     public function getUser($username)
     {
         // see if user has permission to view another user
-        if (!(hasPermission('user_view', true) || Auth::user()->username == $username)) return redirect('/');
+        if (!(hasPermission('user_view', true) || Auth::user()->username == $username))
+            return redirect('/');
 
         if (!request()->wantsJson()) {
             return redirect('/');
@@ -91,7 +96,7 @@ class UsersController extends Controller
     /**
      * Create user
      *
-     * @param App\Http\Requests\CreateUserRequest
+     * @param $request App\Http\Requests\CreateUserRequest
      * @param string
      *
      * @return Void;
@@ -112,9 +117,9 @@ class UsersController extends Controller
 
         if ($request->input('notify') == 'yes') {
             $data['password'] = $request->input('password');
-            $data['edit_link'] = url('users/'.$user->username.'/edit');
+            $data['edit_link'] = url('users/' . $user->username . '/edit');
             $data['reset_link'] = url('password/reset');
-            
+
             $this->mailer->mail($user, 'newaccount', $data);
         }
 
@@ -130,8 +135,8 @@ class UsersController extends Controller
     /**
      * Update user data
      *
-     * @param App\Http\Requests\UpdateUserRequest
-     * @param string
+     * @param $request App\Http\Requests\UpdateUserRequest
+     * @param $username string
      *
      * @return Void;
      **/
@@ -141,6 +146,7 @@ class UsersController extends Controller
 
         if (is_null($user)) {
             Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
+
             return redirect('/');
         }
 
@@ -157,18 +163,20 @@ class UsersController extends Controller
     /**
      * Verify user
      *
-     * @param string $username;
+     * @param $username string
      *
      * @return Void;
      **/
     public function verify($username)
     {
-        if (!hasPermission('user_update', true)) return redirect('/');
+        if (!hasPermission('user_update', true))
+            return redirect('/');
 
         $user = User::whereUsername($username)->first();
 
         if (is_null($user)) {
             Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
+
             return redirect('/');
         }
 
@@ -185,22 +193,26 @@ class UsersController extends Controller
      * Delete user
      *
      * @param string
+     *
      * @return Void;
      **/
     public function delete($username)
     {
         // see if authenticated user has permission to delete users
-        if (!hasPermission('user_delete', true)) return redirect('/');
+        if (!hasPermission('user_delete', true))
+            return redirect('/');
 
         $user = User::whereUsername($username)->first();
 
-        if(is_null($user)) {
+        if (is_null($user)) {
             Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
+
             return back();
         }
 
         if ($username == crminfo('admin_username')) {
             Flash::error(trans('hackerspacecrm.messages.notallowed'));
+
             return back();
         }
 
@@ -208,14 +220,14 @@ class UsersController extends Controller
 
         Flash::success(trans('hackerspacecrm.messages.models.delete.success', ['modelname' => trans('hackerspacecrm.models.user')]));
 
-        return back(); 
+        return back();
     }
 
     /**
      * Change password for user
      *
-     * @param App\Http\Requests\UpdateUserPasswordRequest
-     * @param string
+     * @param $request App\Http\Requests\UpdateUserPasswordRequest
+     * @param $username string
      *
      * @return Void;
      **/
@@ -225,6 +237,7 @@ class UsersController extends Controller
 
         if (is_null($user)) {
             Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
+
             return redirect('/');
         }
 
@@ -241,6 +254,7 @@ class UsersController extends Controller
      * Encrypt password
      *
      * @param string
+     *
      * @return string;
      **/
     public function encryptPassword($password)

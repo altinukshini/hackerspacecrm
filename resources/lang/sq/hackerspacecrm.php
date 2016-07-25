@@ -66,7 +66,7 @@ return [
             'signin' => 'Lidhu për të hyrë në :name',
             'resetpassword' => 'Rivendos fjalëkalimin',
             'createprofile' => 'Krijo profilin',
-            'editaccount' => 'Redakto llogarinë',
+            'editaccount' => 'Redakto përdoruesin',
             'settings' => 'Parametrat',
             'memberprofile' => 'Profili i anëtarit',
         ],

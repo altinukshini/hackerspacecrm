@@ -17,6 +17,7 @@ use HackerspaceCRM\Mailers\UserMailer as Mailer;
 
 class AuthController extends Controller
 {
+
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -55,7 +56,7 @@ class AuthController extends Controller
      */
     public function redirectPath()
     {
-        if (Auth::check()) {
+        if ( Auth::check() ) {
             return Auth::user()->profilePath();
         }
 
@@ -82,9 +83,9 @@ class AuthController extends Controller
     {
         return Validator::make($data, [
             'full_name' => 'required|max:255',
-            'username' => 'required|max:255|username|unique:users',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'username'  => 'required|max:255|username|unique:users',
+            'email'     => 'required|email|max:255|unique:users',
+            'password'  => 'required|min:6|confirmed',
         ]);
     }
 
@@ -99,9 +100,9 @@ class AuthController extends Controller
     {
         return User::create([
             'full_name' => $data['full_name'],
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'username'  => $data['username'],
+            'email'     => $data['email'],
+            'password'  => bcrypt($data['password']),
         ]);
     }
 
@@ -122,7 +123,7 @@ class AuthController extends Controller
         // the IP address of the client making these requests into this application.
         $throttles = $this->isUsingThrottlesLoginsTrait();
 
-        if ($throttles && $lockedOut = $this->hasTooManyLoginAttempts($request)) {
+        if ( $throttles && $lockedOut = $this->hasTooManyLoginAttempts($request) ) {
             $this->fireLockoutEvent($request);
 
             return $this->sendLockoutResponse($request);
@@ -130,11 +131,11 @@ class AuthController extends Controller
 
         $credentials = $this->getCredentials($request);
 
-        if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
+        if ( Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember')) ) {
             $user = User::find(Auth::user()->id);
             $user->setLastLogin();
 
-            if (!empty($user->locale)) {
+            if ( ! empty($user->locale) ) {
                 Session::put('locale', $user->locale);
             }
 
@@ -147,7 +148,7 @@ class AuthController extends Controller
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
 
-        if ($throttles && !$lockedOut) {
+        if ( $throttles && ! $lockedOut ) {
             $this->incrementLoginAttempts($request);
         }
 
@@ -158,7 +159,7 @@ class AuthController extends Controller
      * Overwritten: check if login field is username or email
      * Validate the user login request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      *
      * @return void
      */
@@ -168,7 +169,8 @@ class AuthController extends Controller
         $request->merge([$field => $request->input('login')]);
 
         $this->validate($request, [
-            $this->loginUsername($request) => 'required', 'password' => 'required',
+            $this->loginUsername($request) => 'required',
+            'password' => 'required',
         ]);
     }
 
@@ -189,20 +191,18 @@ class AuthController extends Controller
      * Overwritten: Changed loginUsername() to 'login'
      * Get the failed login response instance.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Response
      */
     protected function sendFailedLoginResponse(Request $request)
     {
         Flash::warning(trans('auth.failed'));
-        
-        return redirect()->back()
-            ->withInput($request->only('login', 'remember'))
-            ->withErrors([
-                'login' => $this->getFailedLoginMessage(),
-                'password' => $this->getFailedLoginMessage(),
-            ]);
+
+        return redirect()->back()->withInput($request->only('login', 'remember'))->withErrors([
+            'login' => $this->getFailedLoginMessage(),
+            'password' => $this->getFailedLoginMessage(),
+        ]);
     }
 
     /**
@@ -248,19 +248,19 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        if (crminfo('enable_registration') == 0) {
+        if ( crminfo('enable_registration') == 0 ) {
             return redirect('/');
         }
 
         $validator = $this->validator($request->all());
 
-        if ($validator->fails()) {
+        if ( $validator->fails() ) {
             $this->throwValidationException($request, $validator);
         }
 
         $user = $this->create($request->all());
 
-        $data['confirmation_link'] = url('login/confirm/'.$user->email_token);
+        $data['confirmation_link'] = url('login/confirm/' . $user->email_token);
         $this->mailer->mail($user, 'confirmation', $data);
 
         Flash::info(trans('hackerspacecrm.messages.confirmemail'));
@@ -274,11 +274,11 @@ class AuthController extends Controller
      */
     public function showRegistrationForm()
     {
-        if (crminfo('enable_registration') == 0) {
+        if ( crminfo('enable_registration') == 0 ) {
             return redirect('/');
         }
 
-        if (property_exists($this, 'registerView')) {
+        if ( property_exists($this, 'registerView') ) {
             return view($this->registerView);
         }
 
@@ -295,8 +295,9 @@ class AuthController extends Controller
     {
         $user = User::where('email_token', $email_token)->first();
 
-        if (is_null($user)) {
+        if ( is_null($user) ) {
             Flash::warning(trans('hackerspacecrm.messages.tokennotfound'));
+
             return redirect('/');
         }
 

@@ -17,9 +17,9 @@
 
 					<!-- Application locale switcher -->
 					@if(isCRMMultilingual())
-						<li class="dropdown messages-menu pull-left">
+						<li class="dropdown messages-menu locale-dropdown pull-left">
 							<a href="#" class="dropdown-toggle pull-left" data-toggle="dropdown">
-								{{ getCurrentSessionAppLocale() }}
+                                <i class="fa fa-flag"></i>&nbsp;{{ getAvailableAppLocaleArray()[getCurrentSessionAppLocale()] }}&nbsp;<i class="caret"></i>
 							</a>
 							<ul class="dropdown-menu">
 								@foreach (getAvailableAppLocaleArray() as $lang => $language)
@@ -45,7 +45,7 @@
 						@else
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<img src="{{ get_gravatar(Auth::user()->email, 160) }}" class="user-image" alt="User Image">
-							<span class="hidden-xs">{{ Auth::user()->full_name }}</span>
+							<span class="hidden-xs">{{ Auth::user()->full_name }}</span> <i class="caret"></i>
 						</a>
 						<ul class="dropdown-menu">
 							<!-- User image -->

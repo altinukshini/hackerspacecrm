@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProfilesController extends Controller
 {
+
     /**
      * Create a new controller instance.
      */
@@ -46,8 +47,11 @@ class ProfilesController extends Controller
     {
         $user = User::whereUsername($username)->first();
 
-        if (is_null($user) || !$user->hasProfile()) {
-            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.profile').'/'.trans('hackerspacecrm.models.user')]));
+        if ( is_null($user) || ! $user->hasProfile() ) {
+            Flash::info(trans('hackerspacecrm.messages.models.notfound',
+                ['modelname' => trans('hackerspacecrm.models.profile') . '/' . trans('hackerspacecrm.models.user')])
+            );
+
             return redirect('/');
         }
 
@@ -59,8 +63,8 @@ class ProfilesController extends Controller
     /**
      * Update profile data
      *
-     * @param App\Http\Requests\UpdateProfileRequest
-     * @param string
+     * @param App\Http\Requests\UpdateProfileRequest $request
+     * @param string $username
      *
      * @return Void;
      **/
@@ -68,16 +72,21 @@ class ProfilesController extends Controller
     {
         $user = User::with('profile')->whereUsername($username)->first();
 
-        if (is_null($user) || !$user->hasProfile()) {
-            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.profile').'/'.trans('hackerspacecrm.models.user')]));
+        if ( is_null($user) || ! $user->hasProfile() ) {
+            Flash::info(trans('hackerspacecrm.messages.models.notfound',
+                ['modelname' => trans('hackerspacecrm.models.profile') . '/' . trans('hackerspacecrm.models.user')])
+            );
+
             return redirect('/');
         }
 
         $user->profile->update($request->all());
 
-        Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.profile')]));
+        Flash::success(trans('hackerspacecrm.messages.models.update.success',
+            ['modelname' => trans('hackerspacecrm.models.profile')])
+        );
 
-        return back();       
+        return back();
     }
 
     /**
@@ -89,26 +98,32 @@ class ProfilesController extends Controller
      **/
     public function delete($username)
     {
-        if (!hasPermission('profile_delete', true)) return redirect('/');
+        if ( ! hasPermission('profile_delete', true) )
+            return redirect('/');
 
         $user = User::with('profile')->whereUsername($username)->first();
 
-        if (is_null($user) || !$user->hasProfile()) {
-            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.profile').'/'.trans('hackerspacecrm.models.user')]));
+        if ( is_null($user) || ! $user->hasProfile() ) {
+            Flash::info(trans('hackerspacecrm.messages.models.notfound',
+                ['modelname' => trans('hackerspacecrm.models.profile') . '/' . trans('hackerspacecrm.models.user')])
+            );
+
             return redirect('/');
         }
 
         $user->profile->delete();
 
-        Flash::success(trans('hackerspacecrm.messages.models.delete.success', ['modelname' => trans('hackerspacecrm.models.profile')]));
+        Flash::success(trans('hackerspacecrm.messages.models.delete.success',
+            ['modelname' => trans('hackerspacecrm.models.profile')])
+        );
 
-        return back();       
+        return back();
     }
 
     /**
      * Show create profile form for a user
      *
-     * @param string
+     * @param string $username
      *
      * @return View;
      **/
@@ -116,31 +131,34 @@ class ProfilesController extends Controller
     {
         $user = User::whereUsername($username)->first();
 
-        if (is_null($user)) {
-            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
+        if ( is_null($user) ) {
+            Flash::info(trans('hackerspacecrm.messages.models.notfound',
+                ['modelname' => trans('hackerspacecrm.models.user')])
+            );
+
             return redirect('/');
         }
 
         // check if user has permission to create profile, or if a member, create his/her own profile
-        if(!(hasPermission('profile_create') || (Auth::user()->hasRole('member') && Auth::user()->username == $username))) {
+        if ( ! (hasPermission('profile_create') || (Auth::user()->hasRole('member') && Auth::user()->username == $username)) ) {
             Flash::warning(trans('hackerspacecrm.messages.nopermission'));
+
             return redirect('/');
         }
 
         // if already has profile, redirect to it
-        if ($user->hasProfile()) {
+        if ( $user->hasProfile() ) {
             return redirect($user->profilePath());
         }
-        
-        return view('profiles.create', compact('user'));
 
+        return view('profiles.create', compact('user'));
     }
 
     /**
      * Create profile for a user
      *
-     * @param App\Http\Requests\CreateProfileRequest
-     * @param string
+     * @param App\Http\Requests\CreateProfileRequest $request
+     * @param string $username
      *
      * @return Void;
      **/
@@ -148,12 +166,15 @@ class ProfilesController extends Controller
     {
         $user = User::whereUsername($username)->first();
 
-        if (is_null($user)) {
-            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.user')]));
+        if ( is_null($user) ) {
+            Flash::info(trans('hackerspacecrm.messages.models.notfound',
+                ['modelname' => trans('hackerspacecrm.models.user')])
+            );
+
             return redirect('/');
         }
 
-        if ($user->hasProfile()) {
+        if ( $user->hasProfile() ) {
             return redirect($user->profilePath());
         }
 
@@ -162,7 +183,9 @@ class ProfilesController extends Controller
 
         $user->profile()->save($profile);
 
-        Flash::success(trans('hackerspacecrm.messages.models.create.success', ['modelname' => trans('hackerspacecrm.models.profile')]));
+        Flash::success(trans('hackerspacecrm.messages.models.create.success',
+            ['modelname' => trans('hackerspacecrm.models.profile')])
+        );
 
         return redirect($user->fresh()->profilePath());
 

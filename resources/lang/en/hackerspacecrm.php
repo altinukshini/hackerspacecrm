@@ -103,7 +103,7 @@ return [
             'locale' => 'Locale',
             'changelanguage' => 'Change language',
             'selectlocale' => 'Select locale',
-            'editaccount' => 'Edit Account',
+            'editaccount' => 'Edit account',
             'createprofile' => 'Create Profile',
             'profile' => 'Profile',
             'resetpassword' => 'Reset password',

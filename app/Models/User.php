@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+
     use HasRole;
 
     /**
@@ -24,7 +25,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'full_name', 'username', 'email', 'password',
+        'full_name',
+        'username',
+        'email',
+        'password',
     ];
 
     /**
@@ -33,7 +37,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -108,7 +113,7 @@ class User extends Authenticatable
      */
     public function profilePath()
     {
-        return $this->hasProfile() ? url('members/'.$this->username) : '/';
+        return $this->hasProfile() ? url('members/' . $this->username) : '/';
     }
 
     /**

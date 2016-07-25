@@ -51,12 +51,12 @@
 										{!! $user->hasProfile() ? '<a href="'.url($user->profilePath()).'"><i class="fa fa-external-link text-blue"></i></a>' :  '' !!}
 									@endcan
 									@can('profile_create')
-										{!! $user->hasProfile() ? '' : '<a title="'.trans("hackerspacecrm.forms.titles.createprofile").'" class="btn btn-xs btn-default btn-flat" href="'.url("profiles/".$user->username."/create").'"><i class="fa fa-plus text-green"></i></a>' !!}
+										{!! $user->hasProfile() ? '' : '<a data-toggle="tooltip" title="'.trans("hackerspacecrm.forms.titles.createprofile").'" class="btn btn-xs btn-default btn-flat" href="'.url("profiles/".$user->username."/create").'"><i class="fa fa-plus text-green"></i></a>' !!}
 									@endcan
 									@can('profile_delete')
 										@if($user->hasProfile())
 											{!! Form::open(['method' => 'DELETE', 'url' => url('profiles/'.$user->username), 'style' => 'float:right;']) !!}
-											<button type="submit" title="{{ trans('hackerspacecrm.forms.titles.deleteprofile') }}" style="align:right;" class="btn btn-xs btn-default btn-flat"><i class="fa fa-trash text-red"></i></button>
+											<button type="submit" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.deleteprofile') }}" style="align:right;" class="btn btn-xs btn-default btn-flat"><i class="fa fa-trash text-red"></i></button>
 											{!! Form::close() !!}
 										@endif
 									@endcan
@@ -66,7 +66,7 @@
 									{!! $user->isVerified() ? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-close text-red"></i>' !!}
 									@if(!$user->isVerified())
 										{!! Form::open(['method' => 'PATCH', 'url' => url('users/'.$user->username.'/verify'), 'style' => 'float:right;']) !!}
-										<button type="submit" title="{{ trans('hackerspacecrm.forms.titles.verifyuser') }}" style="align:right;" class="btn btn-xs btn-default btn-flat"><i class="fa fa-check text-green"></i></button>
+										<button type="submit" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.verifyuser') }}" style="align:right;" class="btn btn-xs btn-default btn-flat"><i class="fa fa-check text-green"></i></button>
 										{!! Form::close() !!}
 									@endif
 								</td>
@@ -75,15 +75,15 @@
 									<td>
 										@can('role_update')
 											@if($user->username != crminfo('admin_username'))
-												<button type="button" title="{{ trans('hackerspacecrm.forms.titles.editroles') }}" class="btn btn-xs btn-default btn-flat" onclick="editUserRoles('{{ url('roles/user/'.$user->username) }}')"><i class="fa fa-eye"></i> {{ trans('hackerspacecrm.forms.labels.roles_l') }}</button>
+												<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.editroles') }}" class="btn btn-xs btn-default btn-flat" onclick="editUserRoles('{{ url('roles/user/'.$user->username) }}')"><i class="fa fa-eye"></i> {{ trans('hackerspacecrm.forms.labels.roles_l') }}</button>
 											@endif
 										@endcan
 										@can('user_update')
-											<button type="button" title="{{ trans('hackerspacecrm.forms.titles.edit') }}" class="btn btn-xs btn-default btn-flat" onclick="editUser('{{ url('users/'.$user->username) }}')"><i class="fa fa-edit text-blue"></i></button>
+											<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.edit') }}" class="btn btn-xs btn-default btn-flat" onclick="editUser('{{ url('users/'.$user->username) }}')"><i class="fa fa-edit text-blue"></i></button>
 										@endcan
 										@can('user_delete')
 											@if($user->username != crminfo('admin_username'))
-												<button type="button" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" data-username="{{ $user->username }}" data-userdeleteurl="{{ url('users/'.$user->username) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmUserDelete"><i class="fa fa-trash text-red"></i></button>
+												<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" data-username="{{ $user->username }}" data-userdeleteurl="{{ url('users/'.$user->username) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmUserDelete"><i class="fa fa-trash text-red"></i></button>
 											@endif
 										@endcan
 									</td>
