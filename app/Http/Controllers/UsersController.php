@@ -113,7 +113,7 @@ class UsersController extends Controller
         $user->email_token = null;
         $user->save();
 
-        $user->assignRoleByName(crminfo('new_user_role'));
+        $user->assignRole(crminfo('new_user_role'));
 
         if ($request->input('notify') == 'yes') {
             $data['password'] = $request->input('password');

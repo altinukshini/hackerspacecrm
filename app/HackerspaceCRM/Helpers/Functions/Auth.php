@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('hasPermission')) {
+if ( ! function_exists('hasPermission') ) {
 
     /**
      * Return true or false if Auth user has given permission
@@ -9,21 +9,22 @@ if (!function_exists('hasPermission')) {
      */
     function hasPermission($permission = '', $flash = false)
     {
-        if ($permission == '' || $permission == 'public' || $permission == 1) {
+        if ( $permission == '' || $permission == 'public' || $permission == 1 ) {
             return true;
         }
 
-        if (!Auth::check() || !Auth::user()->hasPermission($permission)) {
-            if ($flash)
+        if ( ! Auth::check() || ! Auth::user()->hasPermission($permission) ) {
+            if ( $flash )
                 Flash::error(trans('hackerspacecrm.messages.nopermission'));
+
             return false;
         }
-        
+
         return true;
     }
 }
 
-if (!function_exists('hasRole')) {
+if ( ! function_exists('hasRole') ) {
 
     /**
      * Return true or false if Auth user has given role
@@ -32,10 +33,10 @@ if (!function_exists('hasRole')) {
      */
     function hasRole($role, $flash = false)
     {
-        if (!Auth::check() || !Auth::user()->hasRole($role)) {
-            if ($flash)
+        if ( ! Auth::check() || ! Auth::user()->hasRole($role) ) {
+            if ( $flash )
                 Flash::error(trans('hackerspacecrm.messages.nopermission'));
-            
+
             return false;
         }
 
@@ -43,7 +44,7 @@ if (!function_exists('hasRole')) {
     }
 }
 
-if (!function_exists('crmPermissions')) {
+if ( ! function_exists('crmPermissions') ) {
 
     /**
      * Return array of all permissions
@@ -56,7 +57,7 @@ if (!function_exists('crmPermissions')) {
     }
 }
 
-if (!function_exists('crmRoles')) {
+if ( ! function_exists('crmRoles') ) {
 
     /**
      * Return array of all Roles

@@ -2,11 +2,13 @@
 
 namespace App\Traits;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Collection;
 
 trait HasRole
 {
+
     /**
      * Get all User Roles.
      *
@@ -20,73 +22,147 @@ trait HasRole
     /**
      * Check if user has a specific role.
      *
-     * @param Role name
+     * @param integer|string|App\Models\Role|Collection|\Illuminate\Support\Collection|array $role
      *
      * @return bool
      */
     public function hasRole($role)
     {
-        if (is_int($role)) {
+        if ( is_int($role) ) {
             return $this->roles->contains($role);
         }
 
-        if (is_string($role)) {
+        if ( is_string($role) ) {
             return $this->roles->contains('name', $role);
         }
 
-        if ($role instanceof Collection) {
-            return !! $role->intersect($this->roles)->count();
+        if ( is_array($role) ) {
+            foreach ($role as $r) {
+                if ( $this->hasRole($r) ) return true;
+            }
+
+            return false;
         }
 
-        foreach ($role as $r) {
-            if ($this->hasRole($r)) return true;
+        if ( $role instanceof Role ) {
+            return $this->roles->contains('id', $role->id);
+        }
+
+        if ( $role instanceof Collection ) {
+            return ! ! $role->intersect($this->roles)->count();
         }
 
         return false;
     }
 
     /**
-     * Assign role to a user.
+     * hasRole() method alias.
      *
-     * @param App\Models\Role $role
+     * @param integer|string|App\Models\Role|Collection|\Illuminate\Support\Collection|array $roles
      *
      * @return bool
      */
-    public function assignRole(Role $role)
+    public function hasRoles($roles)
     {
-        if (!$this->hasRole($role->name)) {
-            return $this->roles()->attach($role);
-        }
+        return $this->hasRole($roles);
     }
 
     /**
-     * Assign role to a user.
+     * hasRole() method alias.
      *
-     * @param string $name
+     * @param integer|string|App\Models\Role|Collection|\Illuminate\Support\Collection|array $roles
      *
      * @return bool
      */
-    public function assignRoleByName($name)
+    public function hasAnyRole($roles)
     {
-        if (!$this->hasRole($name)) {
-            return $this->roles()->attach(
-                Role::whereName($name)->firstOrFail()
-            );
+        return $this->hasRole($roles);
+    }
+
+    /**
+     * Determine if the user has all of the given role(s).
+     *
+     * @param integer|string|App\Models\Role|Collection|\Illuminate\Support\Collection|array $roles
+     *
+     * @return bool
+     */
+    public function hasAllRoles($roles)
+    {
+        if ( is_int($roles) ) {
+            return $this->roles->contains($roles);
         }
+
+        if ( is_string($roles) ) {
+            return $this->roles->contains('name', $roles);
+        }
+
+        if ( $roles instanceof Role ) {
+            return $this->roles->contains('id', $roles->id);
+        }
+
+        if ( $roles instanceof Collection ) {
+            return ! ! $roles->intersect($this->roles)->count();
+        }
+
+        $roles = collect()->make($roles)->map(function ($role) {
+            return $role instanceof Role ? $role->name : $role;
+        });
+
+        return $roles->intersect($this->roles->lists('name')) == $roles;
     }
 
     /**
      * Assign roles to a user.
      *
-     * @param array $names
+     * @param integer|string|App\Models\Role|array $role
      *
      * @return bool
      */
-    public function assignRolesByName($names)
+    public function assignRole($role)
     {
-        foreach ($names as $name) {
-            $this->assignRoleByName($name);
+        // If user has all given roles
+        // just return true, no need to go further...
+        if ( $this->hasAllRoles($role) ) {
+            return true;
         }
+
+        if ( is_integer($role) ) {
+            $existingRole = Role::find($role);
+            if ( ! is_null($existingRole) ) {
+                return $this->roles()->attach($existingRole);
+            }
+        }
+
+        if ( is_string($role) ) {
+            $existingRole = Role::whereName($role)->first();
+            if ( ! is_null($existingRole) ) {
+                return $this->roles()->attach($existingRole);
+            }
+        }
+
+        if ( $role instanceof Role ) {
+            return $this->roles()->attach($role);
+        }
+
+        if ( is_array($role) ) {
+            foreach ($role as $r) {
+                $this->assignRole($r);
+            }
+
+            return true;
+        }
+    }
+
+    /**
+     * Assign multiple roles to a user.
+     *
+     * @param integer|string|App\Models\Role|array $roles
+     *
+     * @return bool
+     */
+    public function assignRoles($roles)
+    {
+        return $this->assignRole($roles);
     }
 
     /**
@@ -104,45 +180,53 @@ trait HasRole
     /**
      * Revoke role to a user.
      *
-     * @param App\Models\Role $role
+     * @param integer|string|App\Models\Role|array $role
      *
      * @return bool
      */
-    public function revokeRole(Role $role)
+    public function revokeRole($role)
     {
-        if ($this->hasRole($role->name)) {
-            return $this->roles()->detach($role);
+        if ( is_integer($role) ) {
+            $existingRole = Role::find($role);
+            if ( ! is_null($existingRole) && $this->hasRole($existingRole) ) {
+                return $this->roles()->detach($existingRole);
+            }
         }
+
+        if ( is_string($role) ) {
+            $existingRole = Role::whereName($role)->first();
+            if ( ! is_null($existingRole) && $this->hasRole($existingRole)) {
+                return $this->roles()->detach($existingRole);
+            }
+        }
+
+        if ( $role instanceof Role ) {
+            if ( $this->hasRole($role) ) {
+                return $this->roles()->detach($role);
+            }
+        }
+
+        if ( is_array($role) ) {
+            foreach ($role as $r) {
+                $this->revokeRole($r);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * Revoke role to a user.
      *
-     * @param string $name
+     * @param integer|string|App\Models\Role|array $role
      *
      * @return bool
      */
-    public function revokeRoleByName($name)
+    public function revokeRoles($roles)
     {
-        if ($this->hasRole($name)) {
-            return $this->roles()->detach(
-                Role::whereName($name)->firstOrFail()
-            );
-        }
-    }
-
-    /**
-     * Revoke roles by name.
-     *
-     * @param array $names
-     *
-     * @return bool
-     */
-    public function revokeRolesByName($names)
-    {
-        foreach ($names as $name) {
-            $this->revokeRoleByName($name);
-        }
+        return $this->revokeRole($roles);
     }
 
     /**
@@ -162,7 +246,7 @@ trait HasRole
      */
     public function getPermissions()
     {
-        $permissions = array();
+        $permissions = [];
         foreach ($this->roles as $role) {
             $permissions += $role->permissions->lists('name', 'id')->toArray();
         }
@@ -173,31 +257,62 @@ trait HasRole
     /**
      * Check if user has a specific permission.
      *
-     * @param Permission name
+     * @param integer|string|App\Models\Permission|Collection|\Illuminate\Support\Collection|array $permission
      *
      * @return bool
      */
     public function hasPermission($permission)
     {
-        if (is_string($permission) || is_int($permission)) {
-            foreach ($this->roles as $role) {
-                if ($role->hasPermission($permission)) return true;
-            }
-
-            return false;
-        }
-
-        if ($permission instanceof Collection) {
-            foreach ($this->roles as $role) {
-                if ($role->hasPermission($permission)) return true;
-            }
-            return false;
-        }
-
-        foreach ($permission as $p) {
-            if ($this->hasPermission($p)) return true;
+        foreach ($this->roles as $role) {
+            if ( $role->hasPermission($permission) ) return true;
         }
 
         return false;
+    }
+
+    /**
+     * hasPermission() method alias.
+     *
+     * @param integer|string|App\Models\Permission|Collection|\Illuminate\Support\Collection|array $permissions
+     *
+     * @return bool
+     */
+    public function hasPermissions($permissions)
+    {
+        return $this->hasPermission($permissions);
+    }
+
+    /**
+     * hasPermission() method alias.
+     *
+     * @param integer|string|App\Models\Permission|Collection|\Illuminate\Support\Collection|array $permissions
+     *
+     * @return bool
+     */
+    public function hasAnyPermission($permissions)
+    {
+        return $this->hasPermission($permissions);
+    }
+
+    /**
+     * Check if user has all given permissions. You can only give
+     * an array of strings as parameter.
+     *
+     * @param array of strings $permissions
+     *
+     * @return bool
+     */
+    public function hasAllPermissions($permissions)
+    {
+        if ( is_array($permissions) ) {
+            $userPermissions = new Collection([]);
+            foreach ($this->roles as $role) {
+                $userPermissions = $userPermissions->merge($role->permissions);
+            }
+
+            return ! count(array_diff($permissions, $userPermissions->lists('name')->toArray()));
+        }
+
+        return $this->hasPermission($permissions);
     }
 }

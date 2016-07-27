@@ -302,7 +302,7 @@ class AuthController extends Controller
         }
 
         $user->confirmEmail();
-        $user->assignRoleByName(crminfo('new_user_role'));
+        $user->assignRole(crminfo('new_user_role'));
 
         Flash::success(trans('hackerspacecrm.messages.accountverified'));
 
