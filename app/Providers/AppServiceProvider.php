@@ -3,13 +3,12 @@
 namespace App\Providers;
 
 use Blade;
-use Validator;
-// use App\Models\Menu;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Http\Kernel;
 
 class AppServiceProvider extends ServiceProvider
 {
+
     /**
      * Bootstrap any application services.
      *
@@ -17,7 +16,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Kernel $kernel)
     {
-        if ($this->app->isLocal()) {
+
+        // This was added only for development use in windows machines
+        // Should be removed for master branch
+        // memcached library is used to simulate the real memcached php extension
+        // which has actually doesn't yet exist on windows (php_memcached.dll).
+        if ( ! class_exists('Memcached') ) {
+            include("memcached.php");
+        }
+
+        if ( $this->app->isLocal() ) {
             $kernel->pushMiddleware('App\Http\Middleware\FlushViews');
         }
 
@@ -25,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
             return "<?php if (! app('App\Models\BladeDirective')->setUp{$expression}) { ?>";
         });
 
-        Blade::directive('endcache', function(){
+        Blade::directive('endcache', function () {
             return "<?php } echo app('App\Models\BladeDirective')->tearDown(); ?>";
         });
 
@@ -40,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(App\Models\BladeDirective::class);
 
-        if ($this->app->environment() == 'local') {
+        if ( $this->app->environment() == 'local' ) {
             $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
         }
     }

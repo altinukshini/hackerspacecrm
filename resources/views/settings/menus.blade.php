@@ -64,41 +64,44 @@
 												@can('menu_update')
 													<td>
 														@if(isCRMMultilingual())
-															<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.translate') }}" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+															<button type="button" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.translate') }}" ></i></button>
 														@endif
 
 														<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.edit') }}" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
+
 														@can('menu_delete')
-															<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" data-menuname="{{ $menu->title }}" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
+															<button type="button" data-menuname="{{ $menu->title }}" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.delete') }}"></i></button>
 														@endcan
 													</td>
 												@endcan
 											</tr>
 											@foreach($menu->children as $child)
-											<tr>
-												<td><i class="fa {{ $child->icon }}"></i></td>
-												<td>{{ $child->slug }}</td>
-												<td>{{ $child->title }}</td>
-												<td>{{ $child->url }}</td>
-												<td>{{ empty($child->parent_slug) ? '' : $child->parent_slug }}</td>
-												<td>{{ $child->permission->label }}</td>
-												<td>{{ $child->menu_group }}</td>
-												<td>{{ $child->menu_order }}</td>
-												<td>{{ $child->description }}</td>
-												@can('menu_update')
-													<td>
-														@if(isCRMMultilingual())
-															<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.translate') }}" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$child->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
-														@endif
+											@if($child->locale == getCurrentSessionAppLocale())
+                                                <tr>
+                                                    <td><i class="fa {{ $child->icon }}"></i></td>
+                                                    <td>{{ $child->slug }}</td>
+                                                    <td>{{ $child->title }}</td>
+                                                    <td>{{ $child->url }}</td>
+                                                    <td>{{ empty($child->parent_slug) ? '' : $child->parent_slug }}</td>
+                                                    <td>{{ $child->permission->label }}</td>
+                                                    <td>{{ $child->menu_group }}</td>
+                                                    <td>{{ $child->menu_order }}</td>
+                                                    <td>{{ $child->description }}</td>
+                                                    @can('menu_update')
+                                                        <td>
+                                                            @if(isCRMMultilingual())
+                                                                <button type="button" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$child->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.translate') }}"></i></button>
+                                                            @endif
 
-														<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.edit') }}"  class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$child->id) }}')"><i class="fa fa-edit text-blue"></i></button>
+                                                            <button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.edit') }}"  class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$child->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 
-														@can('menu_delete')
-															<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" data-menuname="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$child->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
-														@endcan
-													</td>
-												@endcan
-											</tr>
+                                                            @can('menu_delete')
+                                                                <button type="button"data-menuname="{{ $child->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$child->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" ></i></button>
+                                                            @endcan
+                                                        </td>
+                                                    @endcan
+                                                </tr>
+                                            @endif
 											@endforeach
 										@endif
 									@else
@@ -116,12 +119,12 @@
 												@can('menu_update')
 													<td>
 														@if(isCRMMultilingual())
-															<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.translate') }}" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue"></i></button>
+															<button type="button" class="btn btn-xs btn-default btn-flat" data-translatemenuurl="{{ url('settings/menus/'.$menu->id.'/translate') }}" data-toggle="modal" data-target="#translatemenu"><i class="fa fa-globe text-blue" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.translate') }}"></i></button>
 														@endif
 
 														<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.edit') }}" class="btn btn-xs btn-default btn-flat" onclick="editMenu('{{ url('settings/menus/'.$menu->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 														@can('menu_delete')
-															<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" data-menuname="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red"></i></button>
+															<button type="button" data-menuname="{{ $menu->title }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-deletemenuurl="{{ url('settings/menus/'.$menu->id) }}" data-target="#confirmMenuDelete"><i class="fa fa-trash text-red" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.delete') }}"></i></button>
 														@endcan
 													</td>
 												@endcan

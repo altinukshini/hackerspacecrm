@@ -28,7 +28,7 @@
 							</tr>
 							@foreach($permissions as $permission)
 								<tr>
-									<td>{{ $permission->name }}</td>
+									<td>{{ $permission->label }}</td>
 									@foreach($roles as $role)
 										<td class="text-center">
 											<div class="form-group{{ $errors->has('enable_registration') ? ' has-error' : ' has-feedback' }}">

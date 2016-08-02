@@ -47,7 +47,7 @@
 												<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.edit') }}" class="btn btn-xs btn-default btn-flat" onclick="editRole('{{ url('roles/'.$role->id) }}')"><i class="fa fa-edit text-blue"></i></button>
 											@endcan
 											@can('role_delete')
-												<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" data-rolename="{{ $role->name }}" data-roleid="{{ $role->id }}" data-roleurl="{{ url('roles/'.$role->id) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmRoleDelete"><i class="fa fa-trash text-red"></i></button>
+												<button type="button" data-rolename="{{ $role->name }}" data-roleid="{{ $role->id }}" data-roleurl="{{ url('roles/'.$role->id) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmRoleDelete"><i class="fa fa-trash text-red" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.delete') }}"></i></button>
 											@endcan
 										@endif
 									</td>

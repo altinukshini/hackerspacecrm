@@ -83,7 +83,7 @@
 										@endcan
 										@can('user_delete')
 											@if($user->username != crminfo('admin_username'))
-												<button type="button" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.delete') }}" data-username="{{ $user->username }}" data-userdeleteurl="{{ url('users/'.$user->username) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmUserDelete"><i class="fa fa-trash text-red"></i></button>
+												<button type="button" data-username="{{ $user->username }}" data-userdeleteurl="{{ url('users/'.$user->username) }}" class="btn btn-xs btn-default btn-flat" data-toggle="modal" data-target="#confirmUserDelete"><i class="fa fa-trash text-red" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.delete') }}"></i></button>
 											@endif
 										@endcan
 									</td>
