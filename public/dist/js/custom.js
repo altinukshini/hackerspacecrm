@@ -193,6 +193,29 @@ $('#confirmRoleDelete').on('show.bs.modal', function(e) {
     $("#delForm").attr('action', roleurl);
 });
 
+//////////////////////////////// PERMISSION
+function editPermission(url, locale) {
+    $('#editPermissionForm')[0].reset();
+    $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "JSON",
+        success: function (data) {
+            $('#editPermissionForm').attr('action', url);
+            if(data.label[locale] == null){
+                $('#editPermissionForm [name="label"]').val(data.label['en']);
+            }else{
+                $('#editPermissionForm [name="label"]').val(data.label[locale]);
+            }
+            // Open modal for edit:
+            $('#editPermission').modal('show');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log('Error getting data!');
+        }
+    });
+}
+
 
 /////////////////////////////////// EmailTemplates
 $('#translateemailtemplate').on('show.bs.modal', function(e) {

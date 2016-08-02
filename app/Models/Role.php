@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    use HasPermission;
-    use HasTranslations;
+    use HasPermission, HasTranslations;
 
     /**
      * The table associated with the model.

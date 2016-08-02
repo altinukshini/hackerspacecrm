@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Flash;
 use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateSinglePermissionRequest;
 
 class PermissionsController extends Controller
 {
@@ -17,6 +19,47 @@ class PermissionsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('permission:permission_update');
+    }
+
+    /**
+     * Get data for one permission as json
+     *
+     * @param string
+     *
+     * @return App\Models\Role;
+     **/
+    public function getPermission($permissionId)
+    {
+        // see if user has permission to view another user
+        if (!hasPermission('permission_view', true)) return redirect('/');
+
+        return Permission::find($permissionId);
+    }
+
+    /**
+     * Update a single permission
+     *
+     * @param App\Http\Requests\UpdateSinglePermissionRequest
+     * @param integer
+     *
+     * @return Void;
+     **/
+    public function updateSinglePermission(UpdateSinglePermissionRequest $request, $permissionId)
+    {
+        $permission = Permission::find($permissionId);
+
+        if (is_null($permission)) {
+            Flash::info(trans('hackerspacecrm.messages.models.notfound', ['modelname' => trans('hackerspacecrm.models.permission')]));
+            
+            return redirect('/');
+        }
+
+        $permission->setTranslation('label', getCurrentSessionAppLocale(), $request->input('label'));
+        $permission->save();
+
+        Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.permission')]));
+
+        return back();
     }
 
     /**

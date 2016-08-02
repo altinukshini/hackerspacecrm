@@ -83,6 +83,7 @@ return [
             'createnewrole' => 'Krijo një rol të ri',
             'editrole' => 'Redakto rolin',
             'confirmroledeletion' => 'Konfirmo fshirjen e rolit',
+            'editpermission' => 'Redakto autorizimin',
             'permissions' => 'Autorizimet',
             'createtranslation' => 'Krijo përkthimin',
             'menus' => 'Menytë',
@@ -194,6 +195,7 @@ return [
         ],
         'dropdowns' => [
             'selectlocale' => 'Zgjidh gjuhën',
+            'selectrole' => 'Zgjidh rolin',
             'selectpermission' => 'Zgjidh autorizimin',
             'selectgroup' => 'Zgjidh grupin',
             'none' => '(Asnjë)',

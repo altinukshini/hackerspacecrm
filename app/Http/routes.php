@@ -80,6 +80,8 @@ Route::get('roles/user/{username}', 'RolesController@getUserRoles'); // for ajax
 Route::post('roles/user/{username}', 'RolesController@updateUserRoles'); // to update roles for a single username
 
 Route::get('permissions', 'PermissionsController@showPermissionsForm');
+Route::get('permissions/{permissionId}', 'PermissionsController@getPermission');
+Route::patch('permissions/{permissionId}', 'PermissionsController@updateSinglePermission');
 Route::patch('permissions', 'PermissionsController@update');
 
 // \DB::listen(function($query) {

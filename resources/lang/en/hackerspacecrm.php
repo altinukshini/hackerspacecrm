@@ -83,6 +83,7 @@ return [
             'createnewrole' => 'Create new role',
             'editrole' => 'Edit role',
             'confirmroledeletion' => 'Confirm role deletion',
+            'editpermission' => 'Edit permission',
             'permissions' => 'Permissions',
             'createtranslation' => 'Create translation',
             'menus' => 'Menus',
@@ -194,6 +195,7 @@ return [
         ],
         'dropdowns' => [
             'selectlocale' => 'Select locale',
+            'selectrole' => 'Select role',
             'selectpermission' => 'Select permission',
             'selectgroup' => 'Select group',
             'none' => '(None)',

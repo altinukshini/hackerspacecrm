@@ -3,17 +3,28 @@
 namespace App\Models;
 
 use App\Models\Role;
+use App\Traits\HasTranslations;
 use HackerspaceCRM\Menus\Menu;
 use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
+
+    use HasTranslations;
+
     /**
      * The table associated with the model.
      *
      * @var string
      */
     protected $table = 'permissions';
+
+    /**
+     * Translatable fields.
+     *
+     * @var array
+     */
+    public $translatable = ['label'];
 
     /**
      * The attributes that are mass assignable.
