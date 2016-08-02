@@ -4,11 +4,13 @@ namespace App\Models;
 
 use App\Models\Permission;
 use App\Traits\HasPermission;
+use App\Traits\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
     use HasPermission;
+    use HasTranslations;
 
     /**
      * The table associated with the model.
@@ -16,6 +18,13 @@ class Role extends Model
      * @var string
      */
     protected $table = 'roles';
+
+    /**
+     * Translatable fields.
+     *
+     * @var array
+     */
+    public $translatable = ['label'];
 
     /**
      * The attributes that are mass assignable.

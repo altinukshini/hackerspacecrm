@@ -81,7 +81,7 @@ class RolesController extends Controller
             return redirect('/');
         }
 
-        $role->label = $request->input('label');
+        $role->setTranslation('label', getCurrentSessionAppLocale(), $request->input('label'));
         $role->save();
 
         Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.role')]));

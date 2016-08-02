@@ -164,7 +164,7 @@ $('#confirmUserDelete').on('show.bs.modal', function(e) {
 });
 
 ///////////////////////////////// ROLE
-function editRole(url) {
+function editRole(url, locale) {
     $('#editRoleForm')[0].reset();
     $.ajax({
         url: url,
@@ -172,7 +172,11 @@ function editRole(url) {
         dataType: "JSON",
         success: function (data) {
             $('#editRoleForm').attr('action', url);
-            $('#editRoleForm [name="label"]').val(data.label);
+            if(data.label[locale] == null){
+                $('#editRoleForm [name="label"]').val(data.label['en']);
+            }else{
+                $('#editRoleForm [name="label"]').val(data.label[locale]);
+            }
             // Open modal for edit:
             $('#editRole').modal('show');
         },
