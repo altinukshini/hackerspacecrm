@@ -172,8 +172,8 @@ function editRole(url, locale) {
         dataType: "JSON",
         success: function (data) {
             $('#editRoleForm').attr('action', url);
-            if(data.label[locale] == null){
-                $('#editRoleForm [name="label"]').val(data.label['en']);
+            if( data.label == null || data.label[locale] == null){
+                $('#editRoleForm [name="label"]').val(null);
             }else{
                 $('#editRoleForm [name="label"]').val(data.label[locale]);
             }
@@ -202,10 +202,10 @@ function editPermission(url, locale) {
         dataType: "JSON",
         success: function (data) {
             $('#editPermissionForm').attr('action', url);
-            if(data.label[locale] == null){
-                $('#editPermissionForm [name="label"]').val(data.label['en']);
+            if( data.label == null || data.label[locale] == null){
+                $('#editRoleForm [name="label"]').val(null);
             }else{
-                $('#editPermissionForm [name="label"]').val(data.label[locale]);
+                $('#editRoleForm [name="label"]').val(data.label[locale]);
             }
             // Open modal for edit:
             $('#editPermission').modal('show');

@@ -9,8 +9,11 @@ use App\Exceptions\AttributeIsNotTranslatable;
 trait HasTranslations
 {
 
-
     /**
+     * Overwritten method.
+     * Automatically assign a locale to the created attribute
+     * based on the session locale or default locale
+     *
      * @param $key
      * @param $value
      *
@@ -18,30 +21,35 @@ trait HasTranslations
      */
     public function setAttribute($key, $value)
     {
+        // If not translatable, create it the default way
+        // via the parent method
         if ( ! $this->isTranslatableAttribute($key) ) {
             return parent::setAttribute($key, $value);
         }
 
         if ( is_string($value) && ! json_decode($value) ) {
-            if (getCurrentSessionAppLocale() == crminfo('locale')) {
-                return $this->setTranslation($key, getCurrentSessionAppLocale(), $value);
+
+            // If model is being created while in a session that does
+            // not have the default locale active, then create the attribute
+            // in default locale as well. Prevents empty attribute for default locale.
+            if ( getCurrentSessionAppLocale() != crminfo('locale') ) {
+                $this->setTranslation($key, crminfo('locale'), $value);
             }
 
-            foreach (getAvailableAppLocaleArrayKeys() as $locale){
-                $this->setTranslation($key, $locale, $value);
-            }
-
-            return $this;
+            return $this->setTranslation($key, getCurrentSessionAppLocale(), $value);
         }
 
         if ( is_string($value) && json_decode($value) ) {
             return $this->setTranslations($key, json_decode($value, true));
         }
 
-        return $value;
+        return parent::setAttribute($key, $value);
     }
 
     /**
+     * Overwritten method
+     * Get a plain translatable attribute (if translatable)
+     *
      * @param $key
      *
      * @return mixed
@@ -56,6 +64,8 @@ trait HasTranslations
     }
 
     /**
+     * Alias method of getTranlsation()
+     *
      * @param $key
      * @param $locale
      *
@@ -67,6 +77,8 @@ trait HasTranslations
     }
 
     /**
+     * Get single (requested) translation of an attribute
+     *
      * @param $key
      * @param $locale
      *
@@ -87,14 +99,31 @@ trait HasTranslations
         return $translation;
     }
 
+    /**
+     * Get all available translations of the attribute
+     *
+     * @param $key
+     *
+     * @return array
+     */
     public function getTranslations($key)
     {
         $this->guardAgainstUntranslatableAttribute($key);
 
-        return json_decode((isset($this->getAttributes()[$key]) ? $this->getAttributes()[$key] : '') ?: '{}', true);
+        $translations = isset($this->getAttributes()[$key]) ? $this->getAttributes()[$key] : '';
+
+        // If attribute value is not a json string, force default locale and return array
+        if ( ! json_decode($translations) || empty($translations)) {
+            return [getDefaultAppLocale() => $translations];
+        }
+
+        return json_decode($translations, true);
+
     }
 
     /**
+     * Set a translation for a single attribute
+     *
      * @param $key
      * @param $locale
      * @param $value
@@ -104,6 +133,12 @@ trait HasTranslations
     public function setTranslation($key, $locale, $value)
     {
         $this->guardAgainstUntranslatableAttribute($key);
+
+        // If given locale is not in crm available locales, don't do
+        // anything, just return the same object
+        if (!in_array($locale, getAvailableAppLocaleArrayKeys())) {
+            return $this;
+        }
 
         $translations = $this->getTranslations($key);
 
@@ -116,6 +151,10 @@ trait HasTranslations
 
         $translations[$locale] = $value;
 
+        if (empty($translations[crminfo('locale')])) {
+            $translations[crminfo('locale')] = $value;
+        }
+
         $this->attributes[$key] = $this->asJson($translations);
 
         event(new TranslationHasBeenSet($this, $key, $locale, $oldValue, $value));
@@ -124,6 +163,8 @@ trait HasTranslations
     }
 
     /**
+     * Set multiple translations for a single attribute
+     *
      * @param $key
      * @param array $translations
      *
@@ -141,6 +182,8 @@ trait HasTranslations
     }
 
     /**
+     * Remove a translation for a single attribute
+     *
      * @param $key
      * @param $locale
      *
@@ -152,21 +195,43 @@ trait HasTranslations
 
         unset($translations[$locale]);
 
-        $this->setAttribute($key, $translations);
+        $this->setAttribute($key, empty($translations) ? '' : $translations);
 
         return $this;
     }
 
+    /**
+     * Get all locales in which the attribute is translated
+     *
+     * @param $key
+     *
+     * @return array
+     */
     public function getTranslatedLocales($key)
     {
         return array_keys($this->getTranslations($key));
     }
 
+    /**
+     * Check if attribute is translatable
+     *
+     * @param $key
+     *
+     * @return boolean
+     */
     protected function isTranslatableAttribute($key)
     {
         return in_array($key, $this->getTranslatableAttributes());
     }
 
+    /**
+     * Throw exception if attribute is not translatable
+     *
+     * @param $key
+     *
+     * @throws AttributeIsNotTranslatable
+     * @return void
+     */
     protected function guardAgainstUntranslatableAttribute($key)
     {
         if ( ! $this->isTranslatableAttribute($key) ) {
@@ -174,6 +239,14 @@ trait HasTranslations
         }
     }
 
+    /**
+     * Normalize locale
+     *
+     * @param $key
+     * @param $locale
+     *
+     * @return string
+     */
     protected function normalizeLocale($key, $locale)
     {
         if ( in_array($locale, $this->getTranslatedLocales($key)) ) {
@@ -183,11 +256,42 @@ trait HasTranslations
         return crminfo('locale');
     }
 
+    /**
+     * Get all translatable attributes from class property
+     *
+     * @return array
+     */
     public function getTranslatableAttributes()
     {
         return is_array($this->translatable) ? $this->translatable : [];
     }
 
+    /**
+     * Overwritten method
+     * If attribute value is not json_decodeable (not an array)
+     * by accident, force return it as array
+     * Decode the given JSON back into an array or object.
+     *
+     * @param  string $value
+     * @param  bool $asObject
+     *
+     * @return mixed
+     */
+    public function fromJson($value, $asObject = false)
+    {
+        if ( ! json_decode($value, ! $asObject) || empty($value)) {
+            return [crminfo('locale') => (!empty($value) ? $value : '')];
+        }
+
+        return parent::fromJson($value, $asObject);
+    }
+
+    /**
+     * Overwritten method
+     * Get the casts array.
+     *
+     * @return array
+     */
     public function getCasts()
     {
         return array_merge(parent::getCasts(), array_fill_keys($this->getTranslatableAttributes(), 'array'));
