@@ -175,6 +175,7 @@ return [
         Folklore\Image\ImageServiceProvider::class,
 
         App\Providers\CustomValidationRulesServiceProvider::class,
+        Nwidart\Modules\LaravelModulesServiceProvider::class,
         HackerspaceCRM\Helpers\HelpersServiceProvider::class,
         HackerspaceCRM\Flasher\FlashServiceProvider::class,
         HackerspaceCRM\Menu\Repository\MenuRepositoryServiceProvider::class,
@@ -230,6 +231,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Image' => Folklore\Image\Facades\Image::class,
+        'Module' => Nwidart\Modules\Facades\Module::class,
 
     ],
 

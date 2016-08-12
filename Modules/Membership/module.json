@@ -1,0 +1,16 @@
+{
+    "name": "Membership",
+    "alias": "membership",
+    "description": "Manage Hackerspace/Makerspace members",
+    "keywords": [],
+    "version": "1.0.0",
+    "active": 0,
+    "order": 0,
+    "providers": [
+        "Modules\\Membership\\Providers\\MembershipServiceProvider"
+    ],
+    "aliases": [],
+    "files": [
+        "start.php"
+    ]
+}

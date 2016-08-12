@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "^5.2",
-        "folklore/image": "0.3.*"
+        "folklore/image": "0.3.*",
+        "nwidart/laravel-modules": "^0.10.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -25,7 +26,8 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "HackerspaceCRM\\": "app/HackerspaceCRM"
+            "HackerspaceCRM\\": "app/HackerspaceCRM",
+            "Modules\\": "modules/"
         }
     },
     "autoload-dev": {
