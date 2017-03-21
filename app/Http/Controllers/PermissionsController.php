@@ -92,7 +92,7 @@ class PermissionsController extends Controller
     {
         $requestRoles = $request->input('roles');
 
-        $roles = Role::all()->lists('name', 'id')->toArray();
+        $roles = Role::all()->pluck('name', 'id')->toArray();
 
         // If no permissions selected at all for any role
         // revoke all permissions to all roles

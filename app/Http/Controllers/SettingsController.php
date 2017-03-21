@@ -69,7 +69,7 @@ class SettingsController extends Controller
      **/
     public function showGeneralSettingsForm()
     {
-        $settings = $this->settingRepository->getAll()->lists('value', 'key')->toArray();
+        $settings = $this->settingRepository->getAll()->pluck('value', 'key')->toArray();
 
         return view('settings.general', compact('settings'));
     }

@@ -14,7 +14,7 @@ trait HasPermission
      */
     public function getPermissions()
     {
-        return $this->permissions->lists('name', 'id')->toArray();
+        return $this->permissions->pluck('name', 'id')->toArray();
     }
 
     /**
@@ -108,7 +108,7 @@ trait HasPermission
             return $permission instanceof Permission ? $permission->name : $permission;
         });
 
-        return $permissions->intersect($this->permissions->lists('name')) == $permissions;
+        return $permissions->intersect($this->permissions->pluck('name')) == $permissions;
     }
 
     /**

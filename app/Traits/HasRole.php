@@ -16,7 +16,7 @@ trait HasRole
      */
     public function getRoles()
     {
-        return $this->roles->lists('name', 'id')->toArray();
+        return $this->roles->pluck('name', 'id')->toArray();
     }
 
     /**
@@ -110,7 +110,7 @@ trait HasRole
             return $role instanceof Role ? $role->name : $role;
         });
 
-        return $roles->intersect($this->roles->lists('name')) == $roles;
+        return $roles->intersect($this->roles->pluck('name')) == $roles;
     }
 
     /**
@@ -250,7 +250,7 @@ trait HasRole
     {
         $permissions = [];
         foreach ($this->roles as $role) {
-            $permissions += $role->permissions->lists('name', 'id')->toArray();
+            $permissions += $role->permissions->pluck('name', 'id')->toArray();
         }
 
         return $permissions;
@@ -314,7 +314,7 @@ trait HasRole
                 $userPermissions = $userPermissions->merge($role->permissions);
             }
 
-            return ! count(array_diff($permissions, $userPermissions->lists('name')->toArray()));
+            return ! count(array_diff($permissions, $userPermissions->pluck('name')->toArray()));
         }
 
         return $this->hasPermission($permissions);
