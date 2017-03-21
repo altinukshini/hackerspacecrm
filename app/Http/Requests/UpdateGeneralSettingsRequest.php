@@ -47,5 +47,4 @@ class UpdateGeneralSettingsRequest extends Request
         Flash::error(trans('hackerspacecrm.messages.nopermission'));
         return back();
     }
-
 }

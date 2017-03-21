@@ -44,12 +44,12 @@ class SettingsController extends Controller
         $settingApplicationService = new SettingApplicationService();
         $requestArray = $request->all();
 
-        if (!array_key_exists( 'enable_registration' , $requestArray )) {
+        if (!array_key_exists('enable_registration', $requestArray)) {
             $requestArray['enable_registration'] = '0';
         }
 
         foreach ($requestArray as $key => $value) {
-            if ($key != '_method' && $key != '_token' ) {
+            if ($key != '_method' && $key != '_token') {
                 $setting = $this->settingRepository->byKey($key);
                 if (!is_null($setting)) {
                     $settingApplicationService->update($setting, ['value' => $value]);
@@ -73,5 +73,4 @@ class SettingsController extends Controller
 
         return view('settings.general', compact('settings'));
     }
-
 }

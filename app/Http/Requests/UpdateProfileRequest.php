@@ -15,7 +15,7 @@ class UpdateProfileRequest extends Request
      */
     public function authorize()
     {
-        if(!(hasPermission('profile_update') || (Auth::user()->hasRole('member') && Auth::user()->username == $this->route('username')))) {
+        if (!(hasPermission('profile_update') || (Auth::user()->hasRole('member') && Auth::user()->username == $this->route('username')))) {
             return false;
         }
 

@@ -5,8 +5,8 @@ namespace HackerspaceCRM\User\Repository;
 use HackerspaceCRM\User\User;
 use HackerspaceCRM\User\UserRegistrationDTO;
 
-
-class UserRepository implements UserRepositoryInterface{
+class UserRepository implements UserRepositoryInterface
+{
 
     /**
      * @param UserRegistrationDTO $user

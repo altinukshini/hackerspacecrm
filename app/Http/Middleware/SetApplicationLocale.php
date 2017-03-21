@@ -21,10 +21,10 @@ class SetApplicationLocale
    *
    * @return mixed
    */
-  public function handle($request, Closure $next)
-  {
-      App::setLocale(Session::has('locale') ? Session::get('locale') : crminfo('locale'));
+    public function handle($request, Closure $next)
+    {
+        App::setLocale(Session::has('locale') ? Session::get('locale') : crminfo('locale'));
 
-      return $next($request);
-  }
+        return $next($request);
+    }
 }

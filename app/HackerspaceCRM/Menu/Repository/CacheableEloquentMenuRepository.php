@@ -64,12 +64,12 @@ class CacheableEloquentMenuRepository implements MenuRepositoryInterface
      * @param $menuId
      */
     public function replicate($menuId)
-    {        
+    {
         return $this->menuRepository->replicate($menuId);
     }
 
     /**
-     * By group get parent menus with children 
+     * By group get parent menus with children
      * ordered by menu_order asc.
      *
      * @param $group
@@ -84,8 +84,8 @@ class CacheableEloquentMenuRepository implements MenuRepositoryInterface
     }
 
     /**
-     * Get parent menus without children 
-     * ordered by menu_order asc 
+     * Get parent menus without children
+     * ordered by menu_order asc
      *
      * @return Collection
      */

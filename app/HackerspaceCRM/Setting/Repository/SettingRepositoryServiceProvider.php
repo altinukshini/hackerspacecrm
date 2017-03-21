@@ -15,9 +15,15 @@ class SettingRepositoryServiceProvider extends ServiceProvider
     public function boot()
     {
         // TEMPORARY SOLUTION
-        Setting::updating(function ($setting) { $this->clearCache($setting->key); });
-        Setting::creating(function ($setting) { $this->clearCache($setting->key);});
-        Setting::deleting(function ($setting) { $this->clearCache($setting->key);});
+        Setting::updating(function ($setting) {
+            $this->clearCache($setting->key);
+        });
+        Setting::creating(function ($setting) {
+            $this->clearCache($setting->key);
+        });
+        Setting::deleting(function ($setting) {
+            $this->clearCache($setting->key);
+        });
     }
 
     /**

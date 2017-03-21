@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\App;
 use HackerspaceCRM\Setting\Setting;
 use HackerspaceCRM\Setting\Repository\SettingRepositoryInterface;
 
-
 class SettingApplicationService
 {
 
@@ -52,5 +51,4 @@ class SettingApplicationService
         $settingRepository = App::make(SettingRepositoryInterface::class);
         $settingRepository->update($setting, $attributes);
     }
-
 }

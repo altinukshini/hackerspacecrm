@@ -31,7 +31,9 @@ class PermissionsController extends Controller
     public function getPermission($permissionId)
     {
         // see if user has permission to view another user
-        if (!hasPermission('permission_view', true)) return redirect('/');
+        if (!hasPermission('permission_view', true)) {
+            return redirect('/');
+        }
 
         return Permission::find($permissionId);
     }
@@ -97,8 +99,9 @@ class PermissionsController extends Controller
         if (is_null($requestRoles)) {
             foreach (array_keys($roles) as $key => $role) {
                 $role = Role::find($role);
-                if($role->name != 'administrator')
+                if ($role->name != 'administrator') {
                     $role->revokeAllPermissions();
+                }
             }
 
             Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.permissions')]));

@@ -58,7 +58,7 @@ class ModuleManager
             $package = $this->packageVersion->getPackageInfo("asgardcms/$moduleName-module");
             $module->version = isset($package->version) ? $package->version : 'N/A';
             $module->versionUrl = '#';
-            if ( isset($package->source->url) ) {
+            if (isset($package->source->url)) {
                 $packageUrl = str_replace('.git', '', $package->source->url);
                 $module->versionUrl = $packageUrl . '/tree/' . $package->dist->reference;
             }
@@ -115,7 +115,7 @@ class ModuleManager
         $coreModules = $this->getCoreModules();
 
         foreach ($enabledModules as $moduleToDisable => $value) {
-            if ( isset($coreModules[$moduleToDisable]) ) {
+            if (isset($coreModules[$moduleToDisable])) {
                 continue;
             }
             $module = $this->module->get($moduleToDisable);
@@ -146,7 +146,7 @@ class ModuleManager
     public function changelogFor(Module $module)
     {
         $path = $module->getPath() . '/changelog.yml';
-        if ( ! $this->finder->isFile($path) ) {
+        if (! $this->finder->isFile($path)) {
             return [];
         }
 

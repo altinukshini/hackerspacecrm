@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if ($e instanceof TokenMismatchException){
+        if ($e instanceof TokenMismatchException) {
             Flash::warning(trans('hackerspacecrm.messages.sessionexpired'));
             return redirect()->back()->withInput()->with('error', trans('hackerspacecrm.messages.sessionexpired'));
         }

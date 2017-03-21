@@ -68,5 +68,4 @@ class CRMCache
         }
         return $key;
     }
-
 }

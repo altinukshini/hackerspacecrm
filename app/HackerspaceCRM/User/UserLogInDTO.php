@@ -2,8 +2,8 @@
 
 namespace HackerspaceCRM\User;
 
-
-class UserLogInDTO {
+class UserLogInDTO
+{
 
     /**
      * @var UserEmail
@@ -12,7 +12,8 @@ class UserLogInDTO {
     private $email;
     private $password;
 
-    public function __construct(UserEmail $email, $password){
+    public function __construct(UserEmail $email, $password)
+    {
 
         $this->email = $email;
         $this->password = $password;
@@ -35,5 +36,4 @@ class UserLogInDTO {
     {
         return $this->password;
     }
-
-} 
+}

@@ -48,7 +48,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface
     {
         $menu = $this->byId($menuId);
 
-        if(!is_null($menu)) {
+        if (!is_null($menu)) {
             $clone = $menu->replicate();
             $clone->save();
             return $clone;
@@ -58,8 +58,8 @@ class EloquentMenuRepository implements MenuRepositoryInterface
     }
 
     /**
-     * By group get parent menus with children 
-     * ordered by menu_order asc 
+     * By group get parent menus with children
+     * ordered by menu_order asc
      *
      * @param $group
      *
@@ -69,7 +69,7 @@ class EloquentMenuRepository implements MenuRepositoryInterface
     {
         return Menu::with('children')->with('permission')->where('menu_group', $group)
         ->where('locale', getCurrentSessionAppLocale())
-        ->where(function ($query){
+        ->where(function ($query) {
             $query->whereNull('parent_slug')
                   ->orWhere('parent_slug', '');
         })
@@ -78,15 +78,15 @@ class EloquentMenuRepository implements MenuRepositoryInterface
     }
 
     /**
-     * Get parent menus without children 
-     * ordered by menu_order asc 
+     * Get parent menus without children
+     * ordered by menu_order asc
      *
      * @return Collection
      */
     public function getParents()
     {
         return Menu::where('locale', getCurrentSessionAppLocale())
-        ->where(function ($query){
+        ->where(function ($query) {
             $query->whereNull('parent_slug')
                   ->orWhere('parent_slug', '');
         })
@@ -112,12 +112,15 @@ class EloquentMenuRepository implements MenuRepositoryInterface
         $menu->title = $attributes['title'];
         $menu->url = $attributes['url'];
         $menu->permission_id = $attributes['permission_id'];
-        if (array_key_exists('menu_group', $attributes))
+        if (array_key_exists('menu_group', $attributes)) {
             $menu->menu_group = $attributes['menu_group'];
-        if (array_key_exists('parent_slug', $attributes))
+        }
+        if (array_key_exists('parent_slug', $attributes)) {
             $menu->parent_slug = $attributes['parent_slug'];
-        if (array_key_exists('description', $attributes))
+        }
+        if (array_key_exists('description', $attributes)) {
             $menu->description = $attributes['description'];
+        }
 
         $menu->save();
 

@@ -32,7 +32,7 @@ class EmailTemplatesController extends Controller
         $emailTemplates = EmailTemplate::whereLocale(getCurrentSessionAppLocale())->get();
 
         if (request()->wantsJson()) {
-        	return $emailTemplates;
+            return $emailTemplates;
         }
 
         return view('settings.emails', compact('emailTemplates'));
@@ -51,8 +51,8 @@ class EmailTemplatesController extends Controller
         $emailTemplate = EmailTemplate::find($templateId);
 
         if (is_null($emailTemplate)) {
-        	Flash::error(trans('hackerspacecrm.messages.models.notexist', ['modelname' => trans('hackerspacecrm.models.emailtemplate')]));
-        	return back();
+            Flash::error(trans('hackerspacecrm.messages.models.notexist', ['modelname' => trans('hackerspacecrm.models.emailtemplate')]));
+            return back();
         }
 
         $emailTemplate->update($request->all());
@@ -71,7 +71,9 @@ class EmailTemplatesController extends Controller
     public function translate(TranslateEmailTemplateRequest $request, $templateId)
     {
         // see if user has permission to update menu
-        if (!hasPermission('setting_update', true)) return back();
+        if (!hasPermission('setting_update', true)) {
+            return back();
+        }
 
         $template = EmailTemplate::find($templateId);
 

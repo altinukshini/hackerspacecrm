@@ -50,5 +50,4 @@ class MenuApplicationService
         $menuRepository = App::make(MenuRepositoryInterface::class);
         $menuRepository->update($menu, $attributes);
     }
-
 }

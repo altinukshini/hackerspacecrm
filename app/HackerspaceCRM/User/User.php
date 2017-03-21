@@ -46,7 +46,7 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::creating(function($user) {
+        static::creating(function ($user) {
             $user->email_token = str_random(30);
         });
     }

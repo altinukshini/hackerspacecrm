@@ -91,5 +91,4 @@ class Menu extends Model
     {
         return $this->belongsTo(Permission::class);
     }
-
 }

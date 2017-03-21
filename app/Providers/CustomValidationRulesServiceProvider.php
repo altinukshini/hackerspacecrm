@@ -15,18 +15,17 @@ class CustomValidationRulesServiceProvider extends ServiceProvider
      */
     public function boot(Kernel $kernel)
     {
-        Validator::extend('no_spaces', function($attr, $value){
+        Validator::extend('no_spaces', function ($attr, $value) {
             return preg_match('/^\S*$/u', $value);
         });
 
-        Validator::extend('no_specials_lower_u', function($attr, $value){
+        Validator::extend('no_specials_lower_u', function ($attr, $value) {
             return preg_match('/^[a-z0-9_]+$/', $value);
         });
 
-        Validator::extend('username', function($attr, $value){
+        Validator::extend('username', function ($attr, $value) {
             return preg_match('/^[A-Za-z0-9]+$/', $value);
         });
-
     }
 
     /**
@@ -36,6 +35,5 @@ class CustomValidationRulesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
     }
 }

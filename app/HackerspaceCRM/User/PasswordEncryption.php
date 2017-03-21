@@ -2,15 +2,16 @@
 
 namespace HackerspaceCRM\User;
 
-
-class PasswordEncryption {
+class PasswordEncryption
+{
 
     private $plainPassword;
 
     /**
      * @param $plainPassword
      */
-    public function __construct($plainPassword){
+    public function __construct($plainPassword)
+    {
 
         $this->plainPassword = $plainPassword;
     }
@@ -22,4 +23,4 @@ class PasswordEncryption {
     {
         return bcrypt($this->plainPassword);
     }
-} 
+}

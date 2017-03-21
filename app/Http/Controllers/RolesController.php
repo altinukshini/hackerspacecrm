@@ -28,9 +28,9 @@ class RolesController extends Controller
      **/
     public function show()
     {
-    	$roles = Role::all();
+        $roles = Role::all();
 
-    	return view('settings.users.roles', compact('roles'));
+        return view('settings.users.roles', compact('roles'));
     }
 
     /**
@@ -43,7 +43,9 @@ class RolesController extends Controller
     public function getRole($roleId)
     {
         // see if user has permission to view another user
-        if (!hasPermission('role_view', true)) return redirect('/');
+        if (!hasPermission('role_view', true)) {
+            return redirect('/');
+        }
 
         return Role::find($roleId);
     }
@@ -97,7 +99,9 @@ class RolesController extends Controller
      **/
     public function delete($roleId)
     {
-        if (!hasPermission('role_delete')) return redirect('/');
+        if (!hasPermission('role_delete')) {
+            return redirect('/');
+        }
 
         $role = Role::find($roleId);
 
@@ -116,7 +120,6 @@ class RolesController extends Controller
         Flash::success(trans('hackerspacecrm.messages.models.delete.success', ['modelname' => trans('hackerspacecrm.models.role')]));
 
         return back();
-
     }
 
     /**
@@ -152,7 +155,9 @@ class RolesController extends Controller
      **/
     public function updateUserRoles(Request $request, $username)
     {
-        if (!hasPermission('role_update', true)) return redirect('/');
+        if (!hasPermission('role_update', true)) {
+            return redirect('/');
+        }
 
         $user = User::whereUsername($username)->first();
 
@@ -163,7 +168,7 @@ class RolesController extends Controller
         }
 
         // Check if trying to change CRM Administrator's roles
-        if ($user->username == crminfo('admin_username')){
+        if ($user->username == crminfo('admin_username')) {
             Flash::info(trans('hackerspacecrm.messages.notallowed'));
             return back();
         }
@@ -192,6 +197,5 @@ class RolesController extends Controller
         Flash::success(trans('hackerspacecrm.messages.models.update.success', ['modelname' => trans('hackerspacecrm.models.roles')]));
 
         return back();
-        
     }
 }

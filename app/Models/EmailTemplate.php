@@ -44,7 +44,7 @@ class EmailTemplate extends Model
 
         ob_start();
 
-        extract($data,  EXTR_SKIP);
+        extract($data, EXTR_SKIP);
 
         try {
             eval('?>'.$generated);

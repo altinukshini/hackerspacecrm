@@ -42,7 +42,7 @@ class RememberableQueryBuilder extends QueryBuilder
      */
     public function get($columns = ['*'])
     {
-        if ( ! is_null($this->cacheMinutes)) {
+        if (! is_null($this->cacheMinutes)) {
             return $this->getCached($columns);
         }
 
@@ -183,7 +183,7 @@ class RememberableQueryBuilder extends QueryBuilder
      */
     protected function getCacheCallback($columns)
     {
-        return function() use ($columns) {
+        return function () use ($columns) {
             $this->cacheMinutes = null;
 
             return $this->get($columns);
