@@ -39,7 +39,7 @@ class UserMailer extends Mailer
 	 * @param array
 	 * @return void
 	 */
-    public function mail(User $user, $template, array $data = array())
+    public function mail(User $user, $template, array $data = [])
     {
         $this->emailTemplate = $this->detectEmailTemplateLocale($user, $template);
         $this->toEmail = $user->email;
@@ -57,7 +57,7 @@ class UserMailer extends Mailer
 	 * @param array
 	 * @return void
 	 */
-    public function mailView(User $user, $view, $subject, array $data = array())
+    public function mailView(User $user, $view, $subject, array $data = [])
     {
         $this->toEmail = $user->email;
         $this->subject = $subject;

@@ -19,7 +19,7 @@ abstract class Mailer
 	 * @param HackerspaceCRM\Mailers\EmailAddress $toEmail
 	 * @param $data
 	 */
-    public function deliverView($view, $subject, $fromName, EmailAddress $fromEmail, EmailAddress $toEmail, array $data = array())
+    public function deliverView($view, $subject, $fromName, EmailAddress $fromEmail, EmailAddress $toEmail, array $data = [])
     {
         $this->validateParameters([$view, $subject, $fromName]);
 
@@ -41,7 +41,7 @@ abstract class Mailer
 	 * @param HackerspaceCRM\Mailers\EmailAddress $toEmail
 	 * @param $data
 	 */
-    public function deliverDB(EmailTemplate $template, $fromName, EmailAddress $fromEmail, EmailAddress $toEmail, array $data = array())
+    public function deliverDB(EmailTemplate $template, $fromName, EmailAddress $fromEmail, EmailAddress $toEmail, array $data = [])
     {
         $this->validateParameters($fromName);
 

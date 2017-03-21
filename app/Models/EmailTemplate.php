@@ -38,7 +38,7 @@ class EmailTemplate extends Model
      *
      * @return string;
      **/
-    public function bladeCompile(array $data = array())
+    public function bladeCompile(array $data = [])
     {
         $generated = Blade::compileString($this->email_body);
 
