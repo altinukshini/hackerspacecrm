@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use App\Http\Requests\Request;
 use App\Models\User;
 use Auth;
 use Flash;
 
-class UpdateUserRequest extends Request
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

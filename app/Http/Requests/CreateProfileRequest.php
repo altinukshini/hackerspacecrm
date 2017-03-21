@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\Request;
 use Auth;
 use Flash;
 
-class CreateProfileRequest extends Request
+class CreateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
