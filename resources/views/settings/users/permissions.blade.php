@@ -29,10 +29,10 @@
 							@foreach($permissions as $permission)
 								<tr>
 									<td>
-										{{ $permission->label }}
 										@can('permission_update')
-											<button type="button" class="btn btn-xs btn-default btn-flat pull-right" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.edit') }}" onclick="editPermission('{{ url('permissions/'.$permission->id) }}', '{{ getCurrentSessionAppLocale() }}')"><i class="fa fa-edit text-blue"></i></button>
+											<button type="button" class="btn btn-xs btn-default btn-flat pull-left" data-toggle="tooltip" title="{{ trans('hackerspacecrm.forms.titles.edit') }}" onclick="editPermission('{{ url('permissions/'.$permission->id) }}', '{{ getCurrentSessionAppLocale() }}')"><i class="fa fa-edit text-blue"></i></button>
 										@endcan
+										<span class="pull-right">{{ $permission->label }}</span>
 									</td>
 									@foreach($roles as $role)
 										<td class="text-center">

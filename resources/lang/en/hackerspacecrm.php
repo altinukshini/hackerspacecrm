@@ -154,7 +154,7 @@ return [
             'newuserrole' => 'New user role',
             'appurl' => 'Application URL',
             'footercontent' => 'Footer content',
-            'account', 'Account',
+            'account' => 'Account',
         ],
         'help' => [
             'skills' => 'Separate each skill with a comma. Exc: skill1,skill2,skill3',
