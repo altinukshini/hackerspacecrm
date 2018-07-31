@@ -14,7 +14,7 @@ trait HasPermission
      */
     public function getPermissions()
     {
-        return $this->permissions->lists('name', 'id')->toArray();
+        return $this->permissions->pluck('name', 'id')->toArray();
     }
 
     /**
@@ -26,27 +26,29 @@ trait HasPermission
      */
     public function hasPermission($permission)
     {
-        if ( is_int($permission) ) {
+        if (is_int($permission)) {
             return $this->permissions->contains($permission);
         }
 
-        if ( is_string($permission) ) {
+        if (is_string($permission)) {
             return $this->permissions->contains('name', $permission);
         }
 
-        if ( is_array($permission) ) {
+        if (is_array($permission)) {
             foreach ($permission as $p) {
-                if ( $this->hasPermission($p) ) return true;
+                if ($this->hasPermission($p)) {
+                    return true;
+                }
             }
 
             return false;
         }
 
-        if ( $permission instanceof Permission ) {
+        if ($permission instanceof Permission) {
             return $this->permissions->contains('id', $permission->id);
         }
 
-        if ( $permission instanceof Collection ) {
+        if ($permission instanceof Collection) {
             return ! ! $permission->intersect($this->permissions)->count();
         }
 
@@ -86,19 +88,19 @@ trait HasPermission
      */
     public function hasAllPermissions($permissions)
     {
-        if ( is_int($permissions) ) {
+        if (is_int($permissions)) {
             return $this->permissions->contains($permissions);
         }
 
-        if ( is_string($permissions) ) {
+        if (is_string($permissions)) {
             return $this->permissions->contains('name', $permissions);
         }
 
-        if ( $permissions instanceof Permission ) {
+        if ($permissions instanceof Permission) {
             return $this->permissions->contains('id', $permissions->id);
         }
 
-        if ( $permissions instanceof Collection ) {
+        if ($permissions instanceof Collection) {
             return ! ! $permissions->intersect($this->permissions)->count();
         }
 
@@ -106,7 +108,7 @@ trait HasPermission
             return $permission instanceof Permission ? $permission->name : $permission;
         });
 
-        return $permissions->intersect($this->permissions->lists('name')) == $permissions;
+        return $permissions->intersect($this->permissions->pluck('name')) == $permissions;
     }
 
     /**
@@ -120,29 +122,29 @@ trait HasPermission
     {
         // If role has all given permissions
         // just return true, no need to go further...
-        if ( $this->hasAllPermissions($permission) ) {
+        if ($this->hasAllPermissions($permission)) {
             return true;
         }
 
-        if ( is_integer($permission) ) {
+        if (is_integer($permission)) {
             $existingPermission = Permission::find($permission);
-            if ( ! is_null($existingPermission) ) {
+            if (! is_null($existingPermission)) {
                 return $this->permissions()->attach($existingPermission);
             }
         }
 
-        if ( is_string($permission) ) {
+        if (is_string($permission)) {
             $existingPermission = Permission::whereName($permission)->first();
-            if ( ! is_null($existingPermission) ) {
+            if (! is_null($existingPermission)) {
                 return $this->permissions()->attach($existingPermission);
             }
         }
 
-        if ( $permission instanceof Permission ) {
+        if ($permission instanceof Permission) {
             return $this->permissions()->attach($permission);
         }
 
-        if ( is_array($permission) ) {
+        if (is_array($permission)) {
             foreach ($permission as $p) {
                 $this->givePermission($p);
             }
@@ -184,27 +186,27 @@ trait HasPermission
      */
     public function revokePermission($permission)
     {
-        if ( is_integer($permission) ) {
+        if (is_integer($permission)) {
             $existingPermission = Permission::find($permission);
-            if ( ! is_null($existingPermission) && $this->hasPermission($existingPermission) ) {
+            if (! is_null($existingPermission) && $this->hasPermission($existingPermission)) {
                 return $this->permissions()->detach($existingPermission);
             }
         }
 
-        if ( is_string($permission) ) {
+        if (is_string($permission)) {
             $existingPermission = Permission::whereName($permission)->first();
-            if ( ! is_null($existingPermission) && $this->hasPermission($existingPermission)) {
+            if (! is_null($existingPermission) && $this->hasPermission($existingPermission)) {
                 return $this->permissions()->detach($existingPermission);
             }
         }
 
-        if ( $permission instanceof Permission ) {
-            if ( $this->hasPermission($permission) ) {
+        if ($permission instanceof Permission) {
+            if ($this->hasPermission($permission)) {
                 return $this->permissions()->detach($permission);
             }
         }
 
-        if ( is_array($permission) ) {
+        if (is_array($permission)) {
             foreach ($permission as $p) {
                 $this->revokePermission($p);
             }

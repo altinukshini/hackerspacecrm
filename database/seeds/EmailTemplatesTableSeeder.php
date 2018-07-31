@@ -15,12 +15,12 @@ class EmailTemplatesTableSeeder extends Seeder
         DB::table('email_templates')->truncate();
 
         $templates = [
-			[
-				'title' => 'New account created',
-				'slug' => 'newaccount',
-				'description' => 'This email will be sent to users that are created via a site administrator under users page',
-				'email_subject' => 'New account created at '.crminfo('name'),
-				'email_body' => 'Hi {{ $user->full_name }},<br>
+            [
+                'title' => 'New account created',
+                'slug' => 'newaccount',
+                'description' => 'This email will be sent to users that are created via a site administrator under users page',
+                'email_subject' => 'New account created at '.crminfo('name'),
+                'email_body' => 'Hi {{ $user->full_name }},<br>
 <br>
 A new account has been created for you by a site administrator at <a href=\'{{ $crm->url }}\'>{{ $crm->crmname }}</a>.<br>
 <br>
@@ -45,16 +45,16 @@ Happy hacking!<br>
 <br>
 {{ $crm->orgname }}<br>
 {!! $crm->address !!}',
-				'syntax_help' => '<b>Required variables to be included:</b> $reset_link (to send the reset password link), $edit_link (to send the edit account link), $password (to send the password set for user)<br />
+                'syntax_help' => '<b>Required variables to be included:</b> $reset_link (to send the reset password link), $edit_link (to send the edit account link), $password (to send the password set for user)<br />
 				<b>Other:</b> $user->username, $user->full_name, $user->email, $user->last_login',
-				'locale' => 'en'
-			],
-			[
-				'title' => 'Email confirmation',
-				'slug' => 'confirmation',
-				'description' => 'This email will be sent to users who register via the the crm registration form.',
-				'email_subject' => 'Email confirmation required',
-				'email_body' => 'Thanks for signing up!<br>
+                'locale' => 'en'
+            ],
+            [
+                'title' => 'Email confirmation',
+                'slug' => 'confirmation',
+                'description' => 'This email will be sent to users who register via the the crm registration form.',
+                'email_subject' => 'Email confirmation required',
+                'email_body' => 'Thanks for signing up!<br>
 <br>
 You are receiving this email because you have recently requested to create an account in {{ $crm->crmname }}.<br>
 <br>
@@ -69,16 +69,14 @@ Happy hacking!<br>
 <br>
 {{ $crm->orgname }}<br>
 {!! $crm->address !!}',
-				'syntax_help' => '<b>Required variables to be included:</b> $confirmation_link (to send the email confirmation link)<br />
+                'syntax_help' => '<b>Required variables to be included:</b> $confirmation_link (to send the email confirmation link)<br />
 				<b>Other:</b> $user->username, $user->full_name, $user->email, $user->last_login',
-				'locale' => 'en'
-			],
-		];
+                'locale' => 'en'
+            ],
+        ];
 
-		foreach ($templates as $template) {
-			EmailTemplate::create($template);
-		}
-
-
+        foreach ($templates as $template) {
+            EmailTemplate::create($template);
+        }
     }
 }

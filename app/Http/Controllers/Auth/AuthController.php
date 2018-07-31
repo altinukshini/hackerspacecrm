@@ -56,7 +56,7 @@ class AuthController extends Controller
      */
     public function redirectPath()
     {
-        if ( Auth::check() ) {
+        if (Auth::check()) {
             return Auth::user()->profilePath();
         }
 
@@ -123,7 +123,7 @@ class AuthController extends Controller
         // the IP address of the client making these requests into this application.
         $throttles = $this->isUsingThrottlesLoginsTrait();
 
-        if ( $throttles && $lockedOut = $this->hasTooManyLoginAttempts($request) ) {
+        if ($throttles && $lockedOut = $this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
 
             return $this->sendLockoutResponse($request);
@@ -131,11 +131,11 @@ class AuthController extends Controller
 
         $credentials = $this->getCredentials($request);
 
-        if ( Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember')) ) {
+        if (Auth::guard($this->getGuard())->attempt($credentials, $request->has('remember'))) {
             $user = User::find(Auth::user()->id);
             $user->setLastLogin();
 
-            if ( ! empty($user->locale) ) {
+            if (! empty($user->locale)) {
                 Session::put('locale', $user->locale);
             }
 
@@ -148,7 +148,7 @@ class AuthController extends Controller
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
 
-        if ( $throttles && ! $lockedOut ) {
+        if ($throttles && ! $lockedOut) {
             $this->incrementLoginAttempts($request);
         }
 
@@ -184,7 +184,6 @@ class AuthController extends Controller
     {
         // return property_exists($this, 'username') ? $this->username : 'email';
         return $request->has('username') ? 'username' : 'email';
-
     }
 
     /**
@@ -248,13 +247,13 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        if ( crminfo('enable_registration') == 0 ) {
+        if (crminfo('enable_registration') == 0) {
             return redirect('/');
         }
 
         $validator = $this->validator($request->all());
 
-        if ( $validator->fails() ) {
+        if ($validator->fails()) {
             $this->throwValidationException($request, $validator);
         }
 
@@ -274,11 +273,11 @@ class AuthController extends Controller
      */
     public function showRegistrationForm()
     {
-        if ( crminfo('enable_registration') == 0 ) {
+        if (crminfo('enable_registration') == 0) {
             return redirect('/');
         }
 
-        if ( property_exists($this, 'registerView') ) {
+        if (property_exists($this, 'registerView')) {
             return view($this->registerView);
         }
 
@@ -295,7 +294,7 @@ class AuthController extends Controller
     {
         $user = User::where('email_token', $email_token)->first();
 
-        if ( is_null($user) ) {
+        if (is_null($user)) {
             Flash::warning(trans('hackerspacecrm.messages.tokennotfound'));
 
             return redirect('/');

@@ -23,23 +23,22 @@ trait HasTranslations
     {
         // If not translatable, create it the default way
         // via the parent method
-        if ( ! $this->isTranslatableAttribute($key) ) {
+        if (! $this->isTranslatableAttribute($key)) {
             return parent::setAttribute($key, $value);
         }
 
-        if ( is_string($value) && ! json_decode($value) ) {
-
+        if (is_string($value) && ! json_decode($value)) {
             // If model is being created while in a session that does
             // not have the default locale active, then create the attribute
             // in default locale as well. Prevents empty attribute for default locale.
-            if ( getCurrentSessionAppLocale() != crminfo('locale') ) {
+            if (getCurrentSessionAppLocale() != crminfo('locale')) {
                 $this->setTranslation($key, crminfo('locale'), $value);
             }
 
             return $this->setTranslation($key, getCurrentSessionAppLocale(), $value);
         }
 
-        if ( is_string($value) && json_decode($value) ) {
+        if (is_string($value) && json_decode($value)) {
             return $this->setTranslations($key, json_decode($value, true));
         }
 
@@ -56,7 +55,7 @@ trait HasTranslations
      */
     public function getAttributeValue($key)
     {
-        if ( ! $this->isTranslatableAttribute($key) ) {
+        if (! $this->isTranslatableAttribute($key)) {
             return parent::getAttributeValue($key);
         }
 
@@ -92,7 +91,7 @@ trait HasTranslations
 
         $translation = isset($translations[$locale]) ? $translations[$locale] : '';
 
-        if ( $this->hasGetMutator($key) ) {
+        if ($this->hasGetMutator($key)) {
             return $this->mutateAttribute($key, $translation);
         }
 
@@ -113,12 +112,11 @@ trait HasTranslations
         $translations = isset($this->getAttributes()[$key]) ? $this->getAttributes()[$key] : '';
 
         // If attribute value is not a json string, force default locale and return array
-        if ( ! json_decode($translations) || empty($translations)) {
+        if (! json_decode($translations) || empty($translations)) {
             return [getDefaultAppLocale() => $translations];
         }
 
         return json_decode($translations, true);
-
     }
 
     /**
@@ -144,7 +142,7 @@ trait HasTranslations
 
         $oldValue = isset($translations[$locale]) ? $translations[$locale] : '';
 
-        if ( $this->hasSetMutator($key) ) {
+        if ($this->hasSetMutator($key)) {
             $method = 'set' . Str::studly($key) . 'Attribute';
             $value = $this->{$method}($value);
         }
@@ -234,7 +232,7 @@ trait HasTranslations
      */
     protected function guardAgainstUntranslatableAttribute($key)
     {
-        if ( ! $this->isTranslatableAttribute($key) ) {
+        if (! $this->isTranslatableAttribute($key)) {
             throw AttributeIsNotTranslatable::make($key, $this);
         }
     }
@@ -249,7 +247,7 @@ trait HasTranslations
      */
     protected function normalizeLocale($key, $locale)
     {
-        if ( in_array($locale, $this->getTranslatedLocales($key)) ) {
+        if (in_array($locale, $this->getTranslatedLocales($key))) {
             return $locale;
         }
 
@@ -279,7 +277,7 @@ trait HasTranslations
      */
     public function fromJson($value, $asObject = false)
     {
-        if ( ! json_decode($value, ! $asObject) || empty($value)) {
+        if (! json_decode($value, ! $asObject) || empty($value)) {
             return [crminfo('locale') => (!empty($value) ? $value : '')];
         }
 

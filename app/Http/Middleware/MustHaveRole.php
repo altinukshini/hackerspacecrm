@@ -25,6 +25,5 @@ class MustHaveRole
 
         Flash::error(trans('hackerspacecrm.messages.nopermission'));
         return redirect('/');
-
     }
 }

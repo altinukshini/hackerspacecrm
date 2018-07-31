@@ -11,7 +11,8 @@ trait Cacheable
      */
     public function getObjectCacheKey()
     {
-        return sprintf('%s/%s-%s',
+        return sprintf(
+            '%s/%s-%s',
             get_class($this),
             $this->getKey(),
             $this->updated_at->timestamp

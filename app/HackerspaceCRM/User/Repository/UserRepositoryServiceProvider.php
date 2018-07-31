@@ -4,7 +4,8 @@ namespace HackerspaceCRM\User\Repository;
 
 use Illuminate\Support\ServiceProvider;
 
-class UserRepositoryServiceProvider extends ServiceProvider{
+class UserRepositoryServiceProvider extends ServiceProvider
+{
 
     /**
      * Register the service provider.

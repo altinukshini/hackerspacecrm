@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\Request;
 use Auth;
 use Flash;
 
-class UpdateProfileRequest extends Request
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +16,7 @@ class UpdateProfileRequest extends Request
      */
     public function authorize()
     {
-        if(!(hasPermission('profile_update') || (Auth::user()->hasRole('member') && Auth::user()->username == $this->route('username')))) {
+        if (!(hasPermission('profile_update') || (Auth::user()->hasRole('member') && Auth::user()->username == $this->route('username')))) {
             return false;
         }
 

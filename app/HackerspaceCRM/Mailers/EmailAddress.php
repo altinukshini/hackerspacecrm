@@ -1,10 +1,11 @@
-<?php 
+<?php
 
 namespace HackerspaceCRM\Mailers;
 
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 
-class EmailAddress {
+class EmailAddress
+{
 
     /**
      * @var
@@ -14,7 +15,8 @@ class EmailAddress {
     /**
      * @param $email
      */
-    public function __construct($email){
+    public function __construct($email)
+    {
         $this->setEmail($email);
     }
     /**
@@ -30,9 +32,9 @@ class EmailAddress {
      */
     public function setEmail($email)
     {
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException("Invalid E-mail Provided");
         }
         $this->email = $email;
     }
-} 
+}

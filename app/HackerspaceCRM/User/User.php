@@ -2,6 +2,7 @@
 
 namespace HackerspaceCRM\User;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Profile;
 use App\Models\Permission;
@@ -9,6 +10,7 @@ use App\Traits\HasRole;
 
 class User extends Authenticatable
 {
+    use Notifiable;
 
     use HasRole;
 
@@ -46,7 +48,7 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::creating(function($user) {
+        static::creating(function ($user) {
             $user->email_token = str_random(30);
         });
     }

@@ -50,7 +50,6 @@ class ModulesController extends Controller
      */
     public function show(Module $module)
     {
-
     }
 
     /**
@@ -62,7 +61,6 @@ class ModulesController extends Controller
      */
     public function disable(Module $module)
     {
-
     }
 
     /**
@@ -74,7 +72,6 @@ class ModulesController extends Controller
      */
     public function enable(Module $module)
     {
-
     }
 
     /**
@@ -86,7 +83,6 @@ class ModulesController extends Controller
      */
     public function update(Request $request)
     {
-
     }
 
     /**
@@ -98,6 +94,5 @@ class ModulesController extends Controller
      */
     private function isCoreModule(Module $module)
     {
-
     }
 }

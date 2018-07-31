@@ -69,7 +69,7 @@ class EloquentSettingRepository implements SettingRepositoryInterface
     // Not limiting it to only single string value as attribute
     // for updating a setting, in the future there could be more
     // columns in the db for one setting rather than just key & value
-    public function update(Setting $setting, array $attributes) 
+    public function update(Setting $setting, array $attributes)
     {
         $setting->update($attributes);
     }

@@ -15,9 +15,15 @@ class MenuRepositoryServiceProvider extends ServiceProvider
     public function boot()
     {
         // TEMPORARY SOLUTION
-        Menu::updating(function ($menu) { $this->clearCache($menu->id);});
-        Menu::creating(function ($menu) { $this->clearCache($menu->id);});
-        Menu::deleting(function ($menu) { $this->clearCache($menu->id);});
+        Menu::updating(function ($menu) {
+            $this->clearCache($menu->id);
+        });
+        Menu::creating(function ($menu) {
+            $this->clearCache($menu->id);
+        });
+        Menu::deleting(function ($menu) {
+            $this->clearCache($menu->id);
+        });
 
         View::composer('includes.publicnavigation', 'HackerspaceCRM\Menu\Composers\PublicNavigation');
         View::composer('includes.mainnavigation', 'HackerspaceCRM\Menu\Composers\MainNavigation');
@@ -39,7 +45,7 @@ class MenuRepositoryServiceProvider extends ServiceProvider
     }
 
     private function clearCache($menuId)
-    {   
+    {
         Cache::tags('menus')->flush();
         // Cache::forget('menus.all');
         // Cache::forget('menus.byId.'.$menuId);

@@ -2,7 +2,7 @@
 
 
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -35,9 +35,9 @@ return array(
     | A list a directories to look for images
     |
     */
-    'src_dirs' => array(
+    'src_dirs' => [
         public_path()
-    ),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -264,4 +264,4 @@ return array(
     */
     'proxy_tmp_path' => sys_get_temp_dir(),
 
-);
+];

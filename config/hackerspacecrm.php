@@ -2,7 +2,7 @@
 
 return [
 
-	/*
+    /*
     |--------------------------------------------------------------------------
     | CRM Version
     |--------------------------------------------------------------------------
@@ -12,7 +12,7 @@ return [
     | Do not change this!
     |
     */
-	'version' => '0.1 alpha',
+    'version' => '0.1 alpha',
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     | 			http://localhost/crm/
     |
     */
-	'url' => 'http://localhost:8000/',
+    'url' => 'http://localhost:8000/',
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +57,7 @@ return [
     | Use example: 'Prishtina Hackerspace CRM'
     |
     */
-	'crmname' => 'Hackerspace CRM',
+    'crmname' => 'Hackerspace CRM',
 
     /*
     |--------------------------------------------------------------------------
@@ -72,7 +72,7 @@ return [
     | Use example: 'Prishtina Hackerspace membership management system'
     |
     */
-	'crmdescription' => 'CRM for managing Hackerspaces',
+    'crmdescription' => 'CRM for managing Hackerspaces',
 
     /*
     |--------------------------------------------------------------------------
@@ -86,7 +86,7 @@ return [
     | Use example: 'Prishtina Hackerspace CRM'
     |
     */
-	'crmfooter' => 'Hackerspace CRM',
+    'crmfooter' => 'Hackerspace CRM',
 
     /*
     |--------------------------------------------------------------------------
@@ -138,7 +138,7 @@ return [
     | Example: 'Administrator', 'Master Hacker'
     |
     */
-	'admin_name' => 'CRM Admin',
+    'admin_name' => 'CRM Admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -158,7 +158,7 @@ return [
     |
     |
     */
-	'admin_username' => 'admin',
+    'admin_username' => 'admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -173,7 +173,7 @@ return [
     | Example: 'Administrator', 'Master Hacker'
     |
     */
-	'admin_email' => 'admin@example.com',
+    'admin_email' => 'admin@example.com',
 
     /*
     |--------------------------------------------------------------------------
@@ -187,7 +187,7 @@ return [
 	| Default: 'en'
     |
     */
-	'locale' => 'en',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -207,10 +207,10 @@ return [
 	|			],
     |
     */
-	'supported_locales' => [
-		'en' =>    'English',
-		'sq' =>    'Shqip',
-	],
+    'supported_locales' => [
+        'en' =>    'English',
+        'sq' =>    'Shqip',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -222,7 +222,7 @@ return [
 	| Default: 'adminlte'
     |
     */
-	'theme' => 'adminlte',
+    'theme' => 'adminlte',
 
     /*
     |--------------------------------------------------------------------------
@@ -237,7 +237,7 @@ return [
 	| Do not change this!
     |
     */
-	'menu_groups' => ['public', 'main', 'settings'],
+    'menu_groups' => ['public', 'main', 'settings'],
 
     /*
     |--------------------------------------------------------------------------
@@ -251,7 +251,7 @@ return [
 	| Default: 1
     |
     */
-	'enable_registration' => 1, // 1 = true, 0 = false
+    'enable_registration' => 1, // 1 = true, 0 = false
 
     /*
     |--------------------------------------------------------------------------
@@ -268,7 +268,7 @@ return [
 	| Default: authenticated
     |
     */
-	'new_user_role' => 'authenticated',
+    'new_user_role' => 'authenticated',
 
     /*
     |--------------------------------------------------------------------------
@@ -282,6 +282,6 @@ return [
 	| Do not change this!
     |
     */
-	'caching_driver' => 'memcached',
-	
+    'caching_driver' => 'memcached',
+    
 ];

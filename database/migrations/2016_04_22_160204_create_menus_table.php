@@ -16,8 +16,8 @@ class CreateMenusTable extends Migration
             $table->increments('id');
             
             // relations
-            $table->string('slug')->nullable()->default(NULL);
-            $table->string('parent_slug')->nullable()->default(NULL);
+            $table->string('slug')->nullable()->default(null);
+            $table->string('parent_slug')->nullable()->default(null);
             $table->integer('permission_id')->unsigned();
             $table->foreign('permission_id')->references('id')->on('permissions');
 
@@ -25,8 +25,8 @@ class CreateMenusTable extends Migration
             $table->integer('menu_order')->default(0);
             $table->string('title')->default('');
             $table->string('url')->default('');
-            $table->string('description')->nullable()->default(NULL);
-            $table->string('icon')->nullable()->default(NULL);
+            $table->string('description')->nullable()->default(null);
+            $table->string('icon')->nullable()->default(null);
             $table->string('locale')->nullable()->default('en');
             $table->timestamps();
         });

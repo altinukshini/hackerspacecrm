@@ -52,7 +52,8 @@ class BladeDirective
     public function tearDown()
     {
         return $this->cache->put(
-            array_pop($this->keys), ob_get_clean()
+            array_pop($this->keys),
+            ob_get_clean()
         );
     }
 
@@ -76,7 +77,7 @@ class BladeDirective
             return $item->getObjectCacheKey();
         }
     
-        // If we're dealing with a collection, we'll 
+        // If we're dealing with a collection, we'll
         // use a hashed version of its contents.
         if ($item instanceof \Illuminate\Support\Collection) {
             return md5($item);

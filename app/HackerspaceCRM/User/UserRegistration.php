@@ -2,7 +2,8 @@
 
 namespace HackerspaceCRM\User;
 
-class UserRegistrationService {
+class UserRegistrationService
+{
 
 
-} 
+}

@@ -31,7 +31,7 @@ class MenusController extends Controller
         $this->menuRepository = $menuRepository;
 
         $this->middleware('auth');
-        $this->middleware('permission:menu_view'); 
+        $this->middleware('permission:menu_view');
     }
 
     /**
@@ -72,7 +72,9 @@ class MenusController extends Controller
     public function create(CreateMenuRequest $request)
     {
         // see if user has permission to create menu
-        if (!hasPermission('menu_create', true)) return back();
+        if (!hasPermission('menu_create', true)) {
+            return back();
+        }
 
         $menuApplicationService = new MenuApplicationService();
 
@@ -94,7 +96,9 @@ class MenusController extends Controller
     public function update(UpdateMenuRequest $request, $menuId)
     {
         // see if user has permission to update menu
-        if (!hasPermission('menu_update', true)) return back();
+        if (!hasPermission('menu_update', true)) {
+            return back();
+        }
 
         $menuApplicationService = new MenuApplicationService();
         $menu = $this->menuRepository->byId($menuId);
@@ -117,7 +121,9 @@ class MenusController extends Controller
     public function translate(TranslateMenuRequest $request, $menuId)
     {
         // see if user has permission to update menu
-        if (!hasPermission('menu_update', true)) return back();
+        if (!hasPermission('menu_update', true)) {
+            return back();
+        }
 
         $menuApplicationService = new MenuApplicationService();
         $menu = $this->menuRepository->replicate($menuId);
@@ -139,7 +145,9 @@ class MenusController extends Controller
     public function delete($menuId)
     {
         // see if user has permission to delete menu
-        if (!hasPermission('menu_delete', true)) return back();
+        if (!hasPermission('menu_delete', true)) {
+            return back();
+        }
 
         $menuApplicationService = new MenuApplicationService();
         $menu = $this->menuRepository->byId($menuId);
@@ -161,8 +169,7 @@ class MenusController extends Controller
      **/
     public function normalizeNewMenuRequest(Request $request)
     {
-        if ( $request->has('parent_slug') && $request->input('parent_slug') != '') {
-            
+        if ($request->has('parent_slug') && $request->input('parent_slug') != '') {
             $parent = $this->menuRepository->bySlug($request->input('parent_slug'));
             $requestArray = $request->all();
 
@@ -174,7 +181,6 @@ class MenusController extends Controller
     public function normalizeRelations(Menu $parent, array $requestArray)
     {
         if ($parent->menu_group != $requestArray['menu_group']) {
-            
             $requestArray['menu_group'] = $parent->menu_group;
 
             return $this->normalizeParentId($parent, $requestArray);

@@ -2,8 +2,8 @@
 
 namespace HackerspaceCRM\User;
 
-
-class UserRegistrationDTO {
+class UserRegistrationDTO
+{
 
     protected $name;
     protected $email;
@@ -14,7 +14,8 @@ class UserRegistrationDTO {
      * @param UserEmail $email
      * @param PasswordEncryption $password
      */
-    public function __construct($name,UserEmail $email,PasswordEncryption $password){
+    public function __construct($name, UserEmail $email, PasswordEncryption $password)
+    {
 
         $this->name = $name;
         $this->email = $email;
@@ -44,4 +45,4 @@ class UserRegistrationDTO {
     {
         return $this->password->getPassword();
     }
-} 
+}

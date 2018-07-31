@@ -49,7 +49,9 @@ Route::patch('users/{username}/password', 'UsersController@changePassword');
 Route::delete('users/{username}', 'UsersController@delete');
 
 /* Application settings routes */
-Route::get('settings', function () { return redirect('/'); });
+Route::get('settings', function () {
+    return redirect('/');
+});
 Route::get('settings/general', 'SettingsController@showGeneralSettingsForm');
 Route::patch('settings/general', 'SettingsController@updateGeneralSettings');
 Route::get('settings/emails', 'EmailTemplatesController@showEmailTemplatesForm');
@@ -59,7 +61,7 @@ Route::post('settings/emails/{templateId}/translate', 'EmailTemplatesController@
 /* Menus routes */
 Route::get('settings/menus', 'MenusController@show');
 Route::get('settings/menus/{menuId}', 'MenusController@getMenu'); // for ajax request that populates the form
-Route::post('settings/menus','MenusController@create');
+Route::post('settings/menus', 'MenusController@create');
 Route::patch('settings/menus/{menuId}', 'MenusController@update');
 Route::delete('settings/menus/{menuId}', 'MenusController@delete');
 Route::post('settings/menus/{menuId}/translate', 'MenusController@translate');

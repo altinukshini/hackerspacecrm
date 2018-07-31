@@ -14,7 +14,7 @@ if (!function_exists('CRMSettings')) {
 
         if (is_null($settings)) {
             $settingsAll = App::make('HackerspaceCRM\Setting\Repository\SettingRepositoryInterface');
-            $settings = $settingsAll->getAll()->lists('value', 'key')->toArray();
+            $settings = $settingsAll->getAll()->pluck('value', 'key')->toArray();
         }
 
         return is_null($key) ? $settings : ((is_array($key)) ? array_only($settings, $key) : $settings[$key]);

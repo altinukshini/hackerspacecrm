@@ -2,12 +2,13 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Foundation\Http\FormRequest;
 use Flash;
 use App\Http\Requests\Request;
 use App\Models\EmailTemplate;
 use Illuminate\Contracts\Validation\Validator;
 
-class TranslateEmailTemplateRequest extends Request
+class TranslateEmailTemplateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -11,7 +11,6 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UpdateUserPasswordRequest;
 use HackerspaceCRM\Mailers\UserMailer as Mailer;
 
-
 class UsersController extends Controller
 {
 
@@ -35,8 +34,9 @@ class UsersController extends Controller
      **/
     public function all()
     {
-        if (!hasPermission('user_view', true))
+        if (!hasPermission('user_view', true)) {
             return redirect('/');
+        }
 
         $users = User::all();
 
@@ -55,8 +55,9 @@ class UsersController extends Controller
     public function showUpdateUserForm($username)
     {
         // see if user has permission to update user
-        if (!(Auth::user()->username == $username || hasPermission('user_update', true)))
+        if (!(Auth::user()->username == $username || hasPermission('user_update', true))) {
             return redirect('/');
+        }
 
         $user = User::whereUsername($username)->first();
 
@@ -83,8 +84,9 @@ class UsersController extends Controller
     public function getUser($username)
     {
         // see if user has permission to view another user
-        if (!(hasPermission('user_view', true) || Auth::user()->username == $username))
+        if (!(hasPermission('user_view', true) || Auth::user()->username == $username)) {
             return redirect('/');
+        }
 
         if (!request()->wantsJson()) {
             return redirect('/');
@@ -169,8 +171,9 @@ class UsersController extends Controller
      **/
     public function verify($username)
     {
-        if (!hasPermission('user_update', true))
+        if (!hasPermission('user_update', true)) {
             return redirect('/');
+        }
 
         $user = User::whereUsername($username)->first();
 
@@ -199,8 +202,9 @@ class UsersController extends Controller
     public function delete($username)
     {
         // see if authenticated user has permission to delete users
-        if (!hasPermission('user_delete', true))
+        if (!hasPermission('user_delete', true)) {
             return redirect('/');
+        }
 
         $user = User::whereUsername($username)->first();
 

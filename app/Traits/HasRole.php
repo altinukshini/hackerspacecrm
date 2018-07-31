@@ -16,7 +16,7 @@ trait HasRole
      */
     public function getRoles()
     {
-        return $this->roles->lists('name', 'id')->toArray();
+        return $this->roles->pluck('name', 'id')->toArray();
     }
 
     /**
@@ -28,27 +28,29 @@ trait HasRole
      */
     public function hasRole($role)
     {
-        if ( is_int($role) ) {
+        if (is_int($role)) {
             return $this->roles->contains($role);
         }
 
-        if ( is_string($role) ) {
+        if (is_string($role)) {
             return $this->roles->contains('name', $role);
         }
 
-        if ( is_array($role) ) {
+        if (is_array($role)) {
             foreach ($role as $r) {
-                if ( $this->hasRole($r) ) return true;
+                if ($this->hasRole($r)) {
+                    return true;
+                }
             }
 
             return false;
         }
 
-        if ( $role instanceof Role ) {
+        if ($role instanceof Role) {
             return $this->roles->contains('id', $role->id);
         }
 
-        if ( $role instanceof Collection ) {
+        if ($role instanceof Collection) {
             return ! ! $role->intersect($this->roles)->count();
         }
 
@@ -88,19 +90,19 @@ trait HasRole
      */
     public function hasAllRoles($roles)
     {
-        if ( is_int($roles) ) {
+        if (is_int($roles)) {
             return $this->roles->contains($roles);
         }
 
-        if ( is_string($roles) ) {
+        if (is_string($roles)) {
             return $this->roles->contains('name', $roles);
         }
 
-        if ( $roles instanceof Role ) {
+        if ($roles instanceof Role) {
             return $this->roles->contains('id', $roles->id);
         }
 
-        if ( $roles instanceof Collection ) {
+        if ($roles instanceof Collection) {
             return ! ! $roles->intersect($this->roles)->count();
         }
 
@@ -108,7 +110,7 @@ trait HasRole
             return $role instanceof Role ? $role->name : $role;
         });
 
-        return $roles->intersect($this->roles->lists('name')) == $roles;
+        return $roles->intersect($this->roles->pluck('name')) == $roles;
     }
 
     /**
@@ -122,29 +124,29 @@ trait HasRole
     {
         // If user has all given roles
         // just return true, no need to go further...
-        if ( $this->hasAllRoles($role) ) {
+        if ($this->hasAllRoles($role)) {
             return true;
         }
 
-        if ( is_integer($role) ) {
+        if (is_integer($role)) {
             $existingRole = Role::find($role);
-            if ( ! is_null($existingRole) ) {
+            if (! is_null($existingRole)) {
                 return $this->roles()->attach($existingRole);
             }
         }
 
-        if ( is_string($role) ) {
+        if (is_string($role)) {
             $existingRole = Role::whereName($role)->first();
-            if ( ! is_null($existingRole) ) {
+            if (! is_null($existingRole)) {
                 return $this->roles()->attach($existingRole);
             }
         }
 
-        if ( $role instanceof Role ) {
+        if ($role instanceof Role) {
             return $this->roles()->attach($role);
         }
 
-        if ( is_array($role) ) {
+        if (is_array($role)) {
             foreach ($role as $r) {
                 $this->assignRole($r);
             }
@@ -186,27 +188,27 @@ trait HasRole
      */
     public function revokeRole($role)
     {
-        if ( is_integer($role) ) {
+        if (is_integer($role)) {
             $existingRole = Role::find($role);
-            if ( ! is_null($existingRole) && $this->hasRole($existingRole) ) {
+            if (! is_null($existingRole) && $this->hasRole($existingRole)) {
                 return $this->roles()->detach($existingRole);
             }
         }
 
-        if ( is_string($role) ) {
+        if (is_string($role)) {
             $existingRole = Role::whereName($role)->first();
-            if ( ! is_null($existingRole) && $this->hasRole($existingRole)) {
+            if (! is_null($existingRole) && $this->hasRole($existingRole)) {
                 return $this->roles()->detach($existingRole);
             }
         }
 
-        if ( $role instanceof Role ) {
-            if ( $this->hasRole($role) ) {
+        if ($role instanceof Role) {
+            if ($this->hasRole($role)) {
                 return $this->roles()->detach($role);
             }
         }
 
-        if ( is_array($role) ) {
+        if (is_array($role)) {
             foreach ($role as $r) {
                 $this->revokeRole($r);
             }
@@ -248,7 +250,7 @@ trait HasRole
     {
         $permissions = [];
         foreach ($this->roles as $role) {
-            $permissions += $role->permissions->lists('name', 'id')->toArray();
+            $permissions += $role->permissions->pluck('name', 'id')->toArray();
         }
 
         return $permissions;
@@ -264,7 +266,9 @@ trait HasRole
     public function hasPermission($permission)
     {
         foreach ($this->roles as $role) {
-            if ( $role->hasPermission($permission) ) return true;
+            if ($role->hasPermission($permission)) {
+                return true;
+            }
         }
 
         return false;
@@ -304,13 +308,13 @@ trait HasRole
      */
     public function hasAllPermissions($permissions)
     {
-        if ( is_array($permissions) ) {
+        if (is_array($permissions)) {
             $userPermissions = new Collection([]);
             foreach ($this->roles as $role) {
                 $userPermissions = $userPermissions->merge($role->permissions);
             }
 
-            return ! count(array_diff($permissions, $userPermissions->lists('name')->toArray()));
+            return ! count(array_diff($permissions, $userPermissions->pluck('name')->toArray()));
         }
 
         return $this->hasPermission($permissions);

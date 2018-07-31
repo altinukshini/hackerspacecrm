@@ -2,9 +2,9 @@
 
 namespace HackerspaceCRM\User\Repository;
 
-
 use HackerspaceCRM\User\UserRegistrationDTO;
 
-interface UserRepositoryInterface {
+interface UserRepositoryInterface
+{
     public function saveUser(UserRegistrationDTO $user);
-} 
+}
