@@ -59,7 +59,7 @@ class MenusTableSeeder extends Seeder
 				'icon' => 'fa-line-chart',
 			],
 			[
-				'slug' => 'membership',
+				'slug' => 'memberships',
 				'parent_slug' => 'reports',
 				'permission_id' => 11,
 				'menu_group' => 'main',
